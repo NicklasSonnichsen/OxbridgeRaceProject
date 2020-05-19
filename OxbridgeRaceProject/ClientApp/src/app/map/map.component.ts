@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AgmCoreModule } from '@agm/core';
 
-@NgModule({
-  declarations: [
-   ]
+@Component({
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css']
 })
+export class MapComponent{
+  latitude = 51.678418;
+  longitude = 7.809007;
+  constructor() { }
 
+
+
+}

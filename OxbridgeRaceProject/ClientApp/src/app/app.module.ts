@@ -9,7 +9,10 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
+
+
 
 @NgModule({
   declarations: [
@@ -19,6 +22,7 @@ import { MapComponent } from './map/map.component';
     CounterComponent,
     FetchDataComponent,
     MapComponent
+    
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,7 +32,11 @@ import { MapComponent } from './map/map.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-    ])
+      { path: 'map', component: MapComponent },
+    ]),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCnnppP8trPwzu-5dOv6KUoW6np4nExUOg'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

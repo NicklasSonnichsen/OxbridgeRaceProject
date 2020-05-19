@@ -11,6 +11,8 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
+import { SignUpAdminComponent } from './sign-up-admin/sign-up-admin.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 
 
@@ -21,7 +23,9 @@ import { MapComponent } from './map/map.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    MapComponent
+    MapComponent,
+    SignUpAdminComponent,
+    SignUpComponent
     
   ],
   imports: [
@@ -33,6 +37,7 @@ import { MapComponent } from './map/map.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'map', component: MapComponent },
+      { path: 'sign-up', component: SignUpComponent },
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCnnppP8trPwzu-5dOv6KUoW6np4nExUOg'

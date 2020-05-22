@@ -10,8 +10,8 @@ namespace OxbridgeRaceMobileApp2
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MapView();
+            // setting mainpage to loginview
+            MainPage = new LoginView();
         }
 
         protected override void OnStart()

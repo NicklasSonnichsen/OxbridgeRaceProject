@@ -4,8 +4,17 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="OxbridgeRaceMobileApp2.View.MapView">
+             x:Class="OxbridgeRaceMobileApp2.View.MapView"
+             Padding="10">
+
+    <ContentPage.ToolbarItems>   
+        <ToolbarItem Text="Sign Out" Order="Secondary" Command="{Binding SimpleLogOut}" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <ContentView Content="{Binding Map}"/>
+        <ContentView HeightRequest="10" Content="{Binding Map}"/>
     </ContentPage.Content>
+
+
+
 </ContentPage>

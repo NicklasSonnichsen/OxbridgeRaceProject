@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -21,6 +21,145 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\node_modules\%40agm\core\agm-core.metadata.json" />
+    <Content Include="ClientApp\node_modules\%40agm\core\package.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ClientApp\node_modules\%40agm\core\bundles\agm-core.umd.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\bundles\agm-core.umd.js.map" />
+    <None Include="ClientApp\node_modules\%40agm\core\bundles\agm-core.umd.min.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\bundles\agm-core.umd.min.js.map" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\agm-core.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\core.module.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\bicycling-layer.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\circle.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\data-layer.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\fit-bounds.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\info-window.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\kml-layer.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\map.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\marker.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\polygon.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\polyline-icon.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\polyline-point.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\polyline.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\rectangle.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\directives\transit-layer.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\index.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\map-types.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\fit-bounds.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\geocoder-service.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\google-maps-api-wrapper.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\google-maps-types.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\circle-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\data-layer-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\info-window-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\kml-layer-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\layer-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\marker-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\polygon-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\polyline-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\managers\rectangle-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\maps-api-loader\lazy-maps-api-loader.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\maps-api-loader\maps-api-loader.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\services\maps-api-loader\noop-maps-api-loader.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\utils\browser-globals.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm2015\utils\mvcarray-utils.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\agm-core.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\core.module.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\bicycling-layer.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\circle.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\data-layer.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\fit-bounds.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\info-window.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\kml-layer.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\map.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\marker.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\polygon.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\polyline-icon.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\polyline-point.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\polyline.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\rectangle.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\directives\transit-layer.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\index.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\map-types.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\fit-bounds.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\geocoder-service.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\google-maps-api-wrapper.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\google-maps-types.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\circle-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\data-layer-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\info-window-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\kml-layer-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\layer-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\marker-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\polygon-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\polyline-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\managers\rectangle-manager.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\maps-api-loader\lazy-maps-api-loader.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\maps-api-loader\maps-api-loader.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\services\maps-api-loader\noop-maps-api-loader.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\utils\browser-globals.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\esm5\utils\mvcarray-utils.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\fesm2015\agm-core.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\fesm2015\agm-core.js.map" />
+    <None Include="ClientApp\node_modules\%40agm\core\fesm5\agm-core.js" />
+    <None Include="ClientApp\node_modules\%40agm\core\fesm5\agm-core.js.map" />
+    <None Include="ClientApp\node_modules\%40agm\core\LICENSE" />
+    <None Include="ClientApp\node_modules\%40agm\core\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\agm-core.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\core.module.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\bicycling-layer.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\circle.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\data-layer.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\fit-bounds.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\info-window.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\kml-layer.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\map.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\marker.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\polygon.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\polyline-icon.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\polyline-point.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\polyline.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\rectangle.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\directives\transit-layer.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\index.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\map-types.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\fit-bounds.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\geocoder-service.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\google-maps-api-wrapper.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\google-maps-types.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\circle-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\data-layer-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\info-window-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\kml-layer-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\layer-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\marker-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\polygon-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\polyline-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\managers\rectangle-manager.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\maps-api-loader\lazy-maps-api-loader.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\maps-api-loader\maps-api-loader.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\services\maps-api-loader\noop-maps-api-loader.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\utils\browser-globals.d.ts" />
+    <TypeScriptCompile Include="ClientApp\node_modules\%40agm\core\utils\mvcarray-utils.d.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\node_modules\protractor\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

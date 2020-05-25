@@ -19,8 +19,6 @@ const tbl_GPSCoordinates = new mongoose.Schema({
     fld_Lattitude: {
         type: Number,
         required: true,
-        unique: true,
-        index: true,
         validate(value){
             if(value == "") throw new Erros("Lattitude be entered");
         }
@@ -35,5 +33,5 @@ const tbl_GPSCoordinates = new mongoose.Schema({
     },
   });
 
-const EventCoordinators = mongoose.model("tbl_eventCoordinators", tbl_GPSCoordinates);
-module.exports = EventCoordinators;
+const GPSCoordinates = mongoose.model("tbl_GPSCoordinates", tbl_GPSCoordinates);
+module.exports = GPSCoordinates;

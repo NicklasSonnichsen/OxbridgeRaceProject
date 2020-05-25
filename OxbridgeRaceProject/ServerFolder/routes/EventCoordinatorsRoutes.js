@@ -4,7 +4,7 @@ const app = express();
 
 // AUTHENTICATION
 
-var auth = false;
+//var auth = false;
 
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
@@ -20,11 +20,14 @@ app.get('/eventcoordinator', async (req, res) => {
     //Requires a token to view everything
     var token = req.headers['x-access-token'];
     if(!token){
+      console.log("no token provided");
       return res-status(401).send({auth: false, message: 'No token provided.'});
     }
 
+
     jwt.verify(token, config.secret, function(err, decoded) {
       if (err) {
+        console.log("token not authenticated");
         return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
       }
     })
@@ -77,10 +80,11 @@ app.post('/eventcoordinator', async (req, res) => {
    */
   app.post('/login', async (req, res) => {
     var promise = new Promise(function(resolve, reject){
-      try {
-        const tbl_EventCoordinator = EventCoordinatorModel.findOne({ fld_Email: req.body.fld_Email }, function (err, user) {
+      const tbl_EventCoordinator = EventCoordinatorModel.findOne({ fld_Email: req.body.fld_Email }, function (err, user) {
+     
         
-          //Check for errors before decryption of the password
+        
+        //Check for errors before decryption of the password
         if (err) {
           res.status(500).send('Error on the server.');
           console.log(err);
@@ -96,46 +100,37 @@ app.post('/eventcoordinator', async (req, res) => {
         var storedpsw = JSON.stringify(user.fld_Password);
 
         //bcrypt should then decrypt the hashed password from the server
-        var passwordIsValid = bcrypt.compare(enteredpsw, storedpsw);
+        
         
         console.log(enteredpsw);
         console.log(storedpsw);
+        const passwordIsValid = pswAsync(enteredpsw, storedpsw)
+        console.log(passwordIsValid);
 
-        if (passwordIsValid) {
-            
-          //when the event coordinator successfully logs in, then the event coordinator gets a token
-          var validToken = jwt.sign({ fld_Email: user.fld_Email }, config.secret, {
-          expiresIn: 86400 // expires in 24 hours
-          });
-          console.log(passwordIsValid);
-          
-          resolve("password is valid and token should be signed???");
-        }else if (!passwordIsValid) {
-          
-          console.log("password is not valid")
-          reject(Error("Password is not valid"))
-          return res.status(401).send({ auth: false, token: null });
-        }else  {
-          reject(Error("It broke"));
-        }
-
-        promise.then(function(result) {
-          res.status(200).send({auth: true, token: validToken});
-          console.log(result); // "Stuff worked!"
-        }, function(err) {
-          console.log(err); // Error: "It broke"
-        });
-
-      });
-
-
-        
-      } catch (error) {
-        res.status(500).send(err);
-      }
-
-    })  
-    
+        if(passwordIsValid == true) {
+          console.log("password is valid");
+          promise.then(function(result) {
+  
+              console.log("test");
+  
+              //when the event coordinator successfully logs in, then the event coordinator gets a token
+              var validToken = jwt.sign({ fld_Email: user.fld_Email }, config.secret, {
+              expiresIn: 86400 // expires in 24 hours
+              
+              });
+              
+              res.status(200).send({auth: true, token: validToken});
+              console.log("result"); // "Stuff worked!"
+              resolve("result");
+           
+          })
+        }else(function(err) {
+          reject(err);
+              res.status(500).send({auth: true, token: null});
+              console.log(err); // Error: "It broke"
+        })  
+      }) 
+    }) 
   })
 
   app.get('/logout', async (req, res) => {
@@ -173,5 +168,14 @@ app.post('/eventcoordinator', async (req, res) => {
       res.status(500).send(err)
     }
   })
+
+
+  async function pswAsync(psw, dbpsw){
+    console.log("calling pswAsync");
+    var promise = new Promise
+    const boolResult = await bcrypt.compare(psw, dbpsw);
+    return boolResult;
+  }
+
 
 module.exports = app

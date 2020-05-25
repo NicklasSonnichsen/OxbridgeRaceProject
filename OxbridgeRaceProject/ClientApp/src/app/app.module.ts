@@ -13,6 +13,7 @@ import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
 import { SignUpAdminComponent } from './sign-up-admin/sign-up-admin.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 
 
@@ -25,7 +26,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     FetchDataComponent,
     MapComponent,
     SignUpAdminComponent,
-    SignUpComponent
+    SignUpComponent,
+    AdminLoginComponent
     
   ],
   imports: [
@@ -38,6 +40,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'map', component: MapComponent },
       { path: 'sign-up', component: SignUpComponent },
+      { path: 'admin-login', component: AdminLoginComponent},
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCnnppP8trPwzu-5dOv6KUoW6np4nExUOg'

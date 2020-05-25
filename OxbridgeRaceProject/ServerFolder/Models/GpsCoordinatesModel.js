@@ -18,18 +18,12 @@ const tbl_GPSCoordinates = new mongoose.Schema({
       },
     fld_Lattitude: {
         type: Number,
-        required: true,
-        validate(value){
-            if(value == "") throw new Erros("Lattitude be entered");
-        }
+        required: true
     },
 
     fld_Longitude: {
         type: Number,
-        required: true,
-        validate(value){
-            if(value == "") throw new Erros("Longitude must be entered");
-        }
+        required: true
     },
   });
 

@@ -18,8 +18,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ServerFolder\node_modules\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ServerFolder\node_modules\**" />
+    <EmbeddedResource Remove="ServerFolder\node_modules\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ServerFolder\node_modules\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 

@@ -8,7 +8,11 @@ import { Component } from '@angular/core';
 export class MapComponent{
   latitude = 54.90926;
   longitude = 9.80737;
-  constructor() { }
+
+  onChooseLocation(event)
+  {
+    console.log(event);
+  }
 
 
 

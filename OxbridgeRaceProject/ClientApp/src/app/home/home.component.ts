@@ -19,7 +19,7 @@ export class HomeComponent {
 
   //Call to test our node.js Server
   SeeAll(){
-    this.http.get<Administrators[]>('http://localhost:3000/eventhandler').subscribe((res)=> {
+    this.http.get<Administrators[]>('http://localhost:3000/gps').subscribe((res)=> {
       console.log(res)
     });
   }

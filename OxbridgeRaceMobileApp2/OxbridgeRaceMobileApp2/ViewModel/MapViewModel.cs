@@ -1,8 +1,11 @@
-﻿using OxbridgeRaceMobileApp2.View;
+﻿using Newtonsoft.Json;
+using OxbridgeRaceMobileApp2.Model;
+using OxbridgeRaceMobileApp2.View;
 using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,6 +16,8 @@ namespace OxbridgeRaceMobileApp2.ViewModel
 {
    public class MapViewModel : BaseViewModel
     {
+        private HttpClient client = new HttpClient();
+        private const string URL = "http://localhost:3000/gps";
         public MapViewModel()
         {
             Map = new Map();
@@ -56,6 +61,10 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 //};
 
                 //Map.Pins.Add(pin);
+
+                var post = new GPSLocation { CrewName = "testCrew", Date = DateTime.Now, Lattitude = position.Latitude, Longitude = position.Longitude };
+                var content = JsonConvert.SerializeObject(post);
+                await client.PostAsync(URL, new StringContent(content));
 
                 pinNew.Position=new Position(position.Latitude, position.Longitude);
 

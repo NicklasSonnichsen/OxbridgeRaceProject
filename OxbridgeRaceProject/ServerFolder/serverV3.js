@@ -9,6 +9,7 @@ const raceRouter = require('./routes/RaceRoutes.js');
 const raceCategoryRouter = require('./routes/RaceCategoryRoutes.js');
 const EventCoordinatorsRoutes = require('./routes/EventCoordinatorsRoutes.js');
 const GpsCoordinatesRouter = require('./routes/GPSRoutes.js')
+const AdminRoutes = require('./routes/AdminRoutes.js')
 
 //Cross-Origin-Resource-Sharing
 const cors = require('cors');
@@ -41,6 +42,7 @@ app.use(raceRouter);
 app.use(raceCategoryRouter);
 app.use(EventCoordinatorsRoutes);
 app.use(GpsCoordinatesRouter);
+app.use(AdminRoutes);
 
 //listens to localhost:3000 for CRUD operations
 app.listen(3000, () => { console.log('Server is running...') });

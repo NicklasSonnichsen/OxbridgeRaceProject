@@ -20,6 +20,16 @@ export class SignUpAdminComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log("Submit virker")
+    console.log("FirstNAme er dette: " + this.model.firstName)
+    this.http.post<Administrators>('http://localhost:3000/admin', {
+      "fld_AdminName": this.model.firstName,
+      "fld_AdminLastName": this.model.lastName,
+      "fld_Email": this.model.email,
+      "fld_Password": this.model.password
+    }).subscribe({
+      next: data => this.model = data,  
+      error: error => console.error('There was an error!', error)
+    })
   }
 
 

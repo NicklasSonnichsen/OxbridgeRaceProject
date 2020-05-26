@@ -1,6 +1,6 @@
 <body>
   <p>Map is working </p>
   <agm-map [latitude]="latitude" [longitude]="longitude" (click)="onChooseLocation($event)">
-    
+    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
   </agm-map>
 </body>

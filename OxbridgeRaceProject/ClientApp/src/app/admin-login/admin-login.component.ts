@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Administrators } from '../models/administrators';
+import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-login',
@@ -7,9 +11,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLoginComponent implements OnInit {
 
-  constructor() { }
+  public model: Administrators;
+  public loginEmail = "";
+  public loginPassword = "";
 
-  ngOnInit() {
+  public LoginFormGroup = new FormGroup({});
+
+  /**
+   *
+   */
+  constructor(private http: HttpClient) {
+
+    this.model = new Administrators("","",this.loginEmail,this.loginPassword)
   }
 
+  ngOnInit(): void {
+    
+  }
+
+  //login to backend
+  Login(admin: Administrators): Observable<Administrators> {
+    return this.http.post<Administrators>('http://localhost:3000/login', Administrators)
+    .pipe();
+  };
 }

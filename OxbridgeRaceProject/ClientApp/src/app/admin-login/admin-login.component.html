@@ -1,18 +1,26 @@
-<p>admin-login works!</p>
 <div class="container">
     <h1>Login</h1>
-    <form>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" required>
+    <form formGroupName="LoginFormGroup">
+      <div>
+        <label>Email</label>
+        <input type="text" [id]="loginEmail">
+        <!-- <input type="text" class="form-control" id="fld_Email"
+        [(ngModel)]="model.fld_Email" name="fld_Email"
+        #fld_Email="ngModel"> -->
       </div>
 
-      <div class="form-group">
-        <label for="password">password</label>
-        <input type="password" class="form-control" id="password">
+      <div>
+        <label>Password</label>
+        <input type="password" value={{loginPassword}}>
+        <!-- <input type="password" class="form-control" id="fld_Password"
+        [(ngModel)]="model.fld_Password" name="fld_Password"
+        #fld_Password="ngModel"> -->
+        <div>
+          <a>testd</a>
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="button" class="btn btn-success" (click)="Login()"> Login </button>
 
     </form>
 </div>

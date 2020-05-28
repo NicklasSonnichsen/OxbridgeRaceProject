@@ -6,10 +6,11 @@ namespace OxbridgeRaceMobileApp2.Model
 {
     public class GPSLocation
     {
-        public double Lattitude { get; set; }
-        public double Longitude { get; set; }
-        public string CrewName { get; set; }
-        public DateTime Date { get; set; }
+      
+        public string fld_CrewName { get; set; }
+        public string fld_Date { get; set; }
+        public double fld_Lattitude { get; set; }
+        public double fld_Longitude { get; set; }
 
     }
 }

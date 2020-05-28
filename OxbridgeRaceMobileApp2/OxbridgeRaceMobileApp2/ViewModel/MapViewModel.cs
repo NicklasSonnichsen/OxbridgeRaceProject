@@ -11,20 +11,22 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
+using Android.Content;
 
 namespace OxbridgeRaceMobileApp2.ViewModel
 {
    public class MapViewModel : BaseViewModel
     {
         private HttpClient client = new HttpClient();
-        private const string URL = "http://localhost:3000/gps";
+        private const string URL = @"http://192.168.87.131:3000/gps";
+      
         public MapViewModel()
         {
             Map = new Map();
-
-            
+            client = new HttpClient();
             GetCurrentLocation();
 
+            
             //PositionChanged();
         }
 
@@ -45,7 +47,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
             Map.Pins.Add(pinNew);
             while (IsRunning)
             {
-                Console.WriteLine("Det vireker");
+              
                 var locator = CrossGeolocator.Current;
                 locator.DesiredAccuracy = 0.1;
                 // sets position to the current location
@@ -54,20 +56,34 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 Map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude),
                                                              Distance.FromKilometers(0.05)));
 
-                //var pin = new Pin()
-                //{
-                //    Position = new Position(position.Latitude, position.Longitude),
-                //    Label = "Current Location"
-                //};
+                pinNew.Position = new Position(position.Latitude, position.Longitude);
 
-                //Map.Pins.Add(pin);
-
-                var post = new GPSLocation { CrewName = "testCrew", Date = DateTime.Now, Lattitude = position.Latitude, Longitude = position.Longitude };
-                var content = JsonConvert.SerializeObject(post);
-                await client.PostAsync(URL, new StringContent(content));
-
-                pinNew.Position=new Position(position.Latitude, position.Longitude);
-
+                try
+                {
+                    string currentTime = DateTime.Now.ToString();
+                    
+                    var post = new GPSLocation { fld_CrewName = "testHold2", fld_Date = "2020-05-28", fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
+                    var requestString = JsonConvert.SerializeObject(post);
+                    //var content = new StringContent(requestString, Encoding.UTF8, "application/json");
+                    var content = new StringContent(requestString, Encoding.UTF8, "application/json");
+                    Console.WriteLine("THIS IS CONTENT:  "+content);
+                    var response =  await client.PostAsync(URL,content);
+                    Console.WriteLine("THE JSON STRING:   " + requestString);
+                    //var getResponse = await  client.GetAsync(URL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("Gps info was send to DB");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Something went wrong");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error with sending to server:  "+e.Message);
+                    
+                }           
                 await Task.Delay(1000);
             }
                         

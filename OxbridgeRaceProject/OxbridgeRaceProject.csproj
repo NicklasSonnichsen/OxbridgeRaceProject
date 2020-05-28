@@ -18,11 +18,15 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\NewFolder\**" />
     <Compile Remove="ServerFolder\node_modules\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\NewFolder\**" />
     <Content Remove="ServerFolder\node_modules\**" />
+    <EmbeddedResource Remove="ClientApp\NewFolder\**" />
     <EmbeddedResource Remove="ServerFolder\node_modules\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\NewFolder\**" />
     <None Remove="ServerFolder\node_modules\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
@@ -163,7 +167,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\NewFolder\" />
     <Folder Include="ClientApp\node_modules\protractor\" />
   </ItemGroup>
 

@@ -10,7 +10,7 @@ const tbl_GPSCoordinates = new mongoose.Schema({
       }
     },
     fld_Date: {
-        type: Date,
+        type: String,
         required: true,
         validate(value) {
           if (value == "") throw new Error("No Date entered");

@@ -12,26 +12,31 @@ import { Observable } from 'rxjs';
 export class AdminLoginComponent implements OnInit {
 
   public model: Administrators;
-  public loginEmail = "";
-  public loginPassword = "";
-
-  public LoginFormGroup = new FormGroup({});
-
   /**
    *
    */
   constructor(private http: HttpClient) {
-
-    this.model = new Administrators("","",this.loginEmail,this.loginPassword)
+    this.model = new Administrators('', '', '', '');
   }
 
   ngOnInit(): void {
     
   }
 
+  submitted = false;
   //login to backend
-  Login(admin: Administrators): Observable<Administrators> {
-    return this.http.post<Administrators>('http://localhost:3000/login', Administrators)
-    .pipe();
-  };
+  Login(){
+  this.submitted = true;
+    console.log("Submit virker")
+    console.log("Email = " + this.model.fld_Email)
+    this.http.post<Administrators>('http://localhost:3000/login', {
+      "fld_Email": this.model.fld_Email,
+      "fld_Password": this.model.fld_Password
+    }).subscribe({
+      next: data => this.model = data,  
+      error: error => console.error('There was an error!', error)
+    })
+    this.model.fld_Email = "";
+    this.model.fld_Password = "";
+  }
 }

@@ -11,6 +11,8 @@ var bcrypt = require('bcryptjs');
 var config = require('../config/config');
 
 const salt = bcrypt.genSalt(10);
+
+
 app.get('/eventcoordinator', async (req, res, next) => {
   const tbl_EventCoordinator = await EventCoordinatorModel.find({});
     // Uncomment when login is working...
@@ -19,14 +21,18 @@ app.get('/eventcoordinator', async (req, res, next) => {
     var authHeader = req.headers.authorization;
 
     if (authHeader) {
+      
       const token = authHeader.split(' ')[1];
-
+      console.log(token);
+      JSON.stringify(token);
       jwt.verify(token, config.secret, (err, user) =>{
         if(err){
           console.log("Error with token " + err);
           return res.sendStatus(403);
         }
         req.user = user;
+        console.log("token success");
+        res.status(200).send(tbl_EventCoordinator);
         next();
       })
     } else {
@@ -40,6 +46,24 @@ app.get('/eventcoordinator/:fld_Email', async (req, res) => {
   //Should search for the specified event handler by email
   const tbl_EventCoordinator = await EventCoordinatorModel.find({ fld_Email: req.params.fld_Email});
   try {
+    var authHeader = req.headers.authorization;
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      console.log(token);
+      JSON.stringify(token);
+      jwt.verify(token, config.secret, (err, user) =>{
+        if(err){
+          console.log("Error with token " + err);
+          return res.sendStatus(403);
+        }
+        req.user = user;
+        console.log("token success");
+        res.status(200).send(tbl_EventCoordinator);
+        next();
+      })
+    } else {
+      res.sendStatus(401);
+    }
 
 
     res.send(tbl_EventCoordinator);
@@ -51,29 +75,44 @@ app.get('/eventcoordinator/:fld_Email', async (req, res) => {
 
 
 app.post('/eventcoordinator', async (req, res) => {
-    const tbl_EventCoordinator = new EventCoordinatorModel(req.body);
 
-    try {  
-      const hashedPassword = await bcrypt.hash(req.body.fld_Password, salt);
-      tbl_EventCoordinator.fld_Password = hashedPassword;
+  const tbl_EventCoordinator = new EventCoordinatorModel(req.body);
 
-      await tbl_EventCoordinator.save(function (err) {
-        if (err) {
-          return res.status(500).send("There was a problem registrating the user.")
+  try {
+    console.log(tbl_EventCoordinator.fld_Password);
+    var testpsw = JSON.stringify(tbl_EventCoordinator.fld_Password)
+    console.log(testpsw);
+    var passwordToString = JSON.stringify(req.body.fld_Password);
+    const hashedPassword = await bcrypt.hash(testpsw, 10);
+    tbl_EventCoordinator.fld_Password = hashedPassword;
+  } catch (error) {
+    console.log("Error with hashing: " + error);
+  }
+
+  var authHeader = req.headers.authorization;
+    if (authHeader) {
+      var token = authHeader.split(' ')[1];
+
+      jwt.verify(token, config.secret, (err, user) =>{
+        if(err){
+          console.log("Error with token " + err);
+          return res.sendStatus(403);
         }
-        var validToken = jwt.sign({fld_Email: tbl_EventCoordinator.fld_Email}, config.secret,{
-          expiresIn: 86400 // expires in 24 hours
-        });
-        res.json({
-          validToken
-        });
-        req.headers['x-access-token'].replace();
-      })
-      res.status(200).send({auth: true, token: validToken});
-    } catch (err) {
-      res.status(500).send(err);
-    }
-  });
+        console.log("Token confirmed");
+      })        
+          
+      
+
+      tbl_EventCoordinator.save();
+      res.status(200).send(tbl_EventCoordinator); 
+
+      console.log("res.status(200) send");
+                   
+  } else {
+    console.log("No Token/Header")
+  }
+})
+
 
   /**
    * handles login for the event Coordinators
@@ -82,28 +121,20 @@ app.post('/eventcoordinator', async (req, res) => {
   app.post('/login', async (req, res) => {
     const tbl_EventCoordinator = await EventCoordinatorModel.findOne({fld_Email: req.body.fld_Email})
     try {
-      var enteredpsw = JSON.stringify(req.body.fld_Password);
-      var storedpsw = JSON.stringify(tbl_EventCoordinator.fld_Password);
-      console.log(enteredpsw);
-      console.log(storedpsw);
 
       var passwordIsValid = bcrypt.compare(req.body.fld_Password, tbl_EventCoordinator.fld_Password, (error, success) =>{
         if (success) {
-          var validToken = jwt.sign({id: tbl_EventCoordinator.fld_Email}, config.secret,{
+          var validToken = jwt.sign({tbl_EventCoordinator}, config.secret,{
             expiresIn: 86400
           })
-          res.status(200).send({auth: true, token: validToken});
+          res.send(tbl_EventCoordinator);
         } else {
           res.status(500).send(error);
         }
       });
-      
-
     } catch (error) {
       console.log(error)
     }
-    
-  
   })
 
   // router.route('/logout')
@@ -113,6 +144,28 @@ app.post('/eventcoordinator', async (req, res) => {
 
   app.delete('/eventcoordinator/:fld_Email', async (req, res) => {
     try {
+
+      var authHeader = req.headers.authorization;
+
+    if (authHeader) {
+      
+      const token = authHeader.split(' ')[1];
+      console.log(token);
+      JSON.stringify(token);
+      jwt.verify(token, config.secret, (err, user) =>{
+        if(err){
+          console.log("Error with token " + err);
+          return res.sendStatus(403);
+        }
+        req.user = user;
+        console.log("token success");
+        res.status(200).send(tbl_EventCoordinator);
+        next();
+      })
+    } else {
+      res.sendStatus(401);
+    }
+
       const tbl_EventCoordinator = await EventCoordinatorModel.deleteOne({fld_Email: req.params.fld_Email})
   
       if (!tbl_EventCoordinator) res.status(404).send("No item found")
@@ -124,20 +177,41 @@ app.post('/eventcoordinator', async (req, res) => {
 
   app.patch('/eventcoordinator/:fld_Email', async (req, res) => {
     try {
-      await EventCoordinatorModel.updateOne({fld_Email: fld_Email}, req.body)
-      await EventCoordinatorModel.save()
-      res.send(tbl_EventCoordinator)
-    } catch (err) {
-      res.status(500).send(err)
-    }
-  })
+      var authHeader = req.headers.authorization;
+
+      if (authHeader) {
+      
+        const token = authHeader.split(' ')[1];
+        JSON.stringify(token);
+        jwt.verify(token, config.secret, (err, user) =>{
+          if(err){
+            console.log("Error with token " + err);
+            
+            var validToken = jwt.sign({tbl_EventCoordinator}, config.secret, {
+              expiresIn: 86400
+            })
+            console.log("Giving new token");
+        }
+        
+        req.user = user;
+        var tbl_EventCoordinator = EventCoordinatorModel.updateOne({fld_Email: fld_Email}, req.body)
+        tbl_EventCoordinator.save();
+        res.status(200).send(tbl_EventCoordinator + " Success");
+        
+        console.log("token success");
+        next();
+        })
+      } else {
+        res.sendStatus(401);
+      }
 
 
-  // async function pswAsync(psw, dbpsw){
-  //   console.log("calling pswAsync");
-    
-  // return promise;
-  // }
-
+      //const tbl_EventCoordinator = await EventCoordinatorModel.updateOne();
+      //tbl_EventCoordinator.save();
+      //res.status(200).send(tbl_EventCoordinator);
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    })
 
 module.exports = app

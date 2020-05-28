@@ -163,6 +163,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\NewFolder\" />
     <Folder Include="ClientApp\node_modules\protractor\" />
   </ItemGroup>
 

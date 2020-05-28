@@ -3,19 +3,19 @@
   <form>
     <!--FirstName input-->
     <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input type="text" class="form-control" id="firstName" required minlength="2" pattern="^([A-Z])[a-z]*"
-             [(ngModel)]="model.firstName" name="firstName"
+      <label for="fld_FirstName">First Name</label>
+      <input type="text" class="form-control" id="fld_FirstName" required minlength="2" pattern="^([A-Z])[a-z]*"
+             [(ngModel)]="model.fld_FirstName" name="fld_FirstName"
              #spy
-             #name="ngModel" />
-      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-        <div *ngIf="name.errors.required">
+             #fld_FirstName="ngModel" />
+      <div *ngIf="fld_FirstName.invalid && (fld_FirstName.dirty || fld_FirstName.touched)" class="alert alert-danger">
+        <div *ngIf="fld_FirstName.errors.required">
           First Name is required
         </div>
-        <div *ngIf="name.errors.minlength">
+        <div *ngIf="fld_FirstName.errors.minlength">
           First Name must be atleast 2 characters long
         </div>
-        <div *ngIf="name.errors.pattern">
+        <div *ngIf="fld_FirstName.errors.pattern">
           First Name must begin with capital letter and all other letters must be lower
 
         </div>
@@ -23,15 +23,15 @@
     </div>
     <!--lastName input -->
     <div class="form-group">
-      <label for="lastName">Lastname</label>
-      <input type="text" class="form-control" id="lastName" required minlength="2"
-             [(ngModel)]="model.lastName" name="lastName"
-             #lastname="ngModel">
-      <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="alert alert-danger">
-        <div *ngIf="lastname.errors.required">
+      <label for="fld_LastName">Last name</label>
+      <input type="text" class="form-control" id="fld_LastName" required minlength="2"
+             [(ngModel)]="model.fld_LastName" name="fld_LastName"
+             #fld_LastName="ngModel">
+      <div *ngIf="fld_LastName.invalid && (fld_LastName.dirty || fld_LastName.touched)" class="alert alert-danger">
+        <div *ngIf="fld_LastName.errors.required">
           Last Name is required
         </div>
-        <div *ngIf="lastname.errors.minlength">
+        <div *ngIf="fld_LastName.errors.minlength">
           Last Name must be atleast 2 characters long
         </div>
 
@@ -40,15 +40,15 @@
     </div>
     <!--Email input -->
     <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="text" class="form-control" id="email" required minlength="2"
-             [(ngModel)]="model.email" name="email"
-             #email="ngModel">
-      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-        <div *ngIf="email.errors.required">
+      <label for="fld_Email">E-mail</label>
+      <input type="text" class="form-control" id="fld_Email" required minlength="2"
+             [(ngModel)]="model.fld_Email" name="fld_Email"
+             #fld_Email="ngModel">
+      <div *ngIf="fld_Email.invalid && (fld_Email.dirty || fld_Email.touched)" class="alert alert-danger">
+        <div *ngIf="fld_Email.errors.required">
           Email is required
         </div>
-        <div *ngIf="lastname.errors.minlength">
+        <div *ngIf="fld_LastName.errors.minlength">
           Email must be atleast 2 characters long
         </div>
 
@@ -58,15 +58,15 @@
 
     <!--Password input -->
     <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" required minlength="2"
-             [(ngModel)]="model.password" name="password"
-             #password="ngModel">
-      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
-        <div *ngIf="password.errors.required">
+      <label for="fld_Password">Password</label>
+      <input type="password" class="form-control" id="fld_Password" required minlength="2"
+             [(ngModel)]="model.fld_Password" name="fld_Password"
+             #fld_Password="ngModel">
+      <div *ngIf="fld_Password.invalid && (fld_Password.dirty || fld_Password.touched)" class="alert alert-danger">
+        <div *ngIf="fld_Password.errors.required">
           Password is required
         </div>
-        <div *ngIf="password.errors.minlength">
+        <div *ngIf="fld_Password.errors.minlength">
           Password must be atleast 2 characters long
         </div>
 

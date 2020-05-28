@@ -20,7 +20,7 @@ export class SignUpAdminComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log("Submit virker")
-    console.log("FirstNAme er dette: " + this.model.fld_FirstName)
+    console.log("First name = " + this.model.fld_FirstName)
     this.http.post<Administrators>('http://localhost:3000/eventcoordinator', {
       "fld_AdminName": this.model.fld_FirstName,
       "fld_AdminLastName": this.model.fld_LastName,

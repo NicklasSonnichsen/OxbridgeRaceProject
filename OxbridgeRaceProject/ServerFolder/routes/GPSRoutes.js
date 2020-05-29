@@ -32,6 +32,17 @@ app.get('/gps/:fld_CrewName', async (req, res) => {
     }
 });
 
+app.get('/gps/:fld_Date', async (req, res) => {
+
+    //Should search for the specified date by  date 
+    const tbl_Gps = await GPSCoordinatesModel.find({ fld_Date: req.params.fld_Date });
+    try {
+        res.send(tbl_Gps);
+        console.log(res.fld_Date);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
 
 app.post('/gps', async (req, res) => {
     const tbl_Gps = new GPSCoordinatesModel(req.body);   

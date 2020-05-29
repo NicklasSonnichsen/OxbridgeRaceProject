@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GpsLocation } from '../models/gps-location';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -12,6 +13,8 @@ export class MapComponent{
   longitude = 9.80737;
   pinLattitude;
   pinLongitude;
+  gpsLocation = new Observable;
+  
 
   public model: GpsLocation;
   constructor(private http: HttpClient) {
@@ -28,6 +31,13 @@ export class MapComponent{
     console.log(event);
   }
 
+  OnStart()
+  {
+    console.log("GET Button has been pressed")
+    this.gpsLocation = this.http.get<GpsLocation[]>('http://localhost:3000/gps');
+
+    console.log("THIS IS THE LIST"+this.gpsLocation);
+  }
 
 
 }

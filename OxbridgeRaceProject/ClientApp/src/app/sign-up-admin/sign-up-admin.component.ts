@@ -22,8 +22,8 @@ export class SignUpAdminComponent implements OnInit {
     console.log("Submit virker")
     console.log("First name = " + this.model.fld_FirstName)
     this.http.post<Administrators>('http://localhost:3000/eventcoordinator', {
-      "fld_AdminName": this.model.fld_FirstName,
-      "fld_AdminLastName": this.model.fld_LastName,
+      "fld_FirstName": this.model.fld_FirstName,
+      "fld_LastName": this.model.fld_LastName,
       "fld_Email": this.model.fld_Email,
       "fld_Password": this.model.fld_Password
     }).subscribe({

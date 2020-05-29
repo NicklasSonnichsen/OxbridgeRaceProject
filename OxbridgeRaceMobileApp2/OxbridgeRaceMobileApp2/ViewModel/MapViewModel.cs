@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿
+using Newtonsoft.Json;
 using OxbridgeRaceMobileApp2.Model;
 using OxbridgeRaceMobileApp2.View;
 using Plugin.Geolocator;
@@ -15,18 +16,19 @@ using Android.Content;
 
 namespace OxbridgeRaceMobileApp2.ViewModel
 {
-   public class MapViewModel : BaseViewModel
+    public class MapViewModel : BaseViewModel
     {
         private HttpClient client = new HttpClient();
-        private const string URL = @"http://192.168.87.131:3000/gps";
-      
+        private const string NicklasURL = @"http://192.168.87.131:3000/gps";
+        private const string PhoneUrl = @"http://192.168.43.161:3000/gps";
+
         public MapViewModel()
         {
             Map = new Map();
             client = new HttpClient();
             GetCurrentLocation();
 
-            
+
             //PositionChanged();
         }
 
@@ -38,16 +40,16 @@ namespace OxbridgeRaceMobileApp2.ViewModel
             set { isRunning = value; }
         }
 
-        public Pin pinNew = new Pin{ Label="Current Location" };
+        public Pin pinNew = new Pin { Label = "Current Location" };
 
         public Map Map { get; private set; }
-        
+
         private async void GetCurrentLocation()
-        {   
+        {
             Map.Pins.Add(pinNew);
             while (IsRunning)
             {
-              
+
                 var locator = CrossGeolocator.Current;
                 locator.DesiredAccuracy = 0.1;
                 // sets position to the current location
@@ -55,39 +57,43 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 // moving the map to 
                 Map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude),
                                                              Distance.FromKilometers(0.05)));
-
+                // updating and setting pins location
                 pinNew.Position = new Position(position.Latitude, position.Longitude);
 
                 try
                 {
+                    // getting current time 
                     string currentTime = DateTime.Now.ToString();
-                    
-                    var post = new GPSLocation { fld_CrewName = "testHold2", fld_Date = "2020-05-28", fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
+                    // creating object that is posted to MongoDb 
+                    var post = new GPSLocation { fld_CrewName = "testHold2", fld_Date = currentTime, fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
+                    // converting the object to json 
                     var requestString = JsonConvert.SerializeObject(post);
-                    //var content = new StringContent(requestString, Encoding.UTF8, "application/json");
+                    // making it content
                     var content = new StringContent(requestString, Encoding.UTF8, "application/json");
-                    Console.WriteLine("THIS IS CONTENT:  "+content);
-                    var response =  await client.PostAsync(URL,content);
-                    Console.WriteLine("THE JSON STRING:   " + requestString);
-                    //var getResponse = await  client.GetAsync(URL);
+                    // posting 
+                    var response = await client.PostAsync(PhoneUrl, content);
+                    // to see what could be wrong 
+                    var result = response.Content.ReadAsStringAsync().Result;
                     if (response.IsSuccessStatusCode)
                     {
                         Console.WriteLine("Gps info was send to DB");
+                        Console.WriteLine("Succesfull RESULT" + result);
                     }
                     else
                     {
                         Console.WriteLine("Something went wrong");
+                        Console.WriteLine("Failed RESULT:  " + result);
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error with sending to server:  "+e.Message);
-                    
-                }           
+                    Console.WriteLine("Error with sending to server:  " + e.Message);
+
+                }
                 await Task.Delay(1000);
             }
-                        
-         }
+
+        }
 
         public ICommand SimpleLogOut => new Command(async () => {
 
@@ -98,6 +104,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
 
         });
 
-       
+
     }
 }
+

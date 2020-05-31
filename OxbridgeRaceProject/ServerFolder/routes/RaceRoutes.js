@@ -1,64 +1,109 @@
 const express = require('express');
 const RaceModel = require('../Models/RaceModel.js');
+const cookieparser = require('cookie-parser');
 const app = express();
+app.use(cookieparser());
 
-
-//gets all entries in the tbl_races in mongodb
-app.get('/race', async (req, res) => {
-  const tbl_RaceCategory = await RaceModel.find({});
-
-  try {
-    res.send(tbl_RaceCategory);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-//Should search for the specified race by city (will be changed )
-app.get('/race/:fld_Zipcode', async (req, res) => {
-
-  const tbl_Race = await RaceModel.find({ fld_Zipcode: req.params.fld_Zipcode});
-  try {
-    res.send(tbl_Race);
-    console.log(res.fld_Zipcode);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-//post new race to the database
-app.post('/race', async (req, res) => {
-    const tbl_Race = new RaceModel(req.body);
-  
+  /**
+   * Gets every collection in the database table
+   */
+  app.get('/race', async (req, res) => {
     try {
-      await tbl_Race.save();
-      res.send(tbl_Race);
-    } catch (err) {
-      res.status(500).send(err);
+      var user = req.cookies['user'];
+      if (user) {
+        const tbl_Race = await RaceModel.find({});
+        res.status(200).send({tbl_Race});
+      } else {
+        res.status(400).send("No cookie found")
+      }
+    } catch (error) {
+      res.status(500).send(error)
     }
   });
-
-  //delete from searched zipcode
-  app.delete('/race/:fld_Zipcode', async (req, res) => {
-    try {
-      const tbl_Race = await RaceModel.deleteOne({fld_Zipcode: req.params.fld_Zipcode})
   
-      if (!tbl_Race) res.status(404).send("No item found")
-      res.status(200).send()
-    } catch (err) {
-      res.status(500).send(err)
+  /**
+   * Finds the specified entry in the database
+   */
+  app.get('/race/:fld_Zipcode', async (req, res) => {
+  
+    //Should search for the specified event coordinator by email
+    try {
+      var user = req.cookies['user'];
+      if (user) {
+        const tbl_Race = await RaceModel.findOne({ fld_Zipcode: req.params.fld_Zipcode});
+        res.status(200).send({tbl_Race});
+        } else {
+        res.status(400).send("No cookie found")
+        }
+      } catch (err) {
+        res.status(500).send(err);
+      }
+    });
+  
+  /**
+   * Creates a new entry in the database
+   */
+  app.post('/race', async (req, res) => {
+  
+    const tbl_Race = new RaceModel(req.body);
+    try {
+      var user = req.cookies['user'];
+      if (user) {
+        tbl_Race.save();
+        res.status(201).json({message: "race has been created", tbl_Race});
+      } else {
+        res.status(400).send("No cookie found")
+      }
+    } catch (error) {
+      console.log(error);
     }
   })
-
-  //patch from searched zipcode, JSON body required
-  app.patch('/race/:fld_Zipcode', async (req, res) => {
-    try {
-        await RaceModel.updateOne({fld_Zipcode: req.params.fld_Zipcode}, req.body)
-        await RaceModel.save()
-        res.send(tbl_Race)
+  
+    /**
+     * Deletes the specified entry in the database
+     */
+    app.delete('/race/:fld_Zipcode', async (req, res) => {
+      
+      try {
+        var user = req.cookies['user'];
+        if (user) {
+          const tbl_Race = await RaceModel.deleteOne({fld_Zipcode: req.params.fld_Zipcode});
+          if (!tbl_Race) {
+            res.status(404).send("No item found")
+          } else{
+            res.status(200).send({tbl_Race})
+          }
+        } else {
+          return res.status(400).send("no cookie found");
+        }
+      } catch (err) {
+          res.status(500).send(err)
+        }
+    })
+  
+    /**
+     * Updates the specified entry in the database
+     */
+    app.patch('/race/:fld_Zipcode', async (req, res) => {
+      try {
+        var user = req.cookies['user'];
+        if (user) {
+          var tbl_Race = await RaceModel.findOne({fld_Zipcode: req.params.fld_Zipcode})
+          
+          if (!tbl_Race) {
+            res.status(404).send("No item found")
+          } else{
+  
+            await tbl_Race.replaceOne(req.body);
+            await tbl_Race.save();
+            return res.status(200).send({tbl_Race});
+          }
+        } else {
+          return res.status(400).send("no cookie found");
+        }
       } catch (err) {
         res.status(500).send(err)
       }
-  })
+    })
 
 module.exports = app

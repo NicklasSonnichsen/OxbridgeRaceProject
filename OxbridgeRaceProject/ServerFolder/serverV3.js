@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const BodyParser = require("body-parser");
+const cors = require('cors');
+
 
 //Defining the routes
 const zipCityRouter = require('./routes/zipCityRoutes.js');
@@ -11,8 +13,6 @@ const EventCoordinatorsRoutes = require('./routes/EventCoordinatorsRoutes.js');
 const GpsCoordinatesRouter = require('./routes/GPSRoutes.js')
 const AdminRoutes = require('./routes/AdminRoutes.js')
 
-//Cross-Origin-Resource-Sharing
-const cors = require('cors');
 
 
 const app = express();

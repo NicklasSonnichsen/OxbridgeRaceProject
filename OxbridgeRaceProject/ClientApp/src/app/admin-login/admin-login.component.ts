@@ -3,6 +3,7 @@ import { Administrators } from '../models/administrators';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-admin-login',
@@ -38,5 +39,25 @@ export class AdminLoginComponent implements OnInit {
     })
     this.model.fld_Email = "";
     this.model.fld_Password = "";
+  }
+
+  TestToken() {
+    this.http.get<Administrators>('http://localhost:3000/eventcoordinator').subscribe();
+
+    for (var i in Administrators) {
+      console.log(i);
+    }
+
+  }
+
+  TestSearchToken(){
+    this.http.get<Administrators>('http://localhost:3000/eventcoordinator/test').subscribe({
+      next: data => this.model = data,
+      error: error => console.log("TestSearchToken error!: ", error)
+    });
+
+    for (var i in Administrators) {
+      console.log(i);
+    }
   }
 }

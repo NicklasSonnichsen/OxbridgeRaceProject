@@ -28,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\CrewForm.spec.ts" />
+    <None Remove="ClientApp\src\app\models\CrewForm.ts" />
     <None Remove="ClientApp\src\file.ts" />
   </ItemGroup>
 
@@ -403,6 +405,10 @@
     <TypeScriptCompile Include="ClientApp\node_modules\protractor\node_modules\webdriver-manager\built\lib\http_utils.d.ts" />
     <TypeScriptCompile Include="ClientApp\node_modules\protractor\node_modules\webdriver-manager\built\lib\utils.d.ts" />
     <TypeScriptCompile Include="ClientApp\node_modules\protractor\node_modules\webdriver-manager\built\lib\webdriver.d.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\CrewForm.spec.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\models\CrewForm.ts" />
     <TypeScriptCompile Include="ClientApp\src\file.ts" />
   </ItemGroup>
 

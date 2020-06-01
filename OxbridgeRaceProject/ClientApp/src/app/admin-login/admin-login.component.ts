@@ -20,12 +20,7 @@ export class AdminLoginComponent implements OnInit {
    */
   
 
-  public httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'cookie': this.model.fld_Email
-    })
-  };
+  
 
   constructor(private http: HttpClient, private cookies: CookieService) {
     this.model = new Administrators('', '', '', '');
@@ -42,11 +37,12 @@ export class AdminLoginComponent implements OnInit {
   this.submitted = true;
     console.log("Submit virker")
     console.log("Email = " + this.model.fld_Email)
-    this.http.post('http://localhost:3000/login', {
+    this.http.post < Administrators>('http://localhost:3000/login', {
       "fld_Email": this.model.fld_Email,
       "fld_Password": this.model.fld_Password,
     }).subscribe((res) => {
       this.cookies.put("user", this.model.fld_Email);
+      console.log(res);
     })
       
     //   {
@@ -54,12 +50,12 @@ export class AdminLoginComponent implements OnInit {
     //   localstorage.setItem()  
     //   error: error => console.error('There was an error with login!', error)
     // })
-    this.model.fld_Email = "";
-    this.model.fld_Password = "";
   }
 
   TestToken() {
-     this.http.get<Administrators>('http://localhost:3000/eventcoordinator').subscribe()  
+    this.http.get<Administrators>('http://localhost:3000/eventcoordinator', { withCredentials: true }).subscribe((res => {
+      console.log(res);
+    }))  
      
   }
      //{
@@ -67,8 +63,8 @@ export class AdminLoginComponent implements OnInit {
   //     error: error => console.log("Test cookie error!: ", error)});
   // }
 
-  TestSearchToken(){
-    this.http.get<Administrators>('http://localhost:3000/eventcoordinator/test')
+  TestSearchToken() {
+    this.http.get<Administrators>('http://localhost:3000/eventcoordinator/test', { withCredentials: true })
       .subscribe({
         next: result => console.log(result),
         error: err => console.log(err)

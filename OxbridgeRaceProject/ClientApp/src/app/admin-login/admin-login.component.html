@@ -4,16 +4,16 @@
       <div>
         <label>Email</label>
         <input type="text" class="form-control" id="fld_Email"
-        [(ngModel)]="model.fld_Email" name="fld_Email"
-        #name="ngModel">
+               [(ngModel)]="model.fld_Email" name="fld_Email"
+               #name="ngModel">
 
       </div>
 
       <div>
         <label>Password</label>
         <input type="password" class="form-control" id="fld_Password"
-        [(ngModel)]="model.fld_Password" name="fld_Password"
-        #name="ngModel">
+               [(ngModel)]="model.fld_Password" name="fld_Password"
+               #name="ngModel">
         <div>
           <a>testd</a>
         </div>
@@ -23,6 +23,8 @@
 
       <button type="button" class="btn btn-success" (click)="TestToken()">Test Token</button>
       <button type="button" class="btn btn-success" (click)="TestSearchToken()">Test Search Token</button>
+      <button type="button" class="btn btn-success" (click)="TestSet()">Test set token</button>
+      <button type="button" class="btn btn-success" (click)="TestGet()">Test Search Token</button>
 
     </form>
 </div>

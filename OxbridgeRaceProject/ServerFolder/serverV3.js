@@ -20,7 +20,6 @@ app.use(express.static('public'));
 app.use(express.json()); // Make sure it comes back as json
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({extended:true}));
-app.use(cors());
 
 
 

@@ -11,11 +11,33 @@ const salt = bcrypt.genSalt(10);
 app.get('/getcookie', function(req, res) {
   var user = req.cookies['user'];
   if (user) {
-      return res.send(user);        
+      console.log(req.signedCookies)
+      return res.send(req.cookies);        
   }
 
   return res.send('No cookie found');
 });
+
+app.get('/getall', async (req, res) => {
+
+  try {
+    const tbl_EventCoordinator = await EventCoordinatorModel.find({});
+    res.status(200).send({tbl_EventCoordinator});
+  } catch (error) {
+    console.log(error)
+  }
+
+  
+})
+
+//Debugging
+app.get('/', function (req, res) {
+  // Cookies that have not been signed
+  console.log('Cookies: ', req.cookies['user'])
+
+  // Cookies that have been signed
+  console.log('Signed Cookies: ', req.signedCookies['user'])
+})
 
 /**
  * Gets all of the collections in the database
@@ -44,7 +66,7 @@ app.get('/eventcoordinator/:fld_Email', async (req, res) => {
     var user = req.cookies['user'];
     if (user) {
       const tbl_EventCoordinator = await EventCoordinatorModel.findOne({ fld_Email: req.params.fld_Email});
-
+      console.log(res.cookie(user));
       res.status(200).send({tbl_EventCoordinator});
       } else {
       res.status(400).send("No cookie found")
@@ -83,13 +105,13 @@ app.post('/eventcoordinator', async (req, res) => {
    */
   app.post('/login', async (req, res) =>{
     const tbl_EventCoordinator = await EventCoordinatorModel.findOne({fld_Email: req.body.fld_Email});
-  
+
     try {
       await bcrypt.compare(req.body.fld_Password, tbl_EventCoordinator.fld_Password, (err, success) => {
         if (success) {
-          res.cookie("user", tbl_EventCoordinator,{maxAge: 864000, httpOnly: true});
+          res.cookie("user", tbl_EventCoordinator, {maxAge: 864000});
           console.log("Successfull login")
-          return res.status(200).send({tbl_EventCoordinator});
+          return res.status(200).send({tbl_EventCoordinator})
         } else if (err) {
           console.log(err.message);
           res.status(400).send("login error")
@@ -105,9 +127,12 @@ app.post('/eventcoordinator', async (req, res) => {
    */
   app.get('/logout', async (req, res) => {
     var user = req.cookies['user'];
+    var test = req.cookies['test'];
     if (user) {
       res.clearCookie('user')
         return res.send("you are logged out");        
+    } else if(test){
+      res.clearCookie('test')
     }
   
     return res.send('No cookie found');

@@ -1,0 +1,50 @@
+<p>crew-signup works!</p>
+
+<div class="container-fluid">
+  <form style="padding: 1%;">
+    <h1 style="align-items: center;">Sign up</h1>
+    <div class="form-group">
+      <label for="fld_FirstName">First Name</label>
+      <input type="text" class="form-control" id="fld_FirstName" required minlength="2" pattern="^([A-Z])[a-z]*"
+             [(ngModel)]="model.fld_FirstName" name="fld_FirstName"
+             #spy
+             #fld_FirstName="ngModel" />
+      <div *ngIf="fld_FirstName.invalid && (fld_FirstName.dirty || fld_FirstName.touched)" class="alert alert-danger">
+        <div *ngIf="fld_FirstName.errors.required">
+          First Name is required
+        </div>
+        <div *ngIf="fld_FirstName.errors.minlength">
+          First Name must be atleast 2 characters long
+        </div>
+        <div *ngIf="fld_FirstName.errors.pattern">
+          First Name must begin with capital letter and all other letters must be lower
+
+        </div>
+      </div>
+    </div>
+    <li>
+      <label>Crew name</label>
+      <input type="text" class="form-control" [(ngModel)]="" id="model.fld_CrewName" #fld_CrewName="ngModel">
+    </li>
+    <li>
+      <label>Captain name</label>
+      <input type="text" class="form-control" [(ngModel)]="" id="model.fld_Captain" #fld_Captain="ngModel">
+    </li>
+    <li>
+      <label>Email</label>
+      <input type="text" class="form-control" [(ngModel)]="" id="model.fld_Email" #fld_Email="ngModel">
+    </li>
+    <li>
+      <label>password</label>
+      <input type="password" class="form-control" [(ngModel)]="" id="model.fld_Password" #fld_Password="ngModel">
+    </li>
+    <li>
+      <label>Team size</label>
+      <input type="text" class="form-control" [(ngModel)]="" id="fld_Members" #fld_Members="ngModel">
+    </li>
+    <li>
+      <label>Category</label>
+      <input type="text" class="form-control" [(ngModel)]="model.fld_RaceCategory" id="fld_RaceCategory" #fld_RaceCategory="ngModel">
+    </li>
+  </form>
+</div>

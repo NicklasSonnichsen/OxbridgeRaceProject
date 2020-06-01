@@ -12,6 +12,16 @@ const tbl_crew = new mongoose.Schema({
         }
     },
 
+    fld_Captain:{
+        type: String,
+        required: true,
+        validate(value){
+            if (value ==""){
+                throw new Error("Captain not defined")
+            }
+        }
+    },
+
     fld_Members:{
         type: Number,
         required: true,

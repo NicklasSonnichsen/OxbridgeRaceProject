@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Administrators } from '../models/administrators';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from "angular2-cookie/core";
+import { HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { error } from 'protractor';
@@ -16,16 +18,18 @@ export class AdminLoginComponent implements OnInit {
   /**
    *
    */
-  private httpOptions = {
-    headers: new Headers({
-      'Accept': 'text/html, application/xhtml+xml, */*',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }),
-    responseType: 'text'
+  
+
+  public httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'cookie': this.model.fld_Email
+    })
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cookies: CookieService) {
     this.model = new Administrators('', '', '', '');
+    
   }
 
   ngOnInit(): void {
@@ -38,22 +42,30 @@ export class AdminLoginComponent implements OnInit {
   this.submitted = true;
     console.log("Submit virker")
     console.log("Email = " + this.model.fld_Email)
-    this.http.post<Administrators>('http://localhost:3000/login', {
+    this.http.post('http://localhost:3000/login', {
       "fld_Email": this.model.fld_Email,
-      "fld_Password": this.model.fld_Password
-    }).subscribe({
-      next: data => console.log(data),  
-      error: error => console.error('There was an error with login!', error)
+      "fld_Password": this.model.fld_Password,
+    }).subscribe((res) => {
+      this.cookies.put("user", this.model.fld_Email);
     })
+      
+    //   {
+    //   next: data => console.log(data),
+    //   localstorage.setItem()  
+    //   error: error => console.error('There was an error with login!', error)
+    // })
     this.model.fld_Email = "";
     this.model.fld_Password = "";
   }
 
   TestToken() {
-    this.http.get<Administrators>('http://localhost:3000/eventcoordinator').subscribe({
-      next: data => this.model = data,
-      error: error => console.log("Test cookie error!: ", error)});
+     this.http.get<Administrators>('http://localhost:3000/eventcoordinator').subscribe()  
+     
   }
+     //{
+  //     next: data => this.model = data,
+  //     error: error => console.log("Test cookie error!: ", error)});
+  // }
 
   TestSearchToken(){
     this.http.get<Administrators>('http://localhost:3000/eventcoordinator/test')

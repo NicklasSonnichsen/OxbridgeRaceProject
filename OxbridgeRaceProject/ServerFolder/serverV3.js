@@ -16,6 +16,7 @@ const AdminRoutes = require('./routes/AdminRoutes.js')
 
 
 const app = express();
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.json()); // Make sure it comes back as json
 app.use(BodyParser.json());
@@ -45,3 +46,4 @@ app.use(AdminRoutes);
 
 //listens to localhost:3000 for CRUD operations
 app.listen(3000, () => { console.log('Server is running...') });
+

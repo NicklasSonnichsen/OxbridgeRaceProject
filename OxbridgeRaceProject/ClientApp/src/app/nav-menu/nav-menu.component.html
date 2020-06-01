@@ -34,11 +34,14 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/map']">Map</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <!-- <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/sign-up']">Sign UP</a>
+          </li> -->
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/crew-signup']">Sign up</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/admin-login']">Log in</a>
+            <a class="btn btn-success" [routerLink]="['/admin-login']">Event manager</a>
           </li>
           <li class="nav-item">
             <button class="btn btn-danger" (click)="LogOut()">Log out</button>

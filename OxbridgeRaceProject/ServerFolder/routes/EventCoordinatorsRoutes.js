@@ -109,7 +109,7 @@ app.post('/eventcoordinator', async (req, res) => {
     try {
       await bcrypt.compare(req.body.fld_Password, tbl_EventCoordinator.fld_Password, (err, success) => {
         if (success) {
-          res.cookie("user", tbl_EventCoordinator, {maxAge: 864000});
+          res.cookie("user", tbl_EventCoordinator.fld_Email, {maxAge: 864000, domain: "http://127.0.0.1:3000"});
           console.log("Successfull login")
           return res.status(200).send({tbl_EventCoordinator})
         } else if (err) {

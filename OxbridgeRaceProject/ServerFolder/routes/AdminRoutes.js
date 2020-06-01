@@ -1,14 +1,10 @@
 const express = require('express');
 const AdminModel = require('../Models/AdminModel');
+const cookieparser = require('cookie-parser');
 const app = express();
+app.use(cookieparser());
 
-// AUTHENTICATION
-
-var auth = false;
-
-var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
-var config = require('../config/config');
 
 app.get('/admin', async (req, res) => {
   const tbl_Crew = await AdminModel.find({});

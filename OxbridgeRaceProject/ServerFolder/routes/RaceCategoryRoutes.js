@@ -1,59 +1,109 @@
 const express = require('express');
 const RaceCategoryModel = require('../Models/RaceCategoryModel.js');
+const cookieparser = require('cookie-parser');
 const app = express();
+app.use(cookieparser());
 
-app.get('/racecategory', async (req, res) => {
-  const tbl_RaceCategory = await RaceCategoryModel.find({});
-
-  try {
-    res.send(tbl_RaceCategory);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-app.get('/racecategory/:fld_CategoryName', async (req, res) => {
-
-  //Should search for the specified category by name
-  const tbl_RaceCategory = await RaceCategoryModel.find({ fld_CategoryName: req.params.fld_CategoryName});
-  try {
-    res.send(tbl_RaceCategory);
-    console.log(res.fld_CategoryName);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-app.post('/racecategory', async (req, res) => {
-    const tbl_RaceCategory = new RaceCategoryModel(req.body);
-  
+  /**
+   * Gets every collection in the database table
+   */
+  app.get('/racecategory', async (req, res) => {
     try {
-      await tbl_RaceCategory.save();
-      res.send(tbl_RaceCategory);
-    } catch (err) {
-      res.status(500).send(err);
+      var user = req.cookies['user'];
+      if (user) {
+        const tbl_CategoryName = await RaceCategoryModel.find({});
+        res.status(200).send({tbl_CategoryName});
+      } else {
+        res.status(400).send("No cookie found")
+      }
+    } catch (error) {
+      res.status(500).send(error)
     }
   });
-
-  app.delete('/racecategory/:fld_CategoryName', async (req, res) => {
-    try {
-      const tbl_RaceCategory = await RaceCategoryModel.deleteOne({fld_CategoryName: req.params.fld_CategoryName})
   
-      if (!tbl_RaceCategory) res.status(404).send("No item found")
-      res.status(200).send()
-    } catch (err) {
-      res.status(500).send(err)
-    }
-  })
-
-  app.patch('/racecategory/:fld_CategoryName', async (req, res) => {
+  /**
+   * Finds the specified entry in the database
+   */
+  app.get('/racecategory/:fld_CategoryName', async (req, res) => {
+  
+    //Should search for the specified event coordinator by email
     try {
-      await RaceCategoryModel.updateOne({fld_CategoryName: req.params.fld_CategoryName}, req.body);
-      await RaceCategoryModel.save()
-      res.send(tbl_EventHandler)
-    } catch (err) {
-      res.status(500).send(err)
+      var user = req.cookies['user'];
+      if (user) {
+        const tbl_CategoryName = await RaceCategoryModel.findOne({ fld_CategoryName: req.params.fld_CategoryName});
+        res.status(200).send({tbl_CategoryName});
+        } else {
+        res.status(400).send("No cookie found")
+        }
+      } catch (err) {
+        res.status(500).send(err);
+      }
+    });
+  
+  /**
+   * Creates a new entry in the database
+   */
+  app.post('/racecategory', async (req, res) => {
+  
+    const tbl_CategoryName = new RaceCategoryModel(req.body);
+    try {
+      var user = req.cookies['user'];
+      if (user) {
+        tbl_CategoryName.save();
+        res.status(201).json({message: "race category has been created", tbl_CategoryName});
+      } else {
+        res.status(400).send("No cookie found")
+      }
+    } catch (error) {
+      console.log(error);
     }
   })
+  
+    /**
+     * Deletes the specified entry in the database
+     */
+    app.delete('/racecategory/:tbl_CategoryName', async (req, res) => {
+      
+      try {
+        var user = req.cookies['user'];
+        if (user) {
+          const tbl_CategoryName = await RaceCategoryModel.deleteOne({tbl_CategoryName: req.params.tbl_CategoryName});
+          if (!tbl_CategoryName) {
+            res.status(404).send("No item found")
+          } else{
+            res.status(200).send({tbl_CategoryName})
+          }
+        } else {
+          return res.status(400).send("no cookie found");
+        }
+      } catch (err) {
+          res.status(500).send(err)
+        }
+    })
+  
+    /**
+     * Updates the specified entry in the database
+     */
+    app.patch('/racecategory/:tbl_CategoryName', async (req, res) => {
+      try {
+  
+        var user = req.cookies['user'];
+        if (user) {
+          var tbl_CategoryName = await RaceCategoryModel.findOne({tbl_CategoryName: req.params.tbl_CategoryName})
+          
+          if (!tbl_CategoryName) {
+            res.status(404).send("No item found")
+          } else{
+            await tbl_CategoryName.replaceOne(req.body);
+            await tbl_CategoryName.save();
+            return res.status(200).send({tbl_CategoryName});
+          }
+        } else {
+          return res.status(400).send("no cookie found");
+        }
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    })
 
 module.exports = app

@@ -40,7 +40,9 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/admin-login']">Log in</a>
           </li>
-
+          <li class="nav-item">
+            <button class="btn btn-danger" (click)="LogOut()">Log out</button>
+          </li>
 
         </ul>
       </div>

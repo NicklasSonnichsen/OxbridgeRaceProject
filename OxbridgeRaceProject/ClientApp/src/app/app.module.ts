@@ -14,7 +14,9 @@ import { MapComponent } from './map/map.component';
 import { SignUpAdminComponent } from './sign-up-admin/sign-up-admin.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
-
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CrewSignupComponent } from './crew-signup/crew-signup.component';
+import { ManagerPageComponent } from './manager-page/manager-page.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     MapComponent,
     SignUpAdminComponent,
     SignUpComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    CrewSignupComponent,
+    ManagerPageComponent
     
   ],
   imports: [
@@ -40,13 +44,15 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'map', component: MapComponent },
       { path: 'sign-up', component: SignUpComponent },
+      { path: 'crew-signup', component: CrewSignupComponent},
       { path: 'admin-login', component: AdminLoginComponent},
+      { path: 'manager-page', component: ManagerPageComponent}
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCnnppP8trPwzu-5dOv6KUoW6np4nExUOg'
-    })
+    }),
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

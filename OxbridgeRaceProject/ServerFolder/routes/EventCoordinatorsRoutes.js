@@ -60,7 +60,7 @@ app.get('/eventcoordinator', async (req, res) => {
  * Finds the specified entry in the database
  */
 app.get('/eventcoordinator/:fld_Email', async (req, res) => {
-
+  
   //Should search for the specified event coordinator by email
   try {
     var user = req.cookies['user'];
@@ -109,8 +109,8 @@ app.post('/eventcoordinator', async (req, res) => {
     try {
       await bcrypt.compare(req.body.fld_Password, tbl_EventCoordinator.fld_Password, (err, success) => {
         if (success) {
-          res.cookie("user", tbl_EventCoordinator.fld_Email, {maxAge: 864000, domain: "http://127.0.0.1:3000"});
-          console.log("Successfull login")
+          res.cookie("user", tbl_EventCoordinator.fld_Email, {maxAge: 864000, httpOnly: false, secure: false});
+          console.log("Successfull login");
           return res.status(200).send({tbl_EventCoordinator})
         } else if (err) {
           console.log(err.message);
@@ -127,14 +127,10 @@ app.post('/eventcoordinator', async (req, res) => {
    */
   app.get('/logout', async (req, res) => {
     var user = req.cookies['user'];
-    var test = req.cookies['test'];
     if (user) {
       res.clearCookie('user')
         return res.send("you are logged out");        
-    } else if(test){
-      res.clearCookie('test')
     }
-  
     return res.send('No cookie found');
   })
 

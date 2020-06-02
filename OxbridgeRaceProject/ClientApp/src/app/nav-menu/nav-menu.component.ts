@@ -23,6 +23,9 @@ export class NavMenuComponent {
   }
 
   LogOut() {
+
+    localStorage.clear();
+
     this.http.get<Administrators>('http://localhost:3000/logout').subscribe({
       next: data => console.log(data),
       error: data => console.log(data)

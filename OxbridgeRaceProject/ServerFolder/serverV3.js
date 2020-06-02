@@ -16,6 +16,7 @@ const AdminRoutes = require('./routes/AdminRoutes.js')
 
 
 const app = express();
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.json()); // Make sure it comes back as json
 app.use(BodyParser.json());
@@ -45,3 +46,10 @@ app.use(AdminRoutes);
 
 //listens to localhost:3000 for CRUD operations
 app.listen(3000, () => { console.log('Server is running...') });
+
+app.use(function(req, res, next) {
+  res.header(Access-Control-Allow-Credentials,   true)
+  res.header(Access-Control-Allow-Origin, "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header(Access-Control-Allow-Headers, "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});

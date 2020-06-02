@@ -52,17 +52,19 @@ app.get('/crew/:fld_CrewName', async (req, res) => {
  */
 app.post('/crew', async (req, res) => {
 
-  const tbl_Crew = new EventCoordinatorModel(req.body);
+  const tbl_Crew = new CrewModel(req.body);
   try {
-    var user = req.cookies['user'];
-    if (user) {
-      tbl_Crew.save();
-      res.status(200).send(tbl_Crew);
-    } else {
-      res.status(400).send("No cookie found")
-    }
+    
+    const hashedPassword = await bcrypt.hash(req.body.fld_Password, 10);
+    tbl_Crew.fld_Password = hashedPassword;
+
+    await tbl_Crew.save();
+    res.status(200).send({tbl_Crew});
+      
+    
   } catch (error) {
-    console.log(error);
+    console.log(error)
+    res.status(500).send(error)
   }
 })
 

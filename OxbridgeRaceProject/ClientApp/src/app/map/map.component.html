@@ -1,9 +1,11 @@
 <body>
   <p>Map is working </p>
   <agm-map [latitude]="latitude" [longitude]="longitude" (click)="onChooseLocation($event)">
-    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    <agm-marker [latitude]="pinLattitude" [longitude]="pinLongitude"></agm-marker>
   </agm-map>
 </body>
 <div>
   <button (click)="OnStart()">GET</button>
+  <button (click)="StartTheMoveMent()">START THE MOVEMENT</button>
+  <button (click)="Next()">NEXT</button>
 </div>

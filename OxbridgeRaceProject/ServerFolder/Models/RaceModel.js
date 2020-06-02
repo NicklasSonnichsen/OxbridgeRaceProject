@@ -12,10 +12,42 @@ const tbl_race = new mongoose.Schema({
       }
     },
 
-    // fld_Date:{
-    //   type: Date,
-    //   required: true,
-    // },
+    fld_Date: {
+      type: String,
+      required: true,
+      validate(value) {
+        if (value == "") throw new Error("No Date entered");
+      }
+    },
+    
+    fld_IsStarted:
+    {
+      type:Boolean,
+      required: true
+    },
+
+    fld_IsEnded:
+    {
+      type:Boolean,
+      required: true
+    },
+
+    fld_RaceName: {
+      type : String,
+      required: true,
+      validate(value) {
+        if (value == "") throw new Error("No Name of the race entered");
+      }
+    },
+
+    fld_RaceCoordinator:{
+      type: String,
+      required: true,
+      validate(value) {
+        if (value == "") throw new Error("No RaceCoordinator entered");
+      }
+
+    }
 
 
   });

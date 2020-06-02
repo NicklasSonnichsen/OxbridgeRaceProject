@@ -1,26 +1,27 @@
 const express = require('express');
 const RaceModel = require('../Models/RaceModel.js');
 const app = express();
+var date = Date.now();
 
 
 //gets all entries in the tbl_races in mongodb
 app.get('/race', async (req, res) => {
-  const tbl_RaceCategory = await RaceModel.find({});
+  const tbl_Race = await RaceModel.find({});
 
   try {
-    res.send(tbl_RaceCategory);
+    res.send(tbl_Race);
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
-//Should search for the specified race by city (will be changed )
-app.get('/race/:fld_Zipcode', async (req, res) => {
+//Should search for the specified race by fld_RaceName (will be changed )
+app.get('/race/:fld_RaceName', async (req, res) => {
 
-  const tbl_Race = await RaceModel.find({ fld_Zipcode: req.params.fld_Zipcode});
+  const tbl_Race = await RaceModel.find({ fld_RaceName: req.params.fld_RaceName});
   try {
     res.send(tbl_Race);
-    console.log(res.fld_Zipcode);
+    console.log(res.fld_RaceName);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -38,10 +39,10 @@ app.post('/race', async (req, res) => {
     }
   });
 
-  //delete from searched zipcode
-  app.delete('/race/:fld_Zipcode', async (req, res) => {
+  //delete from searched fld_RaceName
+  app.delete('/race/:fld_RaceName', async (req, res) => {
     try {
-      const tbl_Race = await RaceModel.deleteOne({fld_Zipcode: req.params.fld_Zipcode})
+      const tbl_Race = await RaceModel.deleteOne({fld_RaceName: req.params.fld_RaceName})
   
       if (!tbl_Race) res.status(404).send("No item found")
       res.status(200).send()
@@ -50,15 +51,29 @@ app.post('/race', async (req, res) => {
     }
   })
 
-  //patch from searched zipcode, JSON body required
-  app.patch('/race/:fld_Zipcode', async (req, res) => {
+  //patch from searched fld_RaceName, JSON body required
+  app.patch('/race/:fld_RaceName', async (req, res) => {
     try {
-        await RaceModel.updateOne({fld_Zipcode: req.params.fld_Zipcode}, req.body)
+        await RaceModel.updateOne({fld_RaceName: req.params.fld_RaceName}, req.body)
         await RaceModel.save()
         res.send(tbl_Race)
       } catch (err) {
         res.status(500).send(err)
       }
   })
+
+
+  //Should search for the specified race by fld_RaceName (will be changed )
+app.get('/racedate', async (req, res) => {
+
+  const tbl_Race = await RaceModel.find();
+  try {
+    res.send(tbl_Race.fld_Date);
+    console.log(res.fld_Date);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 
 module.exports = app

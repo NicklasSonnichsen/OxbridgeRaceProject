@@ -1,5 +1,6 @@
 const express = require('express');
 const RaceModel = require('../Models/RaceModel.js');
+const CrewModel = require('../Models/CrewModel.js');
 const cookieparser = require('cookie-parser');
 const app = express();
 app.use(cookieparser());
@@ -129,17 +130,19 @@ app.use(cookieparser());
       }
     })
 
-    app.post('contestants/fld_Zipcode', async(req, res) =>{
+    app.put('/contestants/:fld_Zipcode', async(req, res) =>{
 
       try {
         const tbl_Race = await RaceModel.findOne({fld_Zipcode: req.params.fld_Zipcode});
         if (!tbl_Race) {
           return res.status(404).send("Cannot find race");
         } else {
-          tbl_Race.fld_Contestants.push(req.body);
+          const tbl_Crew = await new CrewModel(req.body)
+          tbl_Race.updateOne({tbl_Race.$push: [tbl_Crew]});
+          res.status(200).send({tbl_Race});
         }
       } catch (error) {
-        
+        console.log(error.message);
       }
     })
 

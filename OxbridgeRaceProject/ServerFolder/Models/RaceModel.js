@@ -43,65 +43,65 @@ const tbl_race = new mongoose.Schema({
         }
       }
     },
-    //fld_Contestants: [tbl_Crew]
+    fld_Contestants: [{
 
-    //   fld_CrewName: {
-    //     type: String,
-    //     required: true,
-    //     unique: true,
-    //     index: true,
-    //     validate(value) {
-    //       if (value == "") throw new Error("Crew name must be entered");
-    //     }
-    // },
+      fld_CrewName: {
+        type: String,
+        required: true,
+        unique: true,
+        index: true,
+        validate(value) {
+          if (value == "") throw new Error("Crew name must be entered");
+        }
+    },
 
-    // fld_Captain:{
-    //     type: String,
-    //     required: true,
-    //     validate(value){
-    //         if (value ==""){
-    //             throw new Error("Captain not defined")
-    //         }
-    //     }
-    // },
+    fld_Captain:{
+        type: String,
+        required: true,
+        validate(value){
+            if (value ==""){
+                throw new Error("Captain not defined")
+            }
+        }
+    },
 
-    // fld_Members:{
-    //     type: Number,
-    //     required: true,
-    //     validate(value){
-    //         if(value < 0) throw new Error("Members must be more than 0");
-    //     }
-    // },
+    fld_Members:{
+        type: Number,
+        required: true,
+        validate(value){
+            if(value < 0) throw new Error("Members must be more than 0");
+        }
+    },
 
-    // fld_Position:{
-    //     type: Number,
-    //     required: false,
-    //     default: 0,
-    // },
+    fld_Position:{
+        type: Number,
+        required: false,
+        default: 0,
+    },
 
-    // fld_Password:{
-    //     type: String,
-    //     required: true,
-    //     validate(value){
-    //         if(value == "") throw new Erros("Password must be entered");
-    //     }
-    // },
-    // fld_Email:{
-    //     type: String,
-    //     required: true,
-    //     validate(value){
-    //         if(value == "") throw new Erros("Email must be entered");
-    //     }
-    // },
+    fld_Password:{
+        type: String,
+        required: true,
+        validate(value){
+            if(value == "") throw new Erros("Password must be entered");
+        }
+    },
+    fld_Email:{
+        type: String,
+        required: true,
+        validate(value){
+            if(value == "") throw new Erros("Email must be entered");
+        }
+    },
 
-    //     fld_Category:{
-    //     type: String,
-    //     required: true,
-    //     validate(value){
-    //         if(value == "") throw new Erros("Category must be selected");
-    //     }
-    // },
-    // }]
+        fld_Category:{
+        type: String,
+        required: true,
+        validate(value){
+            if(value == "") throw new Erros("Category must be selected");
+        }
+    },
+  }]
   });
 
 const Race = mongoose.model("tbl_race", tbl_race);

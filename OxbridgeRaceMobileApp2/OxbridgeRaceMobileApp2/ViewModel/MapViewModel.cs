@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
-using Android.Content;
 
 namespace OxbridgeRaceMobileApp2.ViewModel
 {

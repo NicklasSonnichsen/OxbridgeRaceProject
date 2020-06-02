@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    Start race
+    <button type="button" class="btn btn-success">Start</button>
+</div>
+
+<div class="container-fluid">
+    End race
+    <button type="button" class="btn btn-danger">Stop</button>
+</div>
+
+<div class="container-fluid">
+    search teams
+    <input type="text" class="form-control">
+    <button type="button" class="btn btn-success">Search team</button>
+</div>
+<div class="container-fluid">
+    add teams to race
+    <input type="text" class="form-control">
+    <button type="button" class="btn btn-success">Add team</button>
+</div>
+
+<div class="container-fluid">
+    <li style="list-style: none;" class="nav-item" [routerLinkActive]="['link-active']">
+        <button class="btn btn-success" [routerLink]="['/sign-up']">Add a new event coordinator</button>
+    </li>
+</div>
+

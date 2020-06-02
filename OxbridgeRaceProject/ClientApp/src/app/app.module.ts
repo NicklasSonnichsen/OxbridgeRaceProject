@@ -16,6 +16,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { CrewSignupComponent } from './crew-signup/crew-signup.component';
+import { ManagerPageComponent } from './manager-page/manager-page.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { CrewSignupComponent } from './crew-signup/crew-signup.component';
     SignUpAdminComponent,
     SignUpComponent,
     AdminLoginComponent,
-    CrewSignupComponent
+    CrewSignupComponent,
+    ManagerPageComponent
     
   ],
   imports: [
@@ -44,6 +46,7 @@ import { CrewSignupComponent } from './crew-signup/crew-signup.component';
       { path: 'sign-up', component: SignUpComponent },
       { path: 'crew-signup', component: CrewSignupComponent},
       { path: 'admin-login', component: AdminLoginComponent},
+      { path: 'manager-page', component: ManagerPageComponent}
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCnnppP8trPwzu-5dOv6KUoW6np4nExUOg'

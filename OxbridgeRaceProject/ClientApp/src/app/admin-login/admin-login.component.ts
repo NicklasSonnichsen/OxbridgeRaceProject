@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Administrators } from '../models/administrators';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from "angular2-cookie/core";
+import { Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -22,7 +23,9 @@ export class AdminLoginComponent implements OnInit {
 
   
 
-  constructor(private http: HttpClient, private cookies: CookieService) {
+  constructor(private http: HttpClient, 
+    private cookies: CookieService,
+    private router: Router) {
     this.model = new Administrators('', '', '', '');
     
   }
@@ -43,6 +46,7 @@ export class AdminLoginComponent implements OnInit {
     }).subscribe((res) => {
       this.cookies.put("user", this.model.fld_Email);
       console.log(res);
+      this.router.navigate(['/manager-page'])
     })
       
     //   {

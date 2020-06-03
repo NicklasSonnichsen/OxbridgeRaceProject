@@ -10,13 +10,13 @@ app.use(cookieparser());
    */
   app.get('/race', async (req, res) => {
     try {
-      var user = req.cookies['user'];
-      if (user) {
+      //var user = req.cookies['user'];
+      //if (user) {
         const tbl_Race = await RaceModel.find({});
         res.status(200).send({tbl_Race});
-      } else {
-        res.status(400).send("No cookie found")
-      }
+      //} else {
+      //  res.status(400).send("No cookie found")
+      //}
     } catch (error) {
       res.status(500).send(error)
     }
@@ -29,13 +29,13 @@ app.use(cookieparser());
   
     //Should search for the specified event coordinator by email
     try {
-      var user = req.cookies['user'];
-      if (user) {
+      //var user = req.cookies['user'];
+      //if (user) {
         const tbl_Race = await RaceModel.findOne({ fld_Zipcode: req.params.fld_Zipcode});
         res.status(200).send({tbl_Race});
-        } else {
-        res.status(400).send("No cookie found")
-        }
+        //} else {
+        //res.status(400).send("No cookie found")
+        //}
       } catch (err) {
         res.status(500).send(err);
       }
@@ -144,11 +144,5 @@ app.use(cookieparser());
       } catch (error) {
         console.log(error.message);
       }
-    })
-
-
-    res.status(200).json({
-      "fld_1":"etellerandet",
-      "fld_2":"etellerandet"
     })
 module.exports = app

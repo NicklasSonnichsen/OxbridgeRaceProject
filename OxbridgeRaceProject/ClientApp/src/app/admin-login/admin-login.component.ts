@@ -16,12 +16,6 @@ import { error } from 'protractor';
 export class AdminLoginComponent implements OnInit {
 
   public model: Administrators;
-  /**
-   *
-   */
-  
-
-  
 
   constructor(private http: HttpClient, 
     private cookies: CookieService,

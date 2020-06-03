@@ -28,8 +28,8 @@
     </div>   
 </div>
 
-<div class="form-group" >
-    <form style="padding: 1%;" #crewForm="ngForm">
+<div class="form-group" [hidden]="!crewSubmitted">
+    <form style="padding: 1%;">
         <table class="table table-striped table-dark">
             <thead>
               <th>Crew Name</th>
@@ -56,8 +56,8 @@
     </form>
 </div>
 
-<div class="form-group" >
-    <form style="padding: 1%;" #raceForm="ngForm">
+<div class="form-group" [hidden]="!raceSubmitted">
+    <form style="padding: 1%;">
         <table class="table table-striped table-dark">
             <thead>
               <th>Zipcode</th>
@@ -88,5 +88,8 @@
 
 <div *ngFor="let crew of crews">
     {{crew}}
+</div>
+<div *ngFor="let race of races">
+  {{race}}
 </div>
 

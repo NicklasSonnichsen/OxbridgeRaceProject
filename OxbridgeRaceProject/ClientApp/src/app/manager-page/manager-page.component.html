@@ -6,7 +6,7 @@
             <div class="jumbotron">
                 <button style="margin: 5%;" type="button" class="btn btn-success">Start race</button>
                 <button style="margin: 5%;" type="button" class="btn btn-danger">End race</button>
-                <button style="margin: 5%;" class="btn btn-warning" [routerLink]="['/admin-signup']">New manager</button>
+                <!-- <button style="margin: 5%;" class="btn btn-warning" [routerLink]="['/admin-signup']">New manager</button> -->
                 <button style="margin: 5%;" class="btn btn-warning" (click)="LogOut()">Log out</button>
             </div>
         </div>
@@ -18,8 +18,8 @@
         </div>
         <div class="col">
             <div class="jumbotron" style="margin: 2%;">
-                <input style="margin: 5%;" type="text" class="form-control">
-                <button style="margin: 5%;" type="button" class="btn btn-primary">Search race</button>
+                <input style="margin: 5%;" type="text" class="form-control" id="RaceSearch">
+                <button style="margin: 5%;" type="button" class="btn btn-primary" (click)="SearchRace()">Search race</button>
             
                 <input style="margin: 5%;" type="text" class="form-control">
                 <button style="margin: 5%;" type="button" class="btn btn-success">Add team</button>
@@ -56,7 +56,37 @@
     </form>
 </div>
 
+<div class="form-group" >
+    <form style="padding: 1%;" #raceForm="ngForm">
+        <table class="table table-striped table-dark">
+            <thead>
+              <th>Zipcode</th>
+              <th>Date</th>
+              <th>Is Started</th>
+              <th>Is Ended</th>
+              <th>Race Name</th>
+              <th>Race Coordinators</th>
+              <th>Contestants</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let race of races">
+                <td>{{race.fld_Zipcode}}</td>
+                <td>{{race.fld_Date}}</td>
+                <td>{{race.fld_IsStarted}}</td>
+                <td>{{race.fld_IsEnded}}</td>
+                <td>{{race.fld_RaceName}}</td>
+                <td>{{race.fld_RaceCoordinator}}</td>
+                <td>{{race.fld_Contestants}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+        <button type="button" class="btn btn-warning">Change information</button>
+        <button type="button" class="btn btn-danger">Delete race</button>
+    </form>
+</div>
+
 <div *ngFor="let crew of crews">
-    {{crew.fld_Email}}
+    {{crew}}
 </div>
 

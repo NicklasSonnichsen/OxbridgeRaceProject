@@ -146,4 +146,9 @@ app.use(cookieparser());
       }
     })
 
+
+    res.status(200).json({
+      "fld_1":"etellerandet",
+      "fld_2":"etellerandet"
+    })
 module.exports = app

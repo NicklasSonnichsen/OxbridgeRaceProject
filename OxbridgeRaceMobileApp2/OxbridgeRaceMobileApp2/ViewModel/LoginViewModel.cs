@@ -48,8 +48,10 @@ namespace OxbridgeRaceMobileApp2.ViewModel
             try
             {
                 Console.WriteLine("LOGIN ER BLEVET TRYKKET PÅ");
-                var post = new CrewLoginInfo { fld_CrewName = UserName, fld_Password = UserPassword };
 
+                Console.WriteLine("PASSWORD ER DETTE:    "+UserPassword);
+                var post = new CrewLoginInfo { fld_CrewName = UserName, fld_Password = UserPassword };
+                Console.WriteLine("FLDPASSWORD ER:   "+post.fld_Password);
                 var requestString = JsonConvert.SerializeObject(post);
                 // making it content
                 var content = new StringContent(requestString, Encoding.UTF8, "application/json");

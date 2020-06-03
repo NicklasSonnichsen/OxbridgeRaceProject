@@ -34,7 +34,7 @@ app.get('/gps', async (req, res) => {
       var user = req.cookies['user'];
       if (user) {
         const tbl_Gps = await GPSCoordinatesModel.findOne({ fld_Email: req.params.fld_CrewName});
-  
+      
         res.status(200).send({tbl_Gps});
         } else {
         res.status(400).send("No cookie found")

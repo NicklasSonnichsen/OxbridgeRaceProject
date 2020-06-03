@@ -133,13 +133,13 @@ app.use(cookieparser());
     app.put('/contestants/:fld_Zipcode', async(req, res) =>{
 
       try {
-        const tbl_Race = await RaceModel.findOne({fld_Zipcode: req.params.fld_Zipcode});
+        const tbl_Crew = await new CrewModel(req.body)
+        const tbl_Race = await RaceModel.findOneAndUpdate({fld_Zipcode: req.params.fld_Zipcode}, {$push: {"fld_Contestants": tbl_Crew}});
         if (!tbl_Race) {
           return res.status(404).send("Cannot find race");
         } else {
-          const tbl_Crew = await new CrewModel(req.body)
-          tbl_Race.updateOne({tbl_Race.$push: [tbl_Crew]});
-          res.status(200).send({tbl_Race});
+          await tbl_Race.save();
+          res.status(200).send({tbl_Crew});         
         }
       } catch (error) {
         console.log(error.message);

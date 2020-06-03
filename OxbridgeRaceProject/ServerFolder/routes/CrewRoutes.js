@@ -14,13 +14,13 @@ var bcrypt = require('bcryptjs');
 app.get('/crew', async (req, res) => {
   
   try {
-    var user = req.cookies['user'];
-    if (user) {
+    //var user = req.cookies['user'];
+    //if (user) {
       const tbl_Crew = await CrewModel.find({});
       res.status(200).send(tbl_Crew);
-    } else {
-      res.status(400).send("No cookie found")
-    }
+    //} else {
+    //  res.status(400).send("No cookie found")
+    //}
   } catch (error) {
     res.status(500).send(error)
   }
@@ -30,17 +30,18 @@ app.get('/crew', async (req, res) => {
  * Finds the specified entry in the database
  */
 app.get('/crew/:fld_CrewName', async (req, res) => {
-
+  res.setHeader('Content-Type', 'application/json');
   //Should search for the specified event coordinator by email
+  
   try {
-    var user = req.cookies['user'];
-    if (user) {
-      const tbl_Crew = await CrewModel.findOne({ fld_Email: req.params.fld_CrewName});
-
-      res.status(200).send({tbl_Crew});
-      } else {
-      res.status(400).send("No cookie found")
-      }
+    //var user = req.cookies['user'];
+    //if (user) {
+      const tbl_Crew = await CrewModel.findOne({ fld_CrewName: req.params.fld_CrewName});
+      console.log({tbl_Crew})
+      res.status(200).json({tbl_Crew});
+    //  } else {
+    //  res.status(400).send("No cookie found")
+    //  }
 
     } catch (err) {
       res.status(500).send(err);

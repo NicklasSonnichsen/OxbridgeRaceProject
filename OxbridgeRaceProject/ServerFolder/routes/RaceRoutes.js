@@ -13,7 +13,7 @@ app.use(cookieparser());
       //var user = req.cookies['user'];
       //if (user) {
         const tbl_Race = await RaceModel.find({});
-        res.status(200).send({tbl_Race});
+        res.status(200).send(tbl_Race);
       //} else {
       //  res.status(400).send("No cookie found")
       //}
@@ -32,7 +32,8 @@ app.use(cookieparser());
       //var user = req.cookies['user'];
       //if (user) {
         const tbl_Race = await RaceModel.findOne({ fld_Zipcode: req.params.fld_Zipcode});
-        res.status(200).send({tbl_Race});
+        console.log(tbl_Race);
+        res.status(200).send(tbl_Race);
         //} else {
         //res.status(400).send("No cookie found")
         //}

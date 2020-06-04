@@ -30,7 +30,6 @@ app.get('/crew', async (req, res) => {
  * Finds the specified entry in the database
  */
 app.get('/crew/:fld_CrewName', async (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
   //Should search for the specified event coordinator by email
   
   try {
@@ -38,7 +37,7 @@ app.get('/crew/:fld_CrewName', async (req, res) => {
     //if (user) {
       const tbl_Crew = await CrewModel.findOne({ fld_CrewName: req.params.fld_CrewName});
       console.log({tbl_Crew})
-      res.status(200).json({tbl_Crew});
+      res.status(200).send(tbl_Crew);
     //  } else {
     //  res.status(400).send("No cookie found")
     //  }

@@ -13,12 +13,14 @@ import { Observable, from } from 'rxjs';
 
 export class ManagerPageComponent implements OnInit {
 
-  public crews: Array<CrewForm[]>; 
-  public races: Array<RaceForm>;
+  public crews: CrewForm[]; 
+  public races: RaceForm[];
+  public contestants: Contestants[];
   public searchedCrew: string;
   public searchedRace: string;
   raceSubmitted = false;
   crewSubmitted = false;
+  submitContestants = false;
 
   ChangeInfoRace = false;
   ChangeInfoTeam = false;
@@ -26,23 +28,21 @@ export class ManagerPageComponent implements OnInit {
   public urlTeam = 'http://localhost:3000/crew/';
   public urlRace = 'http://localhost:3000/race/';
 
+
+  enableEdit = false;
+  enableEditIndex = null;
+
+
   constructor(private http: HttpClient) {
    }
 
   ngOnInit(): void {
   }
 
-  InfoCrew(e){
-    console.log(e);
-
-    this.ChangeInfoTeam = true;
-  }
-
-  InfoRace(e){
-    this.races = e.races;
-    console.log(this.races);
-
-    this.ChangeInfoRace = true;
+  enableEditMethod(e, i) {
+    this.enableEdit = true;
+    this.enableEditIndex = i;
+    console.log(i, e);
   }
 
   SearchTeam(){
@@ -67,4 +67,35 @@ export class ManagerPageComponent implements OnInit {
     })
   }
 
+  SaveChangesCrew(crew){
+    console.log(crew.fld_CrewName);
+    this.http.patch(this.urlTeam + crew.fld_CrewName, crew).subscribe();
+  }
+  DeleteCrew(crew){
+    this.http.delete(this.urlTeam + crew.fld_CrewName).subscribe();
+  }
+
+  UpdateContestants(race){
+
+    this.submitContestants = true;
+
+    race.forEach(element => {
+      this.contestants = element;
+      console.log(this.contestants)
+    });
+
+    
+    console.log(this.contestants)
+  }
+
+  AddContestants(race){
+
+  }
+}
+
+export class Contestants{
+  public fld_CrewName: string;
+  public fld_Captain: string;
+  public fld_Members: number;
+  public fld_Category: string;
 }

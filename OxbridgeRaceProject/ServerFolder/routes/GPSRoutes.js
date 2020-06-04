@@ -1,8 +1,6 @@
 ﻿const express = require('express');
 const GPSCoordinatesModel = require('../Models/GpsCoordinatesModel');
-const cookieparser = require('cookie-parser');
 const app = express();
-app.use(cookieparser());
 
 var bcrypt = require('bcryptjs');
 
@@ -12,13 +10,8 @@ var bcrypt = require('bcryptjs');
 app.get('/gps', async (req, res) => {
   
     try {
-      var user = req.cookies['user'];
-      if (user) {
         const tbl_Gps = await GPSCoordinatesModel.find({});
         res.status(200).send({tbl_Gps});
-      } else {
-        res.status(400).send("No cookie found")
-      }
     } catch (error) {
       res.status(500).send(error)
     }
@@ -31,14 +24,8 @@ app.get('/gps', async (req, res) => {
   
     //Should search for the specified event coordinator by email
     try {
-      var user = req.cookies['user'];
-      if (user) {
         const tbl_Gps = await GPSCoordinatesModel.findOne({ fld_Email: req.params.fld_CrewName});
-  
         res.status(200).send({tbl_Gps});
-        } else {
-        res.status(400).send("No cookie found")
-        }
   
       } catch (err) {
         res.status(500).send(err);
@@ -69,17 +56,12 @@ app.get('/gps', async (req, res) => {
      */
     app.delete('/gps/:fld_CrewName', async (req, res) => { 
       try {
-        var user = req.cookies['user'];
-        if (user) {
           const tbl_Gps = await GPSCoordinatesModel.deleteOne({fld_CrewName: req.params.fld_CrewName});
           if (!tbl_Gps) {
             res.status(404).send("No item found")
             } else{
             res.status(200).send(tbl_Gps)
             }
-        } else {
-          return res.status(400).send("no cookie found");
-        }
         } catch (err) {
           res.status(500).send(err)
         }
@@ -88,14 +70,9 @@ app.get('/gps', async (req, res) => {
     app.patch('/gps/:fld_CrewName', async (req, res) => {
         try {
             var tbl_CategoryName = await RaceCategoryModel.findOne({tbl_CategoryName: req.params.tbl_CategoryName})
-            var user = req.cookies['user'];
-            if (user) {
                 await tbl_Gps.replaceOne(req.body);
                 await tbl_Gps.save();
                 return res.status(200).send({tbl_Gps});
-            } else {
-              return res.status(400).send("no cookie found");
-            }
         } catch (err) {
             res.status(500).send(err)
         }

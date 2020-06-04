@@ -1,22 +1,14 @@
 const express = require('express');
 const RaceModel = require('../Models/RaceModel.js');
 const CrewModel = require('../Models/CrewModel.js');
-const cookieparser = require('cookie-parser');
 const app = express();
-app.use(cookieparser());
-
   /**
    * Gets every collection in the database table
    */
   app.get('/race', async (req, res) => {
     try {
-      //var user = req.cookies['user'];
-      //if (user) {
         const tbl_Race = await RaceModel.find({});
         res.status(200).send(tbl_Race);
-      //} else {
-      //  res.status(400).send("No cookie found")
-      //}
     } catch (error) {
       res.status(500).send(error)
     }
@@ -29,14 +21,9 @@ app.use(cookieparser());
   
     //Should search for the specified event coordinator by email
     try {
-      //var user = req.cookies['user'];
-      //if (user) {
         const tbl_Race = await RaceModel.findOne({ fld_Zipcode: req.params.fld_Zipcode});
         console.log(tbl_Race);
         res.status(200).send(tbl_Race);
-        //} else {
-        //res.status(400).send("No cookie found")
-        //}
       } catch (err) {
         res.status(500).send(err);
       }
@@ -49,13 +36,8 @@ app.use(cookieparser());
   
     const tbl_Race = new RaceModel(req.body);
     try {
-      //var user = req.cookies['user'];
-      //if (user) {
         await tbl_Race.save();
         res.status(201).json({message: "race has been created", tbl_Race});
-      //} else {
-      //  res.status(400).send("No cookie found")
-      //}
     } catch (error) {
       console.log(error);
     }
@@ -67,17 +49,12 @@ app.use(cookieparser());
     app.delete('/race/:fld_Zipcode', async (req, res) => {
       
       try {
-        var user = req.cookies['user'];
-        if (user) {
           const tbl_Race = await RaceModel.deleteOne({fld_Zipcode: req.params.fld_Zipcode});
           if (!tbl_Race) {
             res.status(404).send("No item found")
           } else{
             res.status(200).send({tbl_Race})
           }
-        } else {
-          return res.status(400).send("no cookie found");
-        }
       } catch (err) {
           res.status(500).send(err)
         }
@@ -111,8 +88,6 @@ app.use(cookieparser());
 
     app.patch('/race/:fld_Zipcode', async (req, res) => {
       try {
-        //var user = req.cookies['user'];
-        //if (user) {
           var tbl_Race = await RaceModel.findOne({fld_Zipcode: req.params.fld_Zipcode})
           
           if (!tbl_Race) {
@@ -123,9 +98,6 @@ app.use(cookieparser());
             await tbl_Race.save();
             return res.status(200).send({tbl_Race});
           }
-        //} else {
-          //return res.status(400).send("no cookie found");
-        //}
       } catch (err) {
         res.status(500).send(err)
       }

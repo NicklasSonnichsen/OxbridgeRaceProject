@@ -129,7 +129,7 @@ app.post('/logincrew', async (req, res) => {
 
         var passwordIsValid = bcrypt.compare(req.body.fld_Password, tbl_Crew.fld_Password, (error, success) => {
             if (success) {
-                res.send({tbl_Crew});
+                res.send(tbl_Crew);
             } else {
                 res.status(500).send(error);
             }

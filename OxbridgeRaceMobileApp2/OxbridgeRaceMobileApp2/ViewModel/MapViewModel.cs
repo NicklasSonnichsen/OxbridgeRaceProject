@@ -64,7 +64,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                     // getting current time 
                     string currentTime = DateTime.Now.ToString();
                     // creating object that is posted to MongoDb 
-                    var post = new GPSLocation { fld_CrewName = "testHold2", fld_Date = currentTime, fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
+                    var post = new GPSLocation { fld_CrewName = "MartinCrew", fld_Date = currentTime, fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
                     // converting the object to json 
                     var requestString = JsonConvert.SerializeObject(post);
                     // making it content

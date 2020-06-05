@@ -112,7 +112,7 @@ const app = express();
           return res.status(404).send("Cannot find race");
         } else {
           await tbl_Race.save();
-          res.status(200).send({tbl_Crew});         
+          res.status(200).send(tbl_Crew);         
         }
       } catch (error) {
         console.log(error.message);

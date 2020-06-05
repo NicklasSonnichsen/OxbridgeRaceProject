@@ -22,7 +22,7 @@
 
   <div class="d-flex justify-content-center" style="padding: 1%;">
     <div class="form-group" [hidden]="!crewSubmitted">
-      <table class="table-sm table-dark table-hover table-responsive">
+      <table class="table-sm table-hover table-striped table-responsive">
         <thead>
           <th>Crew Name</th>
           <th>Captain</th>
@@ -70,7 +70,7 @@
 
   <div class="form-group" [hidden]="!raceSubmitted">
     <div class="d-flex justify-content-center">
-      <table class="table table-dark table-hover">
+      <table class="table table-hover table-striped">
         <thead>
           <th>Zipcode</th>
           <th>Date</th>
@@ -109,7 +109,7 @@
               <button class="btn-sm btn-danger" *ngIf="race.isEditable" (click)="race.isEditable=!race.isEditable"
                 (click)="DeleteRace(race)">Delete</button>
               <button class="btn-sm btn-primary" *ngIf="race.isEditable"
-                (click)="UpdateContestants(race.fld_Contestants)">Add contestants</button>
+                (click)="UpdateContestants(race.fld_Contestants, race.fld_Zipcode)">Add contestants</button>
             </td>
           </tr>
         </tbody>
@@ -120,11 +120,8 @@
 
   <div class="form-group" [hidden]="!submitContestants">
     <div class="d-flex justify-content-center">
-      <table class="table table-dark table-hover" id="ContestantTable">
-        <!-- <div>
-          <input type="text" class="form-control" id="inputContestant"><button type="submit" class="btn btn-success"
-            (click)="AddContestants(inputContestant)"></button>
-        </div> -->
+      <table class="table table-hover table-striped" id="ContestantTable">
+
         <thead>
           <th>Crew name</th>
           <th>Captain</th>
@@ -133,7 +130,7 @@
         </thead>
         <tbody>
 
-          <tr *ngFor="let contestant of contenstants">
+          <tr *ngFor="let contestant of contestants">
             <td>
               <input type="text" class="form-control" [(ngModel)]="contestant.fld_CrewName"
                 [disabled]="!contestant.isEditable">
@@ -151,21 +148,17 @@
                 [disabled]="!contestant.isEditable">
             </td>
             <td>
-              <button class="btn btn-primary" (click)="contestant.isEditable=!contestant.isEditable"
-                *ngIf="!contestant.isEditable">Edit</button>
-              <button class="btn-sm btn-success" *ngIf="contestant.isEditable"
-                (click)="contestant.isEditable=!contestant.isEditable" (click)="SaveChangesRace(race)">Save</button>
-              <button class="btn-sm btn-danger" *ngIf="contestant.isEditable"
-                (click)="contestant.isEditable=!contestant.isEditable" (click)="DeleteRace(race)">Delete</button>
-              <button class="btn-sm btn-primary" *ngIf="contestant.isEditable"
-                (click)="UpdateContestants(race)"></button>
+              <button class="btn-sm btn-danger" (click)="DeleteContestant(race)">Delete</button>
             </td>
           </tr>
         </tbody>
       </table>
-      
     </div>
-    <button class="btn btn-primary" (click)="submitContestants=false">OK</button>
+    <div>
+      <input style="border-color: black; padding: 1%;" type="text" class="form-control" id="inputContestant">
+      <button style="padding: 1%;" type="submit" class="btn btn-success"(click)="AddContestants('inputContestant.value')">Add Team</button>
+    </div>
+    <button style="padding: 1%;" class="btn btn-primary" (click)="submitContestants=false">OK</button>
   </div>
   
 </div>

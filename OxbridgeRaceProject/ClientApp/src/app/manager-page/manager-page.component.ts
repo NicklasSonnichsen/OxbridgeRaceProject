@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrewForm } from '../models/CrewForm';
 import { RaceForm } from '../models/race-form';
+import { Contestants } from '../models/contestants';
 import { HttpClient } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 
@@ -21,6 +22,7 @@ export class ManagerPageComponent implements OnInit {
   raceSubmitted = false;
   crewSubmitted = false;
   submitContestants = false;
+  public tempZipcode: string;
 
   ChangeInfoRace = false;
   ChangeInfoTeam = false;
@@ -71,33 +73,35 @@ export class ManagerPageComponent implements OnInit {
     console.log(crew.fld_CrewName);
     this.http.patch(this.urlTeam + crew.fld_CrewName, crew).subscribe();
   }
+
   DeleteCrew(crew){
     this.http.delete(this.urlTeam + crew.fld_CrewName).subscribe();
   }
 
-  UpdateContestants(race){
+  UpdateContestants(race, zipcode){
 
     this.submitContestants = true;
+    this.contestants = race
+    this.tempZipcode = zipcode;
+    console.log(this.tempZipcode);
+  }
 
-    race.forEach(element => {
-      this.contestants = element;
-      console.log(this.contestants)
+  AddContestants(contestant){
+    //@ts-ignore
+    //var contestant = document.getElementById("inputContestant").Value
+    console.log(contestant)
+    this.http.get<any>(this.urlTeam + contestant).subscribe({
+      next: result => this.crews = result,
+      error: err => console.log(err),
     });
 
-    var table = document.getElementById("ContestantTable");
-    //@ts-ignore
-    table.refresh();
-    console.log(this.contestants)
-  }
+    console.log(this.crews)
 
-  AddContestants(race){
+    this.http.put("/contestants/" + this.tempZipcode, this.crews).subscribe();
 
   }
-}
 
-export class Contestants{
-  public fld_CrewName: string;
-  public fld_Captain: string;
-  public fld_Members: number;
-  public fld_Category: string;
+  DeleteContestant(contestant){
+
+  }
 }

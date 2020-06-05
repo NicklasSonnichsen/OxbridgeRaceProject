@@ -84,7 +84,9 @@ export class ManagerPageComponent implements OnInit {
       console.log(this.contestants)
     });
 
-    
+    var table = document.getElementById("ContestantTable");
+    //@ts-ignore
+    table.refresh();
     console.log(this.contestants)
   }
 

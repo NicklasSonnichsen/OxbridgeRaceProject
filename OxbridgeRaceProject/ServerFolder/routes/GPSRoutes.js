@@ -15,7 +15,7 @@ app.get('/gps', async (req, res) => {
       // var user = req.cookies['user'];
       // if (user) {
         const tbl_Gps = await GPSCoordinatesModel.find({});
-        res.status(200).send({tbl_Gps});
+        res.status(200).send(tbl_Gps);
       // } else {
       //   res.status(400).send("No cookie found")
       // }
@@ -55,7 +55,7 @@ app.get('/gps', async (req, res) => {
       //var user = req.cookies['user'];
       //if (user) {
         tbl_Gps.save();
-        res.status(200).send({tbl_Gps});
+        res.status(200).send(tbl_Gps);
       // } else {
       //   res.status(400).send("No cookie found")
       // }

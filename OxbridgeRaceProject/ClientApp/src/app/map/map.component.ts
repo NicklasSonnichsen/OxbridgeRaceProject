@@ -20,6 +20,11 @@ export class MapComponent{
   public gpsLocation2: GpsLocation;
   nInterval;
   constructor(private http: HttpClient) {
+
+    window.addEventListener('online', this.GetNewPosition.bind(this));
+    window.addEventListener('offline', this.GetNewPosition.bind(this));
+
+
     this.http.get<any>('http://localhost:3000/gps/test2')
       .subscribe({
         next: result => this.gpsLocation = result,
@@ -32,6 +37,7 @@ export class MapComponent{
         error: err => console.log(err)
       })
 
+    
     
   }
 

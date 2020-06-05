@@ -59,6 +59,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 // updating and setting pins location
                 pinNew.Position = new Position(position.Latitude, position.Longitude);
 
+                Console.WriteLine("WE ARE RUNNING");
                 try
                 {
                     // getting current time 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GpsLocation } from '../models/gps-location';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AgmMarker } from '@agm/core';
 
@@ -12,19 +12,25 @@ import { AgmMarker } from '@agm/core';
 export class MapComponent{
   latitude = 54.90926;
   longitude = 9.80737;
-  public pinLattitude;
-  public pinLongitude;
-  public pinLattitude2;
-  public pinLongitude2;
-  public gpsLocation: GpsLocation[]
-  public gpsLocation2: GpsLocation[]
-  public IsRunning = true;
- 
-
-  public model: GpsLocation;
+  pinLattitude: number
+  pinLongitude: number
+  pinLattitude2: number
+  pinLongitude2: number
+  public gpsLocation: GpsLocation;
+  public gpsLocation2: GpsLocation;
+  nInterval;
   constructor(private http: HttpClient) {
+    this.http.get<any>('http://localhost:3000/gps/test2')
+      .subscribe({
+        next: result => this.gpsLocation = result,
+        error: err => console.log(err)
+      })
 
-  
+    this.http.get<any>('http://localhost:3000/gps/MartinCrew')
+      .subscribe({
+        next: result => this.gpsLocation2 = result,
+        error: err => console.log(err)
+      })
 
     
   }
@@ -34,55 +40,62 @@ export class MapComponent{
     console.log(event);
   }
 
-  public OnStart()
+   OnStart()
+   {
+     
+
+       this.http.get<any>('http://localhost:3000/gps/test2')
+         .subscribe({
+           next: result => this.gpsLocation = result,
+           error: err => console.log(err)
+         })
+
+       this.http.get<any>('http://localhost:3000/gps/MartinCrew')
+         .subscribe({
+           next: result => this.gpsLocation2 = result,
+           error: err => console.log(err)
+         })
+
+       this.pinLattitude = this.gpsLocation.fld_Lattitude
+       this.pinLongitude = this.gpsLocation.fld_Longitude
+
+       this.pinLattitude2 = this.gpsLocation2.fld_Lattitude
+       this.pinLongitude2= this.gpsLocation2.fld_Longitude
+
+       console.log("latitude for test2 from Onstart():  " + this.gpsLocation.fld_Lattitude)
+       console.log("latitude for MartinCrew from Onstart():  " + this.gpsLocation2.fld_Lattitude)
+
+     
+
+     this.nInterval = setInterval(this.GetNewPosition, 1000);
+     
+     
+   }
+
+  GetNewPosition()
   {
-    console.log("GET Button has been pressed")
 
-    this.http.get<GpsLocation[]>('http://localhost:3000/test2').subscribe((gpsLocation: GpsLocation[]) => {
+    console.log("console.log virker da?? :  ")
 
-      this.gpsLocation = gpsLocation
+     this.http.get<any>('http://localhost:3000/gps/test2')
+         .subscribe({
+           next: result => this.gpsLocation = result,
+           error: err => console.log(err)
+         })
 
-    })
+       this.http.get<any>('http://localhost:3000/gps/MartinCrew')
+         .subscribe({
+           next: result => this.gpsLocation2 = result,
+           error: err => console.log(err)
+         })
 
-    this.http.get<GpsLocation[]>('http://localhost:3000/MartinCrew').subscribe((gpsLocation: GpsLocation[]) => {
+  }
 
-      this.gpsLocation2 = gpsLocation
-
-    })
-    while (this.IsRunning) {
-      setTimeout(this.testmethod2, 500);
-      setTimeout(this.testmethod3, 500);
-    }
+  
+   OnStop()
+  {
+     console.log("STOP BUTTON PRESSED");
+     clearInterval(this.nInterval);
     
-  }
-
-
-  public testmethod2() {
-    for (let i = 0; i < this.gpsLocation.length; i++) {
-      console.log("UPDATE location")
-
-      this.pinLattitude = this.gpsLocation[i].fld_Lattitude;
-      this.pinLongitude = this.gpsLocation[i].fld_Longitude;
-      console.log("THIS IS THE LAtitude    : " + this.gpsLocation[i].fld_Lattitude);
-
-
-    }
-  }
-
-  public testmethod3() {
-    for (let i = 0; i < this.gpsLocation2.length; i++) {
-      console.log("UPDATE location")
-
-      this.pinLattitude2 = this.gpsLocation2[i].fld_Lattitude;
-      this.pinLongitude2 = this.gpsLocation2[i].fld_Longitude;
-      console.log("THIS IS THE LAtitude    : " + this.gpsLocation2[i].fld_Lattitude);
-
-
-    }
-  }
-
-  public OnStop()
-  {
-    this.IsRunning = false;
   }
 }

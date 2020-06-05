@@ -22,18 +22,18 @@
 
   <div class="d-flex justify-content-center" style="padding: 1%;">
     <div class="form-group" [hidden]="!crewSubmitted">
-      <table class="table-sm table-dark table-hover" *ngFor="let crew of crews">
+      <table class="table-sm table-dark table-hover table-responsive">
         <thead>
           <th>Crew Name</th>
           <th>Captain</th>
           <th>Email</th>
           <th>Members</th>
           <th>Category</th>
-          <th [hidden]="!crew.isEditable">Password</th>
+          <th>Password</th>
           <th>Actions</th>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let crew of crews">
             <td>
               <input type="text" class="form-control" [(ngModel)]="crew.fld_CrewName" [disabled]="!crew.isEditable">
             </td>
@@ -50,7 +50,7 @@
             <td>
               <input type="text" class="form-control" [(ngModel)]="crew.fld_Category" [disabled]="!crew.isEditable">
             </td>
-            <td [hidden]="!crew.isEditable">
+            <td>
               <input type="text" class="form-control" [(ngModel)]="crew.fld_Password" [disabled]="!crew.isEditable">
             </td>
             <td>
@@ -120,7 +120,7 @@
 
   <div class="form-group" [hidden]="!submitContestants">
     <div class="d-flex justify-content-center">
-      <table class="table table-dark table-hover">
+      <table class="table table-dark table-hover" id="ContestantTable">
         <!-- <div>
           <input type="text" class="form-control" id="inputContestant"><button type="submit" class="btn btn-success"
             (click)="AddContestants(inputContestant)"></button>

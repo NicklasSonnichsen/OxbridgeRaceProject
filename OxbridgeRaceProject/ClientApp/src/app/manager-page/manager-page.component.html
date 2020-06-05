@@ -1,92 +1,171 @@
-
-
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="jumbotron">
-                <button style="margin: 5%;" type="button" class="btn btn-success">Start race</button>
-                <button style="margin: 5%;" type="button" class="btn btn-danger">End race</button>
-                <!-- <button style="margin: 5%;" class="btn btn-warning" [routerLink]="['/admin-signup']">New manager</button> -->
-                <button style="margin: 5%;" class="btn btn-warning" (click)="LogOut()">Log out</button>
-            </div>
-        </div>
-        <div class="col">
-            <div class="jumbotron">
-                <input style="margin: 5%;" type="text" class="form-control" id="CrewSearch">
-                <button style="margin: 5%;" type="button" class="btn btn-primary" (click)="SearchTeam()">Search team</button>
-            </div>
-        </div>
-        <div class="col">
-            <div class="jumbotron" style="margin: 2%;">
-                <input style="margin: 5%;" type="text" class="form-control" id="RaceSearch">
-                <button style="margin: 5%;" type="button" class="btn btn-primary" (click)="SearchRace()">Search race</button>
-            
-                <input style="margin: 5%;" type="text" class="form-control">
-                <button style="margin: 5%;" type="button" class="btn btn-success">Add team</button>
-            </div>
-        </div>
-    </div>   
-</div>
+  <div class="d-flex justify-content-center">
+    <div class="col">
+      <button type="button" class="btn btn-success">Start race</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-danger">End race</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary" (click)="SearchRace()">Search race</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary" (click)="SearchTeam()">Search team</button>
+    </div>
+    <div class="col">
+      <button class="btn btn-warning" [routerLink]="['/admin-signup']">New manager</button>
+    </div>
+    <div class="col">
+      <button class="btn btn-danger" (click)="LogOut()">Log out</button>
+    </div>
+  </div>
 
-<div class="form-group" >
-    <form style="padding: 1%;" #crewForm="ngForm">
-        <table class="table table-striped table-dark">
-            <thead>
-              <th>Crew Name</th>
-              <th>Captain</th>
-              <th>Email</th>
-              <th>Password</th>
-              <th>Members</th>
-              <th>Category</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let crew of crews">
-                <td>{{crew.fld_CrewName}}</td>
-                <td>{{crew.fld_Captain}}</td>
-                <td>{{crew.fld_Email}}</td>
-                <td>{{crew.fld_Password}}</td>
-                <td>{{crew.fld_Members}}</td>
-                <td>{{crew.fld_Category}}</td>
-              </tr>
-            </tbody>
-            
-          </table>
-        <button type="button" class="btn btn-warning">Change information</button>
-        <button type="button" class="btn btn-danger">Delete crew</button>
-    </form>
-</div>
+  <div class="d-flex justify-content-center" style="padding: 1%;">
+    <div class="form-group" [hidden]="!crewSubmitted">
+      <table class="table-sm table-dark table-hover" *ngFor="let crew of crews">
+        <thead>
+          <th>Crew Name</th>
+          <th>Captain</th>
+          <th>Email</th>
+          <th>Members</th>
+          <th>Category</th>
+          <th [hidden]="!crew.isEditable">Password</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="crew.fld_CrewName" [disabled]="!crew.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="crew.fld_Captain" [disabled]="!crew.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="crew.fld_Email" [disabled]="!crew.isEditable">
+            </td>
 
-<div class="form-group" >
-    <form style="padding: 1%;" #raceForm="ngForm">
-        <table class="table table-striped table-dark">
-            <thead>
-              <th>Zipcode</th>
-              <th>Date</th>
-              <th>Is Started</th>
-              <th>Is Ended</th>
-              <th>Race Name</th>
-              <th>Race Coordinators</th>
-              <th>Contestants</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let race of races">
-                <td>{{race.fld_Zipcode}}</td>
-                <td>{{race.fld_Date}}</td>
-                <td>{{race.fld_IsStarted}}</td>
-                <td>{{race.fld_IsEnded}}</td>
-                <td>{{race.fld_RaceName}}</td>
-                <td>{{race.fld_RaceCoordinator}}</td>
-                <td>{{race.fld_Contestants}}</td>
-              </tr>
-            </tbody>
-            
-          </table>
-        <button type="button" class="btn btn-warning">Change information</button>
-        <button type="button" class="btn btn-danger">Delete race</button>
-    </form>
-</div>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="crew.fld_Members" [disabled]="!crew.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="crew.fld_Category" [disabled]="!crew.isEditable">
+            </td>
+            <td [hidden]="!crew.isEditable">
+              <input type="text" class="form-control" [(ngModel)]="crew.fld_Password" [disabled]="!crew.isEditable">
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="crew.isEditable=!crew.isEditable"
+                *ngIf="!crew.isEditable">Edit</button>
+              <button class="btn-sm btn-success" *ngIf="crew.isEditable" (click)="crew.isEditable=!crew.isEditable"
+                (click)="SaveChangesCrew(crew)">Save</button>
+              <button class="btn-sm btn-danger" *ngIf="crew.isEditable" (click)="crew.isEditable=!crew.isEditable"
+                (click)="DeleteCrew(crew)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-primary" (click)="crewSubmitted=false">OK</button>
+    </div>
+  </div>
 
-<div *ngFor="let crew of crews">
-    {{crew}}
-</div>
+  <div class="form-group" [hidden]="!raceSubmitted">
+    <div class="d-flex justify-content-center">
+      <table class="table table-dark table-hover">
+        <thead>
+          <th>Zipcode</th>
+          <th>Date</th>
+          <th>Is Started</th>
+          <th>Is Ended</th>
+          <th>Race Name</th>
+          <th>Race Coordinators</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let race of races">
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="race.fld_Zipcode" [disabled]="!race.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="race.fld_Date" [disabled]="!race.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="race.fld_IsStarted" [disabled]="!race.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="race.fld_IsEnded" [disabled]="!race.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="race.fld_RaceName" [disabled]="!race.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="race.fld_RaceCoordinator"
+                [disabled]="!race.isEditable">
+            </td>
+            <td style="padding: 1%;">
+              <button class="btn btn-primary" (click)="race.isEditable=!race.isEditable"
+                *ngIf="!race.isEditable">Edit</button>
+              <button class="btn-sm btn-success" *ngIf="race.isEditable" (click)="race.isEditable=!race.isEditable"
+                (click)="SaveChangesRace(race)">Save</button>
+              <button class="btn-sm btn-danger" *ngIf="race.isEditable" (click)="race.isEditable=!race.isEditable"
+                (click)="DeleteRace(race)">Delete</button>
+              <button class="btn-sm btn-primary" *ngIf="race.isEditable"
+                (click)="UpdateContestants(race.fld_Contestants)">Add contestants</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-primary" (click)="raceSubmitted=false">OK</button>
+  </div>
 
+  <div class="form-group" [hidden]="!submitContestants">
+    <div class="d-flex justify-content-center">
+      <table class="table table-dark table-hover">
+        <!-- <div>
+          <input type="text" class="form-control" id="inputContestant"><button type="submit" class="btn btn-success"
+            (click)="AddContestants(inputContestant)"></button>
+        </div> -->
+        <thead>
+          <th>Crew name</th>
+          <th>Captain</th>
+          <th>Members</th>
+          <th>Category</th>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let contestant of contenstants">
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="contestant.fld_CrewName"
+                [disabled]="!contestant.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="contestant.fld_Captain"
+                [disabled]="!contestant.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="contestant.fld_Members"
+                [disabled]="!contestant.isEditable">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="contestant.fld_Category"
+                [disabled]="!contestant.isEditable">
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="contestant.isEditable=!contestant.isEditable"
+                *ngIf="!contestant.isEditable">Edit</button>
+              <button class="btn-sm btn-success" *ngIf="contestant.isEditable"
+                (click)="contestant.isEditable=!contestant.isEditable" (click)="SaveChangesRace(race)">Save</button>
+              <button class="btn-sm btn-danger" *ngIf="contestant.isEditable"
+                (click)="contestant.isEditable=!contestant.isEditable" (click)="DeleteRace(race)">Delete</button>
+              <button class="btn-sm btn-primary" *ngIf="contestant.isEditable"
+                (click)="UpdateContestants(race)"></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+    <button class="btn btn-primary" (click)="submitContestants=false">OK</button>
+  </div>
+  
+</div>

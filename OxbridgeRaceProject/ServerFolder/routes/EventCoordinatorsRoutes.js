@@ -1,56 +1,18 @@
 const express = require('express');
 const EventCoordinatorModel = require('../Models/EventCoordinatorModel.js');
-const cookieparser = require('cookie-parser');
 const app = express();
 
-app.use(cookieparser());
 var bcrypt = require('bcryptjs');
 const salt = bcrypt.genSalt(10);
-
-//Debugging
-app.get('/getcookie', function(req, res) {
-  var user = req.cookies['user'];
-  if (user) {
-      console.log(req.signedCookies)
-      return res.send(req.cookies);        
-  }
-
-  return res.send('No cookie found');
-});
-
-app.get('/getall', async (req, res) => {
-
-  try {
-    const tbl_EventCoordinator = await EventCoordinatorModel.find({});
-    res.status(200).send({tbl_EventCoordinator});
-  } catch (error) {
-    console.log(error)
-  }
-
-  
-})
-
-//Debugging
-app.get('/', function (req, res) {
-  // Cookies that have not been signed
-  console.log('Cookies: ', req.cookies['user'])
-
-  // Cookies that have been signed
-  console.log('Signed Cookies: ', req.signedCookies['user'])
-})
 
 /**
  * Gets all of the collections in the database
  */
 app.get('/eventcoordinator', async (req, res) => {
   try {
-    var user = req.cookies['user'];
-    if (user) {
+
       const tbl_EventCoordinator = await EventCoordinatorModel.find({});
       res.status(200).send({tbl_EventCoordinator});
-    } else {
-      res.status(400).send("No cookie found")
-    }
   } catch (error) {
     res.status(500).send(error)
   }
@@ -63,14 +25,10 @@ app.get('/eventcoordinator/:fld_Email', async (req, res) => {
   
   //Should search for the specified event coordinator by email
   try {
-    var user = req.cookies['user'];
-    if (user) {
+
       const tbl_EventCoordinator = await EventCoordinatorModel.findOne({ fld_Email: req.params.fld_Email});
       console.log(res.cookie(user));
       res.status(200).send({tbl_EventCoordinator});
-      } else {
-      res.status(400).send("No cookie found")
-      }
 
     } catch (err) {
       res.status(500).send(err);
@@ -84,16 +42,13 @@ app.post('/eventcoordinator', async (req, res) => {
 
   const tbl_EventCoordinator = new EventCoordinatorModel(req.body);
   try {
-    var user = req.cookies['user'];
-    if (user) {
+
       const hashedPassword = await bcrypt.hash(req.body.fld_Password, 10);
       tbl_EventCoordinator.fld_Password = hashedPassword;
 
       tbl_EventCoordinator.save();
       res.status(201).json({message: "User has been created", tbl_EventCoordinator});
-    } else {
-      res.status(400).send("No cookie found")
-    }
+
   } catch (error) {
     console.log(error);
   }
@@ -123,34 +78,17 @@ app.post('/eventcoordinator', async (req, res) => {
   })
 
   /**
-   * When the user logs out, the cookie is deleted
-   */
-  app.get('/logout', async (req, res) => {
-    var user = req.cookies['user'];
-    if (user) {
-      res.clearCookie('user')
-        return res.send("you are logged out");        
-    }
-    return res.send('No cookie found');
-  })
-
-  /**
    * Deletes the specified entry in the database
    */
   app.delete('/eventcoordinator/:fld_Email', async (req, res) => {
     
     try {
-      var user = req.cookies['user'];
-      if (user) {
         const tbl_EventCoordinator = await EventCoordinatorModel.deleteOne({fld_Email: req.params.fld_Email});
         if (!tbl_EventCoordinator) {
           res.status(404).send("No item found")
         } else{
           res.status(200).send({tbl_EventCoordinator})
         }
-      } else {
-        return res.status(400).send("no cookie found");
-      }
     } catch (err) {
         res.status(500).send(err)
       }
@@ -161,9 +99,6 @@ app.post('/eventcoordinator', async (req, res) => {
    */
   app.patch('/eventcoordinator/:fld_Email', async (req, res) => {
     try {
-      var user = req.cookies['user'];
-      if (user) {
-        console.log("user found")
         var tbl_EventCoordinator = await EventCoordinatorModel.findOne({fld_Email: req.params.fld_Email})
         
         if (!tbl_EventCoordinator) {
@@ -180,9 +115,6 @@ app.post('/eventcoordinator', async (req, res) => {
           console.log("Updating user")
           return res.status(200).send({tbl_EventCoordinator});
         }
-      } else {
-        return res.status(400).send("no cookie found");
-      }
     } catch (err) {
       res.status(500).send(err)
     }

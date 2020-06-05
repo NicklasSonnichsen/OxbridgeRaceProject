@@ -1,8 +1,6 @@
 const express = require('express');
 const CrewModel = require('../Models/CrewModel');
-const cookieparser = require('cookie-parser');
 const app = express();
-app.use(cookieparser());
 
 // AUTHENTICATION
 
@@ -14,13 +12,9 @@ var bcrypt = require('bcryptjs');
 app.get('/crew', async (req, res) => {
   
   try {
-    //var user = req.cookies['user'];
-    //if (user) {
       const tbl_Crew = await CrewModel.find({});
       res.status(200).send(tbl_Crew);
-    //} else {
-    //  res.status(400).send("No cookie found")
-    //}
+
   } catch (error) {
     res.status(500).send(error)
   }
@@ -30,18 +24,12 @@ app.get('/crew', async (req, res) => {
  * Finds the specified entry in the database
  */
 app.get('/crew/:fld_CrewName', async (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
   //Should search for the specified event coordinator by email
-  
   try {
-    //var user = req.cookies['user'];
-    //if (user) {
       const tbl_Crew = await CrewModel.findOne({ fld_CrewName: req.params.fld_CrewName});
       console.log({tbl_Crew})
-      res.status(200).json({tbl_Crew});
-    //  } else {
-    //  res.status(400).send("No cookie found")
-    //  }
+      res.status(200).send(tbl_Crew);
+
 
     } catch (err) {
       res.status(500).send(err);
@@ -75,17 +63,14 @@ app.post('/crew', async (req, res) => {
   app.delete('/crew/:fld_CrewName', async (req, res) => {
     
     try {
-      var user = req.cookies['user'];
-      if (user) {
+      
         const tbl_Crew = await CrewModel.deleteOne({fld_Email: req.params.fld_CrewName});
         if (!tbl_Crew) {
           res.status(404).send("No item found")
         } else{
           res.status(200).send(tbl_Crew)
         }
-      } else {
-        return res.status(400).send("no cookie found");
-      }
+      
     } catch (err) {
         res.status(500).send(err)
       }
@@ -96,8 +81,7 @@ app.post('/crew', async (req, res) => {
    */
   app.patch('/crew/:fld_CrewName', async (req, res) => {
     try {
-      var user = req.cookies['user'];
-      if (user) {
+      
         var tbl_Crew = await CrewModel.findOne({fld_CrewName: req.params.fld_CrewName})
         
         if (!tbl_Crew) {
@@ -114,9 +98,7 @@ app.post('/crew', async (req, res) => {
           console.log("Updating crew")
           return res.status(200).send({tbl_Crew});
         }
-      } else {
-        return res.status(400).send("no cookie found");
-      }
+      
     } catch (err) {
       res.status(500).send(err)
     }

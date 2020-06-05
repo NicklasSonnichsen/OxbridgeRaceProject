@@ -87,8 +87,7 @@ export class ManagerPageComponent implements OnInit {
   }
 
   AddContestants(contestant){
-    //@ts-ignore
-    //var contestant = document.getElementById("inputContestant").Value
+    
     console.log(contestant)
     this.http.get<any>(this.urlTeam + contestant).subscribe({
       next: result => this.crews = result,

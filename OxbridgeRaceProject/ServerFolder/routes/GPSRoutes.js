@@ -39,13 +39,9 @@ app.get('/gps', async (req, res) => {
   
     const tbl_Crew = new GPSCoordinatesModel(req.body);
     try {
-      var user = req.cookies['user'];
-      if (user) {
         tbl_Gps.save();
         res.status(200).send({tbl_Gps});
-      } else {
-        res.status(400).send("No cookie found")
-      }
+
     } catch (error) {
       console.log(error);
     }

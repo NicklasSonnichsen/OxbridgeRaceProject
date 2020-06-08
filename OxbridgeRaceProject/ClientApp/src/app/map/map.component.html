@@ -1,13 +1,15 @@
 <body>
   <p>Map is working </p>
   <agm-map [latitude]="latitude" [longitude]="longitude" (click)="onChooseLocation($event)">
-    <agm-marker [latitude]="pinLattitude" [longitude]="pinLongitude"></agm-marker>
-    <agm-marker [latitude]="pinLattitude2" [longitude]="pinLongitude2"></agm-marker>
+    <!--<agm-marker [latitude]="pinLattitude" [longitude]="pinLongitude"></agm-marker>
+  <agm-marker [latitude]="pinLattitude2" [longitude]="pinLongitude2"></agm-marker>-->
+    <agm-marker *ngFor="let boat of boats" [label]="boat.label" [latitude]="boat.lat" [longitude]="boat.lng" [iconUrl]="icon">
+    </agm-marker>
   </agm-map>
 </body>
 <div>
   <button (click)="OnStart()">START</button>
   <button (click)="OnStop()">STOP</button>
-  <button (click)="GetNewPosition()">Virker det sådan her </button>
+  
 
 </div>

@@ -16,6 +16,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
         private HttpClient client = new HttpClient();
         private const string NicklasURL = @"http://192.168.87.131:3000/logincrew";
         private const string PhoneUrl = @"http://192.168.43.161:3000/logincrew";
+        private const string MathiasURI = @"http://192.168.1.92:3000/gps";
         public LoginViewModel()
         {
             client = new HttpClient();
@@ -56,7 +57,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 // making it content
                 var content = new StringContent(requestString, Encoding.UTF8, "application/json");
                 // posting 
-                var response = await client.PostAsync(NicklasURL, content);
+                var response = await client.PostAsync(MathiasURI, content);
                 // to see what could be wrong 
                 var result = response.Content.ReadAsStringAsync().Result;
                 if (response.IsSuccessStatusCode)

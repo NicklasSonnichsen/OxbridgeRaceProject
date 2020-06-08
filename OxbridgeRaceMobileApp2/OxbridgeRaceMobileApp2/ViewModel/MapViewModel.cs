@@ -66,13 +66,13 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                     // getting current time 
                     string currentTime = DateTime.Now.ToString();
                     // creating object that is posted to MongoDb 
-                    var post = new GPSLocation { fld_CrewName = "MartinCrew", fld_Date = currentTime, fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
+                    var post = new GPSLocation { fld_CrewName = "test2", fld_Date = currentTime, fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
                     // converting the object to json 
                     var requestString = JsonConvert.SerializeObject(post);
                     // making it content
                     var content = new StringContent(requestString, Encoding.UTF8, "application/json");
                     // posting 
-                    var response = await client.PostAsync(NicklasURL, content);
+                    var response = await client.PostAsync(MathiasURI, content);
                     // to see what could be wrong 
                     var result = response.Content.ReadAsStringAsync().Result;
                     if (response.IsSuccessStatusCode)

@@ -108,7 +108,7 @@ export class ManagerPageComponent implements OnInit {
 
     console.log(this.getContestants)
 
-    this.http.post<CrewForm>("/contestants/" + this.tempZipcode, this.getContestants).subscribe();
+    this.http.put<CrewForm>("/contestants/" + this.tempZipcode, this.getContestants).subscribe();
 
   }
 

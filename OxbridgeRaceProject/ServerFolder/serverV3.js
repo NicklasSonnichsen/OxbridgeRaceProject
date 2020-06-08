@@ -30,7 +30,8 @@ app.use(BodyParser.urlencoded({extended:true}));
  * else the server will fail to connect on launch
  */
 mongoose.connect('mongodb+srv://Mathias:test1234@oxbridge-drekb.azure.mongodb.net/OxbridgeRaceDB?authSource=admin&replicaSet=Oxbridge-shard-0&readPreference=primary&ssl=true', {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useFindAndModify: false
 });
 
 
@@ -43,6 +44,7 @@ app.use(raceCategoryRouter);
 app.use(EventCoordinatorsRoutes);
 app.use(GpsCoordinatesRouter);
 app.use(AdminRoutes);
+
 
 //listens to localhost:3000 for CRUD operations
 app.listen(3000, () => { console.log('Server is running...') });

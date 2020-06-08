@@ -104,9 +104,9 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OxbridgeRaceMobileApp2\RaceApp.csproj">
+    <ProjectReference Include="..\OxbridgeRaceMobileApp2\OxbridgeRaceMobileApp2.csproj">
       <Project>{F838CFFD-30E3-49D2-94AB-B2BC89801924}</Project>
-      <Name>RaceApp</Name>
+      <Name>OxbridgeRaceMobileApp2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

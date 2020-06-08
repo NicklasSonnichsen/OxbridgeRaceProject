@@ -108,7 +108,8 @@ const app = express();
       try {
         const tbl_Crew = await new CrewModel(req.body)
         console.log(tbl_Crew)
-        const tbl_Race = await RaceModel.updateOne({fld_Zipcode: req.params.fld_Zipcode}, {$push: {"fld_Contestants": tbl_Crew}});
+        const tbl_Race = await RaceModel.updateOne({fld_Zipcode: req.params.fld_Zipcode}, {$push: {"fld_Contestants": {tbl_Crew}}});
+        console.log({tbl_Race})
         if (!tbl_Race) {
           return res.status(404).send("Cannot find race");
         } else {

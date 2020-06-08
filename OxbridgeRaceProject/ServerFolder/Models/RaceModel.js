@@ -48,8 +48,6 @@ const tbl_race = new mongoose.Schema({
       fld_CrewName: {
         type: String,
         required: true,
-        unique: true,
-        index: true,
         validate(value) {
           if (value == "") throw new Error("Crew name must be entered");
         }

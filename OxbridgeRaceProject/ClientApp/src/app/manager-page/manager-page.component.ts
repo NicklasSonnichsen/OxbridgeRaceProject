@@ -25,6 +25,8 @@ export class ManagerPageComponent implements OnInit {
   crewSubmitted = false;
   submitContestants = false;
 
+  RaceStatus = false;
+
 
   public tempZipcode: string;
 
@@ -120,4 +122,31 @@ export class ManagerPageComponent implements OnInit {
     this.Cookie.remove("user");
     this.router.navigate(['/admin-login'])
   }
+
+  testMethod(){
+    console.log("")
+  }
+
+  StartRace(){
+    this.http.get<any>(this.urlRace + "6430").subscribe({
+      next: result => this.races = result,
+      error: err => console.log(err)
+    });
+
+    console.log(this.races);
+
+    this.RaceStatus = true;
+
+    while(this.RaceStatus){
+      console.log("race is running");
+      //setInterval()
+    }
+
+
+  }
+
+  EndRace(){
+    this.RaceStatus = false
+  }
+
 }

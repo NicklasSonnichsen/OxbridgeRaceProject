@@ -30,8 +30,7 @@ app.use(BodyParser.urlencoded({extended:true}));
  * else the server will fail to connect on launch
  */
 mongoose.connect('mongodb+srv://Mathias:test1234@oxbridge-drekb.azure.mongodb.net/OxbridgeRaceDB?authSource=admin&replicaSet=Oxbridge-shard-0&readPreference=primary&ssl=true', {
-  useNewUrlParser: true,
-  useFindAndModify: false
+  useNewUrlParser: true
 });
 
 

@@ -42,44 +42,5 @@ export class AdminLoginComponent implements OnInit {
       console.log(res);
       this.router.navigate(['/manager-page'])
     })
-      
-    //   {
-    //   next: data => console.log(data),
-    //   localstorage.setItem()  
-    //   error: error => console.error('There was an error with login!', error)
-    // })
-  }
-
-  TestToken() {
-    this.http.get<Administrators>('http://localhost:3000/eventcoordinator', { withCredentials: true }).subscribe((res => {
-      console.log(res);
-    }))  
-     
-  }
-     //{
-  //     next: data => this.model = data,
-  //     error: error => console.log("Test cookie error!: ", error)});
-  // }
-
-  TestSearchToken() {
-    this.http.get<Administrators>('http://localhost:3000/eventcoordinator/test', { withCredentials: true })
-      .subscribe({
-        next: result => console.log(result),
-        error: err => console.log(err)
-      });
-  }
-  TestSet() {
-    this.http.get("http://localhost:3000/set", { responseType: 'text' })
-      .subscribe({
-        next: result => console.log(result),
-        error: err => console.log(err)
-      });
-  }
-  TestGet() {
-    this.http.get("http://localhost:3000/getall", { responseType: 'text' })
-      .subscribe({
-        next: result => console.log(result),
-        error: err => console.log(err)
-      });
   }
 }

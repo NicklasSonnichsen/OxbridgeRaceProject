@@ -107,12 +107,13 @@ const app = express();
 
       try {
         const tbl_Crew = await new CrewModel(req.body)
+        console.log(tbl_Crew)
         const tbl_Race = await RaceModel.findOneAndUpdate({fld_Zipcode: req.params.fld_Zipcode}, {$push: {"fld_Contestants": tbl_Crew}});
         if (!tbl_Race) {
           return res.status(404).send("Cannot find race");
         } else {
           await tbl_Race.save();
-          res.status(200).send(tbl_Crew);         
+          res.status(200).send({tbl_Crew});         
         }
       } catch (error) {
         console.log(error.message);

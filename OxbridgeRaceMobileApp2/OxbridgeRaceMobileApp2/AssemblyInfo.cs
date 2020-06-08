@@ -1,4 +1,4 @@
-using Android.App;
+using Android.app;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]

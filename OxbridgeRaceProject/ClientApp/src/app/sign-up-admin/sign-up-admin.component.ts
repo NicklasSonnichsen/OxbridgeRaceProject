@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Administrators } from '../models/administrators'
+import { Router } from '@angular/router'
+import { CookieService } from 'angular2-cookie/core'
 
 @Component({
   selector: 'app-sign-up-admin',
@@ -9,11 +11,17 @@ import { Administrators } from '../models/administrators'
 })
 export class SignUpAdminComponent implements OnInit {
   public model: Administrators;
-  constructor(private http: HttpClient) {
-    this.model = new Administrators('Martin', 'Iversen', 'test@myMail.com', '123456789');
+
+  constructor(private http: HttpClient, private Cookie: CookieService, private router:Router) {
+    this.model = new Administrators('', '', '', '');
   }
 
   ngOnInit() {
+    var cookie = this.Cookie.get("user");
+    if (cookie == null) {
+      console.log("401 not authorized - No cookie found");
+      this.router.navigate(['/admin-login']);
+    }
   }
   submitted = false;
 

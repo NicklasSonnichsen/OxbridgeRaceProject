@@ -115,7 +115,7 @@
         </tbody>
       </table>
     </div>
-    <button class="btn btn-primary" (click)="raceSubmitted=false">OK</button>
+    <button class="btn btn-primary" (click)="raceSubmitted=false" (click)="submitContestants=false">OK</button>
   </div>
 
   <div class="form-group" [hidden]="!submitContestants">
@@ -148,15 +148,15 @@
                 [disabled]="!contestant.isEditable">
             </td>
             <td>
-              <button class="btn-sm btn-danger" (click)="DeleteContestant(race)">Delete</button>
+              <button class="btn-sm btn-danger" (click)="DeleteContestant(contestant)">Delete</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div>
-      <input style="border-color: black; padding: 1%;" type="text" class="form-control" id="inputContestant">
-      <button style="padding: 1%;" type="submit" class="btn btn-success"(click)="AddContestants('inputContestant.value')">Add Team</button>
+    <div>                                                                                 <!--Gets the Crew name from the input field-->
+      <input style="border-color: black; padding: 1%;" type="text" class="form-control" [(ngModel)]="getContestants">
+      <button style="padding: 1%;" type="submit" class="btn btn-success"(click)="AddContestants()">Add Team</button>
     </div>
     <button style="padding: 1%;" class="btn btn-primary" (click)="submitContestants=false">OK</button>
   </div>

@@ -3,6 +3,8 @@ import { CrewForm } from '../models/CrewForm';
 import { RaceForm } from '../models/race-form';
 import { Contestants } from '../models/contestants';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from "angular2-cookie/core";
+import { Router } from '@angular/router';
 import { Observable, from } from 'rxjs';
 
 @Component({
@@ -17,11 +19,13 @@ export class ManagerPageComponent implements OnInit {
   public crews: CrewForm[]; 
   public races: RaceForm[];
   public contestants: Contestants[];
-  public searchedCrew: string;
-  public searchedRace: string;
+  public getContestants: CrewForm[];
+
   raceSubmitted = false;
   crewSubmitted = false;
   submitContestants = false;
+
+
   public tempZipcode: string;
 
   ChangeInfoRace = false;
@@ -35,10 +39,15 @@ export class ManagerPageComponent implements OnInit {
   enableEditIndex = null;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private Cookie: CookieService, private router: Router) {
    }
 
   ngOnInit(): void {
+    var cookie = this.Cookie.get("user");
+    if(cookie == null){
+      console.log("401 not authorized - No cookie found");
+      this.router.navigate(['/admin-login'])
+    }
   }
 
   enableEditMethod(e, i) {
@@ -78,29 +87,37 @@ export class ManagerPageComponent implements OnInit {
     this.http.delete(this.urlTeam + crew.fld_CrewName).subscribe();
   }
 
-  UpdateContestants(race, zipcode){
+  SaveChangesRace(race){
+    console.log(race.fld_Zipcode);
+    this.http.patch(this.urlRace + race.fld_Zipcode, race).subscribe();
+  }
 
+  UpdateContestants(race, zipcode){
     this.submitContestants = true;
     this.contestants = race
     this.tempZipcode = zipcode;
     console.log(this.tempZipcode);
   }
 
-  AddContestants(contestant){
+  AddContestants(){
     
-    console.log(contestant)
-    this.http.get<any>(this.urlTeam + contestant).subscribe({
-      next: result => this.crews = result,
+    this.http.get<any>(this.urlTeam + this.getContestants).subscribe({
+      next: result => this.getContestants = result, 
       error: err => console.log(err),
     });
 
-    console.log(this.crews)
+    console.log(this.getContestants)
 
-    this.http.put("/contestants/" + this.tempZipcode, this.crews).subscribe();
+    this.http.post<CrewForm>("/contestants/" + this.tempZipcode, this.getContestants).subscribe();
 
   }
 
   DeleteContestant(contestant){
 
+  }
+
+  LogOut(){
+    this.Cookie.remove("user");
+    this.router.navigate(['/admin-login'])
   }
 }

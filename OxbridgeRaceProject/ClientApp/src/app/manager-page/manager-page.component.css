@@ -4,4 +4,10 @@ input{
 }
 input[type="text"]:disabled{
     background-color: transparent;
+    text-align: center;
+}
+
+th{
+    text-align: center;
+    width: min-content;
 }

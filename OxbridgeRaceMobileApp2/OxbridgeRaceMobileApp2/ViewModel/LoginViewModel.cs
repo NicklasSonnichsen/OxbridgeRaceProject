@@ -51,6 +51,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 Console.WriteLine("LOGIN ER BLEVET TRYKKET PÅ");
 
                 Console.WriteLine("PASSWORD ER DETTE:    "+UserPassword);
+                
                 var post = new CrewLoginInfo { fld_CrewName = UserName, fld_Password = UserPassword };
                 Console.WriteLine("FLDPASSWORD ER:   "+post.fld_Password);
                 var requestString = JsonConvert.SerializeObject(post);
@@ -64,6 +65,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 {
 
                     Console.WriteLine("Succesfull RESULT" + result);
+                    (Application.Current as App).crewName = UserName;
                     App.Current.MainPage = new NavigationPage(new MapView());
                 }
                 else

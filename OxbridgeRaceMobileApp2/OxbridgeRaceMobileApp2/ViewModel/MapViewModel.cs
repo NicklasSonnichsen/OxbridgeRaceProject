@@ -60,13 +60,13 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 // updating and setting pins location
                 pinNew.Position = new Position(position.Latitude, position.Longitude);
 
-                Console.WriteLine("WE ARE RUNNING");
+                
                 try
                 {
                     // getting current time 
                     string currentTime = DateTime.Now.ToString();
                     // creating object that is posted to MongoDb 
-                    var post = new GPSLocation { fld_CrewName = "test2", fld_Date = currentTime, fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
+                    var post = new GPSLocation { fld_CrewName = (Application.Current as App).crewName, fld_Date = currentTime, fld_Lattitude = position.Latitude, fld_Longitude = position.Longitude };
                     // converting the object to json 
                     var requestString = JsonConvert.SerializeObject(post);
                     // making it content
@@ -98,11 +98,12 @@ namespace OxbridgeRaceMobileApp2.ViewModel
 
         public ICommand SimpleLogOut => new Command(async () => {
 
-            // navigate to the next page after you have logged in 
-            App.Current.MainPage = new LoginView();
             // setting IsRunnign to false so the geolacotor stops recording position
             IsRunning = false;
 
+            // navigate to the next page after you have logged in 
+            App.Current.MainPage = new LoginView();
+           
         });
 
 

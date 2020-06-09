@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const BodyParser = require("body-parser");
+
 const cors = require('cors');
 
 
@@ -44,6 +45,7 @@ app.use(EventCoordinatorsRoutes);
 app.use(GpsCoordinatesRouter);
 app.use(AdminRoutes);
 
+
 //listens to localhost:3000 for CRUD operations
 app.listen(3000, () => { console.log('Server is running...') });
 
@@ -53,3 +55,6 @@ app.listen(3000, () => { console.log('Server is running...') });
 //   res.header(Access-Control-Allow-Headers, "Origin, X-Requested-With, Content-Type, Accept");
 //   next();
 // });
+
+
+

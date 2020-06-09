@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CrewForm } from '../models/CrewForm';
 import { RaceForm } from '../models/race-form';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
+import { CookieService } from "angular2-cookie/core";
+import { Router } from '@angular/router';
+import { Observable, } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CrewForm } from "../models/CrewForm";
+import { error } from '@angular/compiler/src/util';
+import { removeSummaryDuplicates } from '@angular/compiler';
 
 @Component({
   selector: 'app-manager-page',
@@ -15,12 +20,17 @@ export class ManagerPageComponent implements OnInit {
 
   public crews: CrewForm[]; 
   public races: RaceForm[];
-  public contestants: Contestants[];
-  public searchedCrew: string;
-  public searchedRace: string;
+  public contestants: Array<CrewForm>;
+  public getContestants: CrewForm[];
+
   raceSubmitted = false;
   crewSubmitted = false;
   submitContestants = false;
+
+  RaceStatus = false;
+
+
+  public tempID;
 
   ChangeInfoRace = false;
   ChangeInfoTeam = false;
@@ -33,10 +43,17 @@ export class ManagerPageComponent implements OnInit {
   enableEditIndex = null;
 
 
-  constructor(private http: HttpClient) {
-   }
+  constructor(private http: HttpClient, 
+    private Cookie: CookieService, 
+    private router: Router,
+    ) {}
 
   ngOnInit(): void {
+    var cookie = this.Cookie.get("user");
+    if(cookie == null){
+      console.log("401 not authorized - No cookie found");
+      this.router.navigate(['/admin-login'])
+    }
   }
 
   enableEditMethod(e, i) {
@@ -71,33 +88,82 @@ export class ManagerPageComponent implements OnInit {
     console.log(crew.fld_CrewName);
     this.http.patch(this.urlTeam + crew.fld_CrewName, crew).subscribe();
   }
+
   DeleteCrew(crew){
     this.http.delete(this.urlTeam + crew.fld_CrewName).subscribe();
   }
 
-  UpdateContestants(race){
+  SaveChangesRace(race, id){
+    console.log(race.fld_Zipcode);
+    this.http.patch(this.urlRace + id, race).subscribe();
+  }
 
+  UpdateContestants(race, id){
     this.submitContestants = true;
+    this.contestants = race;
+    this.tempID = id;
+    console.log(this.tempID);
+  }
 
-    race.forEach(element => {
-      this.contestants = element;
-      console.log(this.contestants)
+  AddContestants(contestant){
+    
+    console.log(contestant)
+    this.http.get<any>(this.urlTeam + contestant).subscribe(data =>{
+      console.log(data);
+      this.getContestants = data;
+      console.log(contestant);
+    })
+    
+    console.log(this.tempID)
+
+    this.http.put<any>('http://localhost:3000/contestants/' + this.tempID, this.getContestants).subscribe({
+      next: result => console.log(result),
+      error: err => console.log(err)
     });
 
-    var table = document.getElementById("ContestantTable");
-    //@ts-ignore
-    table.refresh();
-    console.log(this.contestants)
   }
 
-  AddContestants(race){
+  DeleteContestant(contestant){
 
   }
+
+  LogOut(){
+    this.Cookie.remove("user");
+    this.router.navigate(['/admin-login'])
+  }
+
+  testMethod(){
+    console.log("")
+  }
+
+  StartRace(){
+    this.http.get<any>(this.urlRace + "6430").subscribe({
+      next: result => this.races = result,
+      error: err => console.log(err)
+    });
+
+    console.log(this.races);
+
+    this.RaceStatus = true;
+
+    while(this.RaceStatus){
+      console.log("race is running");
+      //setInterval()
+    }
+
+
+  }
+
+  EndRace(){
+    this.RaceStatus = false
+  }
+
 }
 
-export class Contestants{
-  public fld_CrewName: string;
-  public fld_Captain: string;
-  public fld_Members: number;
-  public fld_Category: string;
+
+interface Contestants{
+  fld_CrewName: string;
+  fld_Captain: string;
+  fld_Members: number;
+  fld_Category: string;
 }

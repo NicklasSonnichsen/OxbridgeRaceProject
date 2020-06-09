@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OxbridgeRaceProject", "OxbridgeRaceProject\OxbridgeRaceProject.csproj", "{8B5F5895-2DDE-4BA9-A7BB-E230C69956E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website", "OxbridgeRaceProject\Website.csproj", "{8B5F5895-2DDE-4BA9-A7BB-E230C69956E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxbridgeRaceMobileApp2.Android", "OxbridgeRaceMobileApp2\OxbridgeRaceMobileApp2.Android\OxbridgeRaceMobileApp2.Android.csproj", "{762D8650-754E-4C29-BD02-F2F123ADD526}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OxbridgeRaceMobileApp2", "OxbridgeRaceMobileApp2\OxbridgeRaceMobileApp2\OxbridgeRaceMobileApp2.csproj", "{F838CFFD-30E3-49D2-94AB-B2BC89801924}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServerNodeJS", "ServerNodeJS", "{10F943ED-3DE3-4402-99B2-657E6094766C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

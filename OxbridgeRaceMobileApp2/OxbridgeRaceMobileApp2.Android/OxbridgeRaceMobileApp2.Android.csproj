@@ -54,6 +54,12 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
     <PackageReference Include="Refit">
       <Version>5.1.67</Version>
     </PackageReference>
@@ -99,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OxbridgeRaceMobileApp2\OxbridgeRaceMobileApp2.csproj">
-      <Project>{8B07172C-1794-418D-8969-2F7EAB6ACF0D}</Project>
+      <Project>{F838CFFD-30E3-49D2-94AB-B2BC89801924}</Project>
       <Name>OxbridgeRaceMobileApp2</Name>
     </ProjectReference>
   </ItemGroup>

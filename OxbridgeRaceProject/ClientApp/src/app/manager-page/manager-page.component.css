@@ -1,8 +1,13 @@
 input{
     background-color: transparent;
-    border-color: gray;
-    color: white;
+    border-color:transparent;
 }
 input[type="text"]:disabled{
     background-color: transparent;
+    text-align: center;
+}
+
+th{
+    text-align: center;
+    width: min-content;
 }

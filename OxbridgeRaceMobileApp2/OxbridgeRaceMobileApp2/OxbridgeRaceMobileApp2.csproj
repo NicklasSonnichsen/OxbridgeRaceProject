@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Reference Include="Mono.Android">
-      <HintPath>D:\Marti\Visual Studio\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Dev\v10.0\Mono.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
 

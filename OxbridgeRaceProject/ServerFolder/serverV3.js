@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const BodyParser = require("body-parser");
+
 const cors = require('cors');
 
 
@@ -54,3 +55,6 @@ app.listen(3000, () => { console.log('Server is running...') });
 //   res.header(Access-Control-Allow-Headers, "Origin, X-Requested-With, Content-Type, Accept");
 //   next();
 // });
+
+
+

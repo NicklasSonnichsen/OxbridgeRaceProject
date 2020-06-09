@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CrewForm } from '../models/CrewForm';
 import { RaceForm } from '../models/race-form';
-import { Contestants } from '../models/contestants';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from "angular2-cookie/core";
 import { Router } from '@angular/router';
-import { Observable, from } from 'rxjs';
+import { Observable, } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CrewForm } from "../models/CrewForm";
+import { error } from '@angular/compiler/src/util';
+import { removeSummaryDuplicates } from '@angular/compiler';
 
 @Component({
   selector: 'app-manager-page',
@@ -18,7 +20,7 @@ export class ManagerPageComponent implements OnInit {
 
   public crews: CrewForm[]; 
   public races: RaceForm[];
-  public contestants: Contestants[];
+  public contestants: Array<CrewForm>;
   public getContestants: CrewForm[];
 
   raceSubmitted = false;
@@ -28,7 +30,7 @@ export class ManagerPageComponent implements OnInit {
   RaceStatus = false;
 
 
-  public tempZipcode: string;
+  public tempID;
 
   ChangeInfoRace = false;
   ChangeInfoTeam = false;
@@ -41,8 +43,10 @@ export class ManagerPageComponent implements OnInit {
   enableEditIndex = null;
 
 
-  constructor(private http: HttpClient, private Cookie: CookieService, private router: Router) {
-   }
+  constructor(private http: HttpClient, 
+    private Cookie: CookieService, 
+    private router: Router,
+    ) {}
 
   ngOnInit(): void {
     var cookie = this.Cookie.get("user");
@@ -89,28 +93,33 @@ export class ManagerPageComponent implements OnInit {
     this.http.delete(this.urlTeam + crew.fld_CrewName).subscribe();
   }
 
-  SaveChangesRace(race){
+  SaveChangesRace(race, id){
     console.log(race.fld_Zipcode);
-    this.http.patch(this.urlRace + race.fld_Zipcode, race).subscribe();
+    this.http.patch(this.urlRace + id, race).subscribe();
   }
 
-  UpdateContestants(race, zipcode){
+  UpdateContestants(race, id){
     this.submitContestants = true;
-    this.contestants = race
-    this.tempZipcode = zipcode;
-    console.log(this.tempZipcode);
+    this.contestants = race;
+    this.tempID = id;
+    console.log(this.tempID);
   }
 
-  AddContestants(){
+  AddContestants(contestant){
     
-    this.http.get<any>(this.urlTeam + this.getContestants).subscribe({
-      next: result => this.getContestants = result, 
-      error: err => console.log(err),
+    console.log(contestant)
+    this.http.get<any>(this.urlTeam + contestant).subscribe(data =>{
+      console.log(data);
+      this.getContestants = data;
+      console.log(contestant);
+    })
+    
+    console.log(this.tempID)
+
+    this.http.put<any>('http://localhost:3000/contestants/' + this.tempID, this.getContestants).subscribe({
+      next: result => console.log(result),
+      error: err => console.log(err)
     });
-
-    console.log(this.getContestants)
-
-    this.http.put<CrewForm>("/contestants/" + this.tempZipcode, this.getContestants).subscribe();
 
   }
 
@@ -149,4 +158,12 @@ export class ManagerPageComponent implements OnInit {
     this.RaceStatus = false
   }
 
+}
+
+
+interface Contestants{
+  fld_CrewName: string;
+  fld_Captain: string;
+  fld_Members: number;
+  fld_Category: string;
 }

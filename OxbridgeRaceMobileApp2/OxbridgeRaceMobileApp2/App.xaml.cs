@@ -9,6 +9,7 @@ namespace OxbridgeRaceMobileApp2
 {
     public partial class App : Application
     {
+      public  string crewName;
         
         public App()
         {

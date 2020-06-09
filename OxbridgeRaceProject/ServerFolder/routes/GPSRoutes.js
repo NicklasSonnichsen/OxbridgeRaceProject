@@ -16,6 +16,23 @@ app.get('/gps', async (req, res) => {
       res.status(500).send(error)
     }
   });
+
+  /**
+ * Gets all of the collections in the database
+ */
+app.get('/gpsnames', async (req, res) => {
+  
+  try {
+      const tbl_Gps = await GPSCoordinatesModel.distinct("fld_CrewName");
+      const tbl_Gps2 = await GPSCoordinatesModel.aggregate([
+        {$match:{}},
+        {$group:{_id:"$fld_CrewName",lat:{$last:"$fld_Lattitude"},lng:{$last:"$fld_Longitude"}}}
+      ])
+      res.status(200).send(tbl_Gps2);
+  } catch (error) {
+    res.status(500).send(error)
+  }
+});
   
   /**
    * Finds the specified entry in the database
@@ -26,7 +43,7 @@ app.get('/gps', async (req, res) => {
     try {
       // var user = req.cookies['user'];
       // if (user) {
-        const tbl_Gps = await GPSCoordinatesModel.findOne({ fld_CrewName: req.params.fld_CrewName},{_id:0,__v:0}).sort({_id:-1});
+        const tbl_Gps = await GPSCoordinatesModel.findOne({ fld_CrewName: req.params.fld_CrewName},{__v:0}).sort({_id:-1});
       
         res.status(200).send(tbl_Gps);
         // } else {

@@ -72,7 +72,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                     // making it content
                     var content = new StringContent(requestString, Encoding.UTF8, "application/json");
                     // posting 
-                    var response = await client.PostAsync(MathiasURI, content);
+                    var response = await client.PostAsync(PhoneUrl, content);
                     // to see what could be wrong 
                     var result = response.Content.ReadAsStringAsync().Result;
                     if (response.IsSuccessStatusCode)

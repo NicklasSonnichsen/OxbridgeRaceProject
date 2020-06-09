@@ -51,22 +51,6 @@ export class MapComponent {
       })
 
 
-    console.log("PLS IKKE UNDEFINED: " + this.boats[0]);
-    console.log("CrewNames  er   " + this.CrewNames);
-
-
-    //this.GetAllTeams(this.boats)
-
-    //this.boats = this.boats.map(boat => {
-    //  boat.label = {
-    //    text: boat.name,
-    //    color: "red",
-    //    fontWeight: "bold",
-    //    fontSize: "16px"
-    //  };
-    //  return boat;
-    //})
-
   }
 
   onChooseLocation(event) {
@@ -79,8 +63,7 @@ export class MapComponent {
 
   OnStart() {
     const secondCounter = interval(1000)
-    this.isRunning = true;
-    
+    this.isRunning = true;  
 
 
     this.http.get<any>('http://localhost:3000/gpsnames')
@@ -102,40 +85,15 @@ export class MapComponent {
     })
 
     secondCounter.subscribe(n => {
-      
-      this.http.get<any>('http://localhost:3000/gps/test2')
-        .subscribe({
-          next: result => this.gpsLocation = result,
-          error: err => console.log(err)
-        })
-
-      this.http.get<any>('http://localhost:3000/gps/MartinCrew')
-        .subscribe({
-          next: result => this.gpsLocation2 = result,
-          error: err => console.log(err)
-        })
-
-      
-
-      this.showUpdatedItem(this.gpsLocation)
-      this.showUpdatedItem(this.gpsLocation2)
+ 
+      this.GetAllTeams();    
       
     }
    )
     
   }
 
-  boats: BoatProps[] = [
-    {
-      name: "test2",
-      lat: 54.90926,
-      lng: 9.80737
-    },
-    {
-      name: "MartinCrew",
-      lat: 54.90926,
-      lng: 9.70737
-    }]
+  boats: BoatProps[] = []
   icon = {
     labelOrigin: { x: 16, y: 48 },
     url: "/assets/BoatMarker2.jpg.png",
@@ -145,26 +103,6 @@ export class MapComponent {
     }
   };
 
-  
- 
-
-  showUpdatedItem(newItem) {
-    
-    
-
-    for (var i = 0; i < this.boats.length; i++) {
-      console.log(this.boats[i].name + " ER DET, DET SAMME " + newItem.fld_CrewName);
-     
-      if (this.boats[i].name.toString().match(newItem.fld_CrewName)) {
-               
-        this.boats[i].lat = newItem.fld_Lattitude;
-        this.boats[i].lng = newItem.fld_Longitude;       
-
-      }
-
-    }   
-
-  }
 
   GetAllTeams() {
 
@@ -173,12 +111,21 @@ export class MapComponent {
         next: result => this.CrewNames = result,
         error: err => console.log(err)
       })
-
+  
     for (var i = 0; i < this.CrewNames.length; i++) {
-      //this.boats = new Array<BoatProps>();
-      //this.boats.push(this.CrewNames[i])
 
-      console.log("Hallo du ");
+      if (this.boats[i] == undefined) {
+        this.boats[i] = { name: this.CrewNames[i]._id, lat: this.CrewNames[i].lat, lng: this.CrewNames[i].lng }
+        console.log(this.boats[i].name);   
+      }
+      else if (this.boats[i].name.match(this.CrewNames[i]._id)) {
+        console.log("This is boats.name:   " + this.boats[i].name);
+        console.log("this is CrewNames.name:   " + this.CrewNames[i]._id);
+        this.boats[i].lat = this.CrewNames[i].lat
+        this.boats[i].lng = this.CrewNames[i].lng
+      }
+      
+      
 
     }
   }
@@ -186,6 +133,7 @@ export class MapComponent {
 
   OnStop() {
     console.log("STOP BUTTON PRESSED");
+
     
   }
 }

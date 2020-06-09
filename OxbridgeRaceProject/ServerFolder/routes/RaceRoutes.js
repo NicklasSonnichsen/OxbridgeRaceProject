@@ -120,4 +120,22 @@ const app = express();
         console.log(error.message);
       }
     })
+
+  
+
+    app.get('/contestants/:fld_RaceName', async (req, res) => {
+  
+      //Should search for the specified event coordinator by email
+      try {
+          
+          const tbl_Race = await RaceModel.aggregate([
+            {$match:{}},
+            {$group:{_id:"$fld_Contestants"}}
+          ])
+          console.log(tbl_Race);
+          res.status(200).send(tbl_Race);
+        } catch (err) {
+          res.status(500).send(err);
+        }
+      });
 module.exports = app

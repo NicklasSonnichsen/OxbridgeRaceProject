@@ -8,8 +8,8 @@
   </agm-map>
 </body>
 <div>
-  <button (click)="OnStart()">START</button>
-  <button (click)="OnStop()">STOP</button>
+  <button [disabled]="!isEnabled" [hidden]="!isEnabled" (click)="OnStart()">START</button>
+  <button [disabled]="!isEnabled" [hidden]="!isEnabled" (click)="OnStop()">STOP</button>
   
 
 </div>

@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { GpsLocation } from '../models/gps-location';
 import { SpecificCrewInfo } from '../models/specific-crew-info'
 import { HttpClient, HttpHandler } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { AgmMarker } from '@agm/core';
 import { interval } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { RaceForm } from '../models/race-form';
+import { CookieService } from "angular2-cookie/core";
 
  interface BoatProps {
   name: string;
@@ -21,17 +22,18 @@ import { RaceForm } from '../models/race-form';
   styleUrls: ['./map.component.css']
 })
 @Injectable()
-export class MapComponent {
+export class MapComponent implements OnInit {
   latitude = 54.90926;
   longitude = 9.80737;
   public gpsLocation: GpsLocation;
   public gpsLocation2: GpsLocation;
   nInterval;
   isRunning: boolean
+  public isEnabled = false;
   CrewNames: SpecificCrewInfo[];
  
   
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private Cookie: CookieService) {
     this.http.get<any>('http://localhost:3000/gps/test2')
       .subscribe({
         next: result => this.gpsLocation = result,
@@ -52,15 +54,26 @@ export class MapComponent {
 
 
   }
+    ngOnInit(): void {
+      
+        var cookie = this.Cookie.get("user");
+        if(cookie == null) {
+        this.isEnabled = false;
+
+      }
+    else {
+        this.isEnabled = true;
+      }
+    
+    }
+
+
 
   onChooseLocation(event) {
     console.log(event);
   }
 
-  delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
+ 
   OnStart() {
     const secondCounter = interval(1000)
     this.isRunning = true;  

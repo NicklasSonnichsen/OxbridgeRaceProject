@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -14,6 +15,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { CrewSignupComponent } from './crew-signup/crew-signup.component';
 import { ManagerPageComponent } from './manager-page/manager-page.component';
+import { RaceFormComponent } from './race-form/race-form.component';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { ManagerPageComponent } from './manager-page/manager-page.component';
     SignUpAdminComponent,
     AdminLoginComponent,
     CrewSignupComponent,
-    ManagerPageComponent
+    ManagerPageComponent,
+    RaceFormComponent
     
   ],
   imports: [
@@ -38,7 +41,8 @@ import { ManagerPageComponent } from './manager-page/manager-page.component';
       { path: 'crew-signup', component: CrewSignupComponent},
       { path: 'admin-signup', component: SignUpAdminComponent},
       { path: 'admin-login', component: AdminLoginComponent},
-      { path: 'manager-page', component: ManagerPageComponent}
+      { path: 'manager-page', component: ManagerPageComponent},
+      { path: 'race-form', component: RaceFormComponent}
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCnnppP8trPwzu-5dOv6KUoW6np4nExUOg'

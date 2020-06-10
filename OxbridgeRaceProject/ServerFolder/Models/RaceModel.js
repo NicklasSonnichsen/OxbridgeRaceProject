@@ -11,7 +11,7 @@ const tbl_race = new mongoose.Schema({
       }
     },
     fld_Date:{
-      type: Date,
+      type: String,
 
     },
     fld_IsStarted:{

@@ -7,13 +7,16 @@
       <button type="button" class="btn btn-danger"(click)="EndRace()">End race</button>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-primary" (click)="SearchRace()">Search race</button>
+      <button type="button" class="btn btn-primary" (click)="SearchRace()" (click)="submitContestants=false">Search race</button>
     </div>
     <div class="col">
       <button type="button" class="btn btn-primary" (click)="SearchTeam()">Search team</button>
     </div>
     <div class="col">
-      <button class="btn btn-warning" [routerLink]="['/admin-signup']">New manager</button>
+      <button class="btn btn-primary" [routerLink]="['/race-form']">New Race</button>
+    </div>
+    <div class="col">
+      <button class="btn btn-warning btn-m" [routerLink]="['/admin-signup']">New manager</button>
     </div>
     <div class="col">
       <button class="btn btn-danger" (click)="LogOut()">Log out</button>
@@ -148,7 +151,7 @@
                 [disabled]="!contestant.isEditable">
             </td>
             <td>
-              <button class="btn-sm btn-danger" (click)="DeleteContestant(contestant)">Delete</button>
+              <button class="btn-sm btn-danger" (click)="DeleteContestant(contestant, contestant._id)">Delete</button>
             </td>
           </tr>
         </tbody>

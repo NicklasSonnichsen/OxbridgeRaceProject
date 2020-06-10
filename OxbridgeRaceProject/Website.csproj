@@ -18,11 +18,15 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\NewFolder\**" />
     <Compile Remove="ServerFolder\node_modules\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\NewFolder\**" />
     <Content Remove="ServerFolder\node_modules\**" />
+    <EmbeddedResource Remove="ClientApp\NewFolder\**" />
     <EmbeddedResource Remove="ServerFolder\node_modules\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\NewFolder\**" />
     <None Remove="ServerFolder\node_modules\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
@@ -412,10 +416,6 @@
     <TypeScriptCompile Include="ClientApp\src\file.ts" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ClientApp\NewFolder\" />
-  </ItemGroup>
-
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
@@ -429,7 +429,7 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build --prod" />
+    <!--<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build prod" />-->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
     <!-- Include the newly-built files in the publish output -->

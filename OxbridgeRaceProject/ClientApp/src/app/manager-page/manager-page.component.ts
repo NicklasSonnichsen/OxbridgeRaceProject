@@ -65,6 +65,7 @@ export class ManagerPageComponent implements OnInit {
   SearchTeam(){
     this.crewSubmitted = true
     this.raceSubmitted = false;
+    this.submitContestants = false;
     this.http.get<any>(this.urlTeam)
     .subscribe({
       next: result => this.crews = result,
@@ -93,6 +94,12 @@ export class ManagerPageComponent implements OnInit {
     this.http.delete(this.urlTeam + crew.fld_CrewName).subscribe();
   }
 
+  DeleteRace(race){
+    this.http.delete(this.urlRace + race._id).subscribe();
+  }
+
+
+
   SaveChangesRace(race, id){
     console.log(race.fld_Zipcode);
     this.http.patch(this.urlRace + id, race).subscribe();
@@ -110,6 +117,12 @@ export class ManagerPageComponent implements OnInit {
     console.log(contestant)
     this.http.get<any>(this.urlTeam + contestant).subscribe(data =>{
       console.log(data);
+      if (data.fld_CrewName.contains(contestant.fld_CrewName)) {
+        console.log("duplicate found")
+      } else {
+        
+      }
+
       this.getContestants = data;
       console.log(contestant);
     })
@@ -123,8 +136,19 @@ export class ManagerPageComponent implements OnInit {
 
   }
 
-  DeleteContestant(contestant){
+  DeleteContestant(contestant, id){
+    this.http.get<any>(this.urlRace + this.tempID).subscribe(result => {
+      console.log(result.fld_Contestants);
 
+      var contestantsArray = result.fld_Contestants;
+      contestantsArray.forEach(element => {
+        if (element._id == id) {
+          this.http.patch<any>('http://localhost:3000/contestants/' + this.tempID, contestant).subscribe(result =>{
+            console.log(result);
+          });
+        }
+      });
+    })
   }
 
   LogOut(){

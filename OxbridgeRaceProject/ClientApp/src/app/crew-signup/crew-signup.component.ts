@@ -13,6 +13,7 @@ export class CrewSignupComponent implements OnInit {
   submitted = false;
 
   constructor(private http: HttpClient) {
+    this.model = new CrewForm("","",0,0,"","","");
    
   }
 

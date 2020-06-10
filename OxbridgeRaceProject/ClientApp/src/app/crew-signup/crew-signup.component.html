@@ -1,19 +1,16 @@
-
 <div class="alert alert-success" [hidden]="!submitted">
   <strong *ngIf>Success!</strong> Your team has been added!.
 </div>
 
 
-<div class="form-group" >
+<div class="form-group">
   <form style="padding: 1%;" #crewForm="ngForm">
     <h1 style="align-items: center;">Sign up</h1>
 
     <div class="form-group">
       <label>Crew name</label>
-      <input type="text" class="form-control" name="fld_CrewName"
-             id="fld_CrewName" required minlength="2"
-             [(ngModel)]="model.fld_CrewName"
-             #spy #fld_CrewName="ngModel">
+      <input type="text" class="form-control" name="fld_CrewName" id="fld_CrewName" required minlength="2"
+        [(ngModel)]="model.fld_CrewName" #spy #fld_CrewName="ngModel">
 
       <div *ngIf="fld_CrewName.invalid && (fld_CrewName.dirty || fld_CrewName.touched)" class="alert alert-danger">
         <div *ngIf="fld_CrewName.errors.required">
@@ -27,11 +24,8 @@
 
     <div class="form-group">
       <label>Captain name</label>
-      <input type="text" class="form-control" name="fld_Captain"
-             required minlength="2" [(ngModel)]="model.fld_Captain"
-             id="fld_Captain"
-             #spy
-             #fld_Captain="ngModel">
+      <input type="text" class="form-control" name="fld_Captain" required minlength="2" [(ngModel)]="model.fld_Captain"
+        id="fld_Captain" #spy #fld_Captain="ngModel">
       <div *ngIf="fld_Captain.invalid && (fld_Captain.dirty || fld_Captain.touched)" class="alert alert-danger">
         <div *ngIf="fld_Captain.errors.required">
           Captain name is required
@@ -44,14 +38,8 @@
 
     <div class="form-group">
       <label>Email</label>
-      <input type="text"
-             class="form-control"
-             name="fld_Email"
-             required
-             [(ngModel)]="model.fld_Email"
-             id="fld_Email"
-             #spy
-             #fld_Email="ngModel">
+      <input type="text" class="form-control" name="fld_Email" required [(ngModel)]="model.fld_Email" id="fld_Email"
+        #spy #fld_Email="ngModel">
       <div *ngIf="fld_Email.invalid && (fld_Email.dirty || fld_Email.touched)" class="alert alert-danger">
         <div *ngIf="fld_Email.errors.required">
           Email is required
@@ -61,14 +49,8 @@
 
     <div class="form-group">
       <label>password</label>
-      <input type="password"
-             class="form-control"
-             name="fld_Password"
-             required minlength="6"
-             [(ngModel)]="model.fld_Password"
-             id="fld_Password"
-             #spy
-             #fld_Password="ngModel" />
+      <input type="password" class="form-control" name="fld_Password" required minlength="6"
+        [(ngModel)]="model.fld_Password" id="fld_Password" #spy #fld_Password="ngModel" />
 
       <div *ngIf="fld_Password.invalid && (fld_Password.dirty || fld_Password.touched)" class="alert alert-danger">
         <div *ngIf="fld_Password.errors.required">
@@ -82,14 +64,8 @@
 
     <div class="form-group">
       <label>Team size (including captain)</label>
-      <input type="text"
-             class="form-control"
-             name="fld_Members"
-             required
-             [(ngModel)]="model.fld_Members"
-             id="fld_Members"
-             #spy
-             #fld_Members="ngModel">
+      <input type="number" class="form-control" name="fld_Members" required [(ngModel)]="model.fld_Members"
+        id="fld_Members" #spy #fld_Members="ngModel">
       <div *ngIf="fld_Members.invalid && (fld_Members.dirty || fld_Members.touched)" class="alert alert-danger">
         <div *ngIf="fld_Members.errors.required">
           Members are required
@@ -102,14 +78,8 @@
 
     <div class="form-group">
       <label>Category</label>
-      <input type="text"
-             class="form-control"
-             name="fld_Category"
-             required
-             [(ngModel)]="model.fld_Category"
-             id="fld_Category"
-             #spy
-             #fld_Category="ngModel" />
+      <input type="text" class="form-control" name="fld_Category" required [(ngModel)]="model.fld_Category"
+        id="fld_Category" #spy #fld_Category="ngModel" />
 
       <div *ngIf="fld_Category.invalid && (fld_Category.dirty || fld_Category.touched)" class="alert alert-danger">
         <div *ngIf="fld_Category.errors.required">
@@ -118,7 +88,8 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-success" style="margin: 1%; " [disabled]="!crewForm.form.valid" (click)="onSubmit()">Submit</button>
+    <button type="submit" class="btn btn-success" style="margin: 1%; " [disabled]="!crewForm.form.valid"
+      (click)="onSubmit()">Submit</button>
 
   </form>
 </div>

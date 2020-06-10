@@ -1,0 +1,58 @@
+<div class="alert alert-success" [hidden]="!submitted">
+    <strong *ngIf>Success!</strong> The race has been added!.
+</div>
+
+<div class="container">
+    <form #raceForm="ngForm">
+        <div>
+            <label>Zipcode</label>
+            <input class="form-control" type="number" name="fld_Zipcode" id="fld_Zipcode"
+                [(ngModel)]="model.fld_Zipcode" required #spy #fld_Zipcode="ngModel">
+            <div *ngIf="fld_Zipcode.invalid && (fld_Zipcode.dirty || fld_Zipcode.touched)" class="alert alert-danger">
+                <div *ngIf="fld_Zipcode.errors.required">
+                    Zipcode is required
+                </div>
+            </div>
+        </div>
+        <div>
+            <label>Select Date and time</label>
+            <div class="form-inline">
+                <input class="form-control" type="date" name="dates" id="dates" [(ngModel)]="dateTimeBuilder.date"
+                    required>
+                <div>
+                    <input class="form-control" type="number" name="hours" id="hours" min="0" max="23" placeholder="00" [(ngModel)]="dateTimeBuilder.hours">
+                    <input class="form-control" type="number" name="minutes" id="minutes" min="0" max="59" placeholder="00" [(ngModel)]="dateTimeBuilder.minutes">
+                </div>
+            </div>
+        </div>
+        <div>
+            <label>Race Name</label>
+            <input class="form-control" type="text" name="fld_RaceName" id="fld_RaceName"
+                [(ngModel)]="model.fld_RaceName" required #spy #fld_RaceName="ngModel">
+
+            <div *ngIf="fld_RaceName.invalid && (fld_RaceName.dirty || fld_RaceName.touched)"
+                class="alert alert-danger">
+                <div *ngIf="fld_RaceName.errors.required">
+                    Race name is required
+                </div>
+            </div>
+        </div>
+        <div>
+            <label>Race Coordinator</label>
+            <input class="form-control" type="text" name="fld_RaceCoordinator" id="fld_RaceCoordinator"
+                [(ngModel)]="model.fld_RaceCoordinator" required #spy #fld_RaceCoordinator="ngModel">
+
+            <div *ngIf="fld_RaceCoordinator.invalid && (fld_RaceCoordinator.dirty || fld_RaceCoordinator.touched)"
+                class="alert alert-danger">
+                <div *ngIf="fld_RaceCoordinator.errors.required">
+                    Race Coordinator is required
+                </div>
+            </div>
+        </div>
+        <div class="mr-3">
+            <button class="btn btn-success" data-toggle="modal" data-target="#SuccesModal"
+                [disabled]="!raceForm.form.valid" (click)="SubmitRace()">Save</button>
+            <button class="btn btn-danger" [routerLink]="['/manager-page']">Go back</button>
+        </div>
+    </form>
+</div>

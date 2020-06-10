@@ -19,11 +19,11 @@ const app = express();
   /**
    * Finds the specified entry in the database
    */
-  app.get('/race/:fld_Zipcode', async (req, res) => {
+  app.get('/race/:_id', async (req, res) => {
   
     //Should search for the specified event coordinator by email
     try {
-        const tbl_Race = await RaceModel.findOne({ fld_Zipcode: req.params.fld_Zipcode});
+        const tbl_Race = await RaceModel.findOne({ _id: req.params._id});
         console.log(tbl_Race);
         res.status(200).send(tbl_Race);
       } catch (err) {
@@ -48,10 +48,10 @@ const app = express();
     /**
      * Deletes the specified entry in the database
      */
-    app.delete('/race/:fld_Zipcode', async (req, res) => {
+    app.delete('/race/:_id', async (req, res) => {
       
       try {
-          const tbl_Race = await RaceModel.deleteOne({fld_Zipcode: req.params.fld_Zipcode});
+          const tbl_Race = await RaceModel.deleteOne({_id: req.params._id});
           if (!tbl_Race) {
             res.status(404).send("No item found")
           } else{
@@ -60,6 +60,31 @@ const app = express();
       } catch (err) {
           res.status(500).send(err)
         }
+    })
+
+    /**
+     * Deletes a nested document from the table
+     */
+    app.delete('race/:_id', async(req, res)=>{
+
+      try {
+        const tbl_Contestants = await RaceModel.findOne({_id: req.params._id}, function(err, result){
+          if (err) {
+            res.status(404).send("contestant not found");
+          } else {
+            result.remove(function (err) {
+              if (err) {
+                res.status(500).send(err.message);
+              } else {
+                res.status(200).send("contestant has been removed")
+              }
+            })
+          }
+        })
+        await tbl_Contestants.save();
+      } catch (error){
+        res.status(500).send("Server Error - Delete contestant : " + error.message);
+      }
     })
 
 
@@ -93,6 +118,22 @@ const app = express();
         }
       } catch (error) {
         console.log(error.message);
+      }
+    })
+
+    app.patch('/contestants/:_id', async(req, res) =>{
+
+      try {
+        const tbl_Crew = await new CrewModel(req.body)
+        console.log(tbl_Crew);
+        const tbl_Race = await RaceModel.update({_id: req.params._id}, {$pull: {fld_Contestants: tbl_Crew}});
+        if (!tbl_Race) {
+          return res.status(404).send("Cannot find race: ");
+        } else {
+          res.status(200).send("Contestants have been removed");         
+        }
+      } catch (error) {
+        console.log(error);
       }
     })
 

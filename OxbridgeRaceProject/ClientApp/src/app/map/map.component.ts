@@ -27,10 +27,15 @@ export class MapComponent implements OnInit {
   longitude = 9.80737;
   public gpsLocation: GpsLocation;
   public gpsLocation2: GpsLocation;
-  nInterval;
+  public nInterval;
+  public secondCounter = interval(1000)
+  myVar;
   isRunning: boolean
+  isStarted: boolean
+
   public isEnabled = false;
   CrewNames: SpecificCrewInfo[];
+ 
  
   
   constructor(private http: HttpClient, private Cookie: CookieService) {
@@ -64,6 +69,12 @@ export class MapComponent implements OnInit {
     else {
         this.isEnabled = true;
       }
+
+      console.log("isRunning er:  " + this.isRunning)
+      if (this.CheckIfRunning) {
+
+        this.GetAllTeams
+      }
     
     }
 
@@ -75,15 +86,15 @@ export class MapComponent implements OnInit {
 
  
   OnStart() {
-    const secondCounter = interval(1000)
+    
     this.isRunning = true;  
 
 
-    this.http.get<any>('http://localhost:3000/gpsnames')
-      .subscribe({
-        next: result => this.CrewNames = result,
-        error: err => console.log(err)
-      })
+    //this.http.get<any>('http://localhost:3000/gpsnames')
+    //  .subscribe({
+    //    next: result => this.CrewNames = result,
+    //    error: err => console.log(err)
+    //  })
 
     this.GetAllTeams();
 
@@ -96,13 +107,35 @@ export class MapComponent implements OnInit {
       };
       return boat;
     })
+    
+    this.nInterval = setInterval(() => {
+      this.GetAllTeams
+      console.log("JEG ER FRA INTERVAL");
+      this.http.get<any>('http://localhost:3000/gpsnames')
+        .subscribe({
+          next: result => this.CrewNames = result,
+          error: err => console.log(err)
+        })
 
-    secondCounter.subscribe(n => {
- 
-      this.GetAllTeams();    
-      
-    }
-   )
+      console.log("Det virker ");
+
+      for (var i = 0; i < this.CrewNames.length; i++) {
+
+        if (this.boats[i] == undefined) {
+          this.boats[i] = { name: this.CrewNames[i]._id, lat: this.CrewNames[i].lat, lng: this.CrewNames[i].lng }
+          console.log(this.boats[i].name);
+        }
+        else if (this.boats[i].name.match(this.CrewNames[i]._id)) {
+          console.log("This is boats.name:   " + this.boats[i].name);
+          console.log("this is CrewNames.name:   " + this.CrewNames[i]._id);
+          this.boats[i].lat = this.CrewNames[i].lat
+          this.boats[i].lng = this.CrewNames[i].lng
+        }
+
+
+
+      }}, 1000)
+    
     
   }
 
@@ -123,7 +156,7 @@ export class MapComponent implements OnInit {
       .subscribe({
         next: result => this.CrewNames = result,
         error: err => console.log(err)
-      })
+      })    
   
     for (var i = 0; i < this.CrewNames.length; i++) {
 
@@ -145,8 +178,24 @@ export class MapComponent implements OnInit {
 
 
   OnStop() {
+    this.isRunning = false;
     console.log("STOP BUTTON PRESSED");
-
+    this.boats = [];
+    //clearInterval(this.secondCounter)
+    clearInterval(this.nInterval)
     
+  }
+
+  CheckIfRunning() {
+    console.log("er isRunning true:  " + this.isRunning);
+    console.log("er isStarted true:  " + this.isStarted);
+    if (this.isRunning) {
+
+      this.isStarted = true;
+
+      
+
+    }
+    return this.isStarted;
   }
 }

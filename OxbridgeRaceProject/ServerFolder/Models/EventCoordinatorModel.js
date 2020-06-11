@@ -22,7 +22,7 @@ const tbl_eventCoordinators = new mongoose.Schema({
         unique: true,
         index: true,
         validate(value){
-            if(value == "") throw new Erros("Email must be entered");
+            if(value == "") throw new Errors("Email must be entered");
         }
     },
 
@@ -30,7 +30,7 @@ const tbl_eventCoordinators = new mongoose.Schema({
         type: String,
         required: true,
         validate(value){
-            if(value == "") throw new Erros("Password must be entered");
+            if(value == "") throw new Errors("Password must be entered");
         }
     },
   });

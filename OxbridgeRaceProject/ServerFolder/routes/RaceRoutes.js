@@ -137,17 +137,15 @@ const app = express();
       }
     })
 
-    app.get("/contestants/:fld_Zipcode", async(req, res)=>{
+    app.get("/contestants/", async(req, res)=>{
       try{
-        const tbl_Contestants = await RaceModel.findOne({fld_Zipcode: req.params.fld_Zipcode}, {"fld_Contestants": "test2"});
+        const tbl_Contestants = await RaceModel.find();
         console.log(tbl_Contestants);
         res.status(200).send(tbl_Contestants)
       } catch(err){
         console.log(err)
       }
     })
-
-  
     
 
 module.exports = app

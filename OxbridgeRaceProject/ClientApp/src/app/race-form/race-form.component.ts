@@ -14,10 +14,14 @@ export class RaceFormComponent implements OnInit {
 
   public model: RaceForm;
   public dateTimeBuilder: DateTimeBuilder;
-  submitted = false;
+
   public initDate;
-  urlRace = "http://localhost:3000/race";
   public dateTime;
+
+  submitted = false;
+  
+  urlRace = "http://localhost:3000/race";
+  
   
   constructor(private http:HttpClient, private Cookie:CookieService, private router: Router) { 
     this.initDate = Date.now()
@@ -26,6 +30,9 @@ export class RaceFormComponent implements OnInit {
     
   }
 
+  /**
+   * Checks for cookies on page load
+   */
   ngOnInit() {
     var cookie = this.Cookie.get("user");
     if(cookie == null){
@@ -34,6 +41,9 @@ export class RaceFormComponent implements OnInit {
     }
   }
 
+  /**
+   * The data from the form is added as a new race in the database
+   */
   SubmitRace(){
     this.dateTime = this.dateTimeBuilder.date + " " + this.dateTimeBuilder.hours + ":" + this.dateTimeBuilder.minutes
     this.model.fld_Date = this.dateTime;
@@ -50,7 +60,10 @@ export class RaceFormComponent implements OnInit {
 
 export class DateTimeBuilder{
   /**
-   *
+   * Builds an object based on date, hours and minutes
+   * @param date 
+   * @param hours 
+   * @param minutes 
    */
   constructor(
     public date: string,

@@ -26,11 +26,18 @@ namespace UnitTesting
 
             testLogin.UserName = user.fld_CrewName;
             testLogin.UserPassword = user.fld_Password;
-            testLogin.LoginIsvalid();
 
 
-            Assert.True(testLogin.isSuccessfull);
+            Assert.True(testLogin.IsSuccesFull);
 
+        }
+
+        [Fact]
+        public void TroubleShooting()
+        {
+            int a = 5;
+
+            Assert.True(a > 2);
         }
     }
 }

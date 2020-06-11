@@ -1,6 +1,6 @@
 <body>
   <p>Map is working </p>
-  <agm-map [latitude]="latitude" [longitude]="longitude" (click)="onChooseLocation($event)">
+  <agm-map [latitude]="latitude" [longitude]="longitude">
     <!--<agm-marker [latitude]="pinLattitude" [longitude]="pinLongitude"></agm-marker>
   <agm-marker [latitude]="pinLattitude2" [longitude]="pinLongitude2"></agm-marker>-->
     <agm-marker *ngFor="let boat of boats" [label]="boat.label" [latitude]="boat.lat" [longitude]="boat.lng" [iconUrl]="icon">

@@ -18,6 +18,7 @@ import { ManagerPageComponent } from './manager-page/manager-page.component';
 import { RaceFormComponent } from './race-form/race-form.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +29,8 @@ import { RaceFormComponent } from './race-form/race-form.component';
     AdminLoginComponent,
     CrewSignupComponent,
     ManagerPageComponent,
-    RaceFormComponent
+    RaceFormComponent,
+    
     
   ],
   imports: [

@@ -1,5 +1,9 @@
-<div class="alert alert-success" [hidden]="!submitted">
+<div class="alert alert-success" [hidden]="!successPost">
   <strong *ngIf>Success!</strong> Your team has been added!.
+</div>
+
+<div class="alert alert-warning" [hidden]="!failedPost">
+  <strong *ngIf>Error!</strong> The crew name already exists!.
 </div>
 
 

@@ -11,6 +11,8 @@ export class CrewSignupComponent implements OnInit {
 
   public model: CrewForm;
   submitted = false;
+  successPost = false;
+  failedPost = false;
 
   constructor(private http: HttpClient) {
     this.model = new CrewForm("","",0,0,"","","");
@@ -30,6 +32,9 @@ export class CrewSignupComponent implements OnInit {
   }
 
 
+  /**
+   * Submits a new crew to the database
+   */
   Submit() {
     console.log("Submit virker")
     this.http.post<CrewForm>('http://localhost:3000/crew', {
@@ -41,9 +46,18 @@ export class CrewSignupComponent implements OnInit {
       "fld_Category": this.model.fld_Category,
       observe: "response"
 
-    }).subscribe(response => {
-      console.log(response);
-      console.log(this.model.fld_CrewName);
+    }).subscribe({
+      next: res => this.successPost = true,
+      error: err => this.failedPost = true
     })
+
+    //Shows an alert if the crew was successfully added or not
+    //Doesnt work as intended yet
+    if(this.failedPost){
+      this.successPost = false;
+    } else if(this.successPost){
+      this.failedPost = false;
+    }
+
   }
 }

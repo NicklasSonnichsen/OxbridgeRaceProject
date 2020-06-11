@@ -16,6 +16,9 @@ export class SignUpAdminComponent implements OnInit {
     this.model = new Administrators('', '', '', '');
   }
 
+  /**
+   * Checks for cookies on page load
+   */
   ngOnInit() {
     var cookie = this.Cookie.get("user");
     if (cookie == null) {
@@ -25,6 +28,9 @@ export class SignUpAdminComponent implements OnInit {
   }
   submitted = false;
 
+  /**
+   * Adds a new event coordinator to the Database
+   */
   onSubmit() {
     this.submitted = true;
     console.log("Submit virker")

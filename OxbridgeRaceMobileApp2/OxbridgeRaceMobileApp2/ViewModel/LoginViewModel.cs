@@ -16,7 +16,8 @@ namespace OxbridgeRaceMobileApp2.ViewModel
         private HttpClient client = new HttpClient();
         private const string NicklasURL = @"http://192.168.87.131:3000/logincrew";
         private const string PhoneUrl = @"http://192.168.43.161:3000/logincrew";
-        private const string MathiasURI = @"http://192.168.1.92:3000/gps";
+        private const string MathiasURI = @"http://192.168.1.92:3000/logincrew";
+        private const string Emulator = @"http://10.0.2.2:3000/logincrew";
         public LoginViewModel()
         {
             client = new HttpClient();

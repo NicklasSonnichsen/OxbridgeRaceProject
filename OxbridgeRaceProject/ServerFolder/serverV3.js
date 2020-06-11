@@ -2,6 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const BodyParser = require("body-parser");
 
+//Unit testing
+//const morgan = require('morgan');
+//const config = require('./config/test.json');
+
+
 const cors = require('cors');
 
 
@@ -45,16 +50,17 @@ app.use(EventCoordinatorsRoutes);
 app.use(GpsCoordinatesRouter);
 app.use(AdminRoutes);
 
+// if(config.util.getEnv('NODE_ENV') !== 'test') {
+//   //use morgan to log at command line
+//   app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
+// }
 
 //listens to localhost:3000 for CRUD operations
 app.listen(3000, () => { console.log('Server is running...') });
 
-// app.use(function(req, res, next) {
-//   res.header(Access-Control-Allow-Credentials,   true)
-//   res.header(Access-Control-Allow-Origin, "http://localhost:3000"); // update to match the domain you will make the request from
-//   res.header(Access-Control-Allow-Headers, "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+module.exports = app;
+
+
 
 
 

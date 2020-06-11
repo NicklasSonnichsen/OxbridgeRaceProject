@@ -26,17 +26,17 @@ export class ManagerPageComponent implements OnInit {
   raceSubmitted = false;
   crewSubmitted = false;
   submitContestants = false;
-
   RaceStatus = false;
-
-
+  
   public tempID;
 
   ChangeInfoRace = false;
   ChangeInfoTeam = false;
 
+  //urls to the backend
   public urlTeam = 'http://localhost:3000/crew/';
   public urlRace = 'http://localhost:3000/race/';
+  public urlContestants = 'http://localhost:3000/contestants/';
 
 
   enableEdit = false;
@@ -48,6 +48,9 @@ export class ManagerPageComponent implements OnInit {
     private router: Router,
     ) {}
 
+    /**
+     * Checks for cookies on page load
+     */
   ngOnInit(): void {
     var cookie = this.Cookie.get("user");
     if(cookie == null){
@@ -56,12 +59,19 @@ export class ManagerPageComponent implements OnInit {
     }
   }
 
+  /**
+   * Used for enabling/disabling the "edit buttons"
+   * @param e 
+   * @param i 
+   */
   enableEditMethod(e, i) {
     this.enableEdit = true;
     this.enableEditIndex = i;
     console.log(i, e);
   }
-
+  /**
+   * Prompts a list with all the crews
+   */
   SearchTeam(){
     this.crewSubmitted = true
     this.raceSubmitted = false;
@@ -74,6 +84,9 @@ export class ManagerPageComponent implements OnInit {
   };
 
 
+  /**
+   * prompts a list with all the races
+   */
   SearchRace(){
     this.raceSubmitted = true;
     this.crewSubmitted = false;
@@ -85,26 +98,48 @@ export class ManagerPageComponent implements OnInit {
     })
   }
 
+  /**
+   * Saves changes made to the crew
+   * @param crew 
+   */
   SaveChangesCrew(crew){
     console.log(crew.fld_CrewName);
     this.http.patch(this.urlTeam + crew.fld_CrewName, crew).subscribe();
   }
 
+  /**
+   * Deletes a crew
+   * @param crew 
+   */
   DeleteCrew(crew){
     this.http.delete(this.urlTeam + crew.fld_CrewName).subscribe();
   }
 
+  /**
+   * Deletes a race from the list
+   * @param race Selected race
+   */
   DeleteRace(race){
     this.http.delete(this.urlRace + race._id).subscribe();
   }
 
 
-
+  /**
+   * Saves the changes made to the race
+   * @param race Selected race
+   * @param id Race ID
+   */
   SaveChangesRace(race, id){
     console.log(race.fld_Zipcode);
     this.http.patch(this.urlRace + id, race).subscribe();
   }
 
+  /**
+   * Gets the race ID from the selected list
+   * and prompts a new table with contestants
+   * @param race The selected race
+   * @param id The race ID
+   */
   UpdateContestants(race, id){
     this.submitContestants = true;
     this.contestants = race;
@@ -112,30 +147,33 @@ export class ManagerPageComponent implements OnInit {
     console.log(this.tempID);
   }
 
+  /**
+   * Adds a contestant to a race
+   * @param contestant Crew which participates in a race
+   */
   AddContestants(contestant){
     
     console.log(contestant)
     this.http.get<any>(this.urlTeam + contestant).subscribe(data =>{
       console.log(data);
-      if (data.fld_CrewName.contains(contestant.fld_CrewName)) {
-        console.log("duplicate found")
-      } else {
-        
-      }
 
       this.getContestants = data;
       console.log(contestant);
-    })
-    
-    console.log(this.tempID)
-
-    this.http.put<any>('http://localhost:3000/contestants/' + this.tempID, this.getContestants).subscribe({
+    });
+      console.log(this.tempID)
+      this.http.put<any>(this.urlContestants + this.tempID, this.getContestants).subscribe({
       next: result => console.log(result),
       error: err => console.log(err)
     });
+    
 
   }
 
+  /**
+   * Deletes a contestant under the selected race
+   * @param contestant Crew which participates in a race
+   * @param id contestant ID
+   */
   DeleteContestant(contestant, id){
     this.http.get<any>(this.urlRace + this.tempID).subscribe(result => {
       console.log(result.fld_Contestants);
@@ -143,7 +181,7 @@ export class ManagerPageComponent implements OnInit {
       var contestantsArray = result.fld_Contestants;
       contestantsArray.forEach(element => {
         if (element._id == id) {
-          this.http.patch<any>('http://localhost:3000/contestants/' + this.tempID, contestant).subscribe(result =>{
+          this.http.patch<any>(this.urlContestants + this.tempID, contestant).subscribe(result =>{
             console.log(result);
           });
         }
@@ -151,15 +189,18 @@ export class ManagerPageComponent implements OnInit {
     })
   }
 
+
+  /**
+   * Removes the cookie from the browser
+   * making it unable to use manager functions
+   */
   LogOut(){
     this.Cookie.remove("user");
     this.router.navigate(['/admin-login'])
   }
 
-  testMethod(){
-    console.log("")
-  }
 
+  
   StartRace(){
     this.http.get<any>(this.urlRace + "6430").subscribe({
       next: result => this.races = result,
@@ -182,12 +223,4 @@ export class ManagerPageComponent implements OnInit {
     this.RaceStatus = false
   }
 
-}
-
-
-interface Contestants{
-  fld_CrewName: string;
-  fld_Captain: string;
-  fld_Members: number;
-  fld_Category: string;
 }

@@ -159,7 +159,7 @@
     </div>
     <div>                                                                                 <!--Gets the Crew name from the input field-->
       <input style="border-color: black; padding: 1%;" type="text" class="form-control" #contestantInput>
-      <button style="padding: 1%;" type="submit" class="btn btn-success"(click)="AddContestants(contestantInput.value); inputContestant=''">Add Team</button>
+      <button style="padding: 1%;" type="submit" class="btn btn-success"(click)="AddContestants(contestantInput.value); contestantInput.value=''">Add Team</button>
     </div>
     <button style="padding: 1%;" class="btn btn-primary" (click)="submitContestants=false">OK</button>
   </div>

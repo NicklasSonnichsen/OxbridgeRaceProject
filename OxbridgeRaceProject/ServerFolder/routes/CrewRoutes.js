@@ -96,7 +96,7 @@ app.post('/crew', async (req, res) => {
           await tbl_Crew.save();
 
           console.log("Updating crew")
-          return res.status(200).send({tbl_Crew});
+          res.status(200).send(tbl_Crew);
         }
       
     } catch (err) {

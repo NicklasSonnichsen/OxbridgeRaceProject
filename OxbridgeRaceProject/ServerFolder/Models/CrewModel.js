@@ -40,14 +40,14 @@ const tbl_crew = new mongoose.Schema({
         type: String,
         required: true,
         validate(value){
-            if(value == "") throw new Erros("Password must be entered");
+            if(value == "") throw new Errors("Password must be entered");
         }
     },
     fld_Email:{
         type: String,
         required: true,
         validate(value){
-            if(value == "") throw new Erros("Email must be entered");
+            if(value == "") throw new Errors("Email must be entered");
         }
     },
 
@@ -55,7 +55,7 @@ const tbl_crew = new mongoose.Schema({
         type: String,
         required: true,
         validate(value){
-            if(value == "") throw new Erros("Category must be selected");
+            if(value == "") throw new Errors("Category must be selected");
         }
     },
 });

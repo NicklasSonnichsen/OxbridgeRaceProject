@@ -17,6 +17,9 @@ namespace OxbridgeRaceMobileApp2.ViewModel
         private const string NicklasURL = @"http://192.168.87.131:3000/logincrew";
         private const string PhoneUrl = @"http://192.168.43.161:3000/logincrew";
         private const string MathiasURI = @"http://192.168.1.92:3000/gps";
+
+        public bool isSuccessfull;
+
         public LoginViewModel()
         {
             client = new HttpClient();
@@ -63,10 +66,11 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 var result = response.Content.ReadAsStringAsync().Result;
                 if (response.IsSuccessStatusCode)
                 {
-
+                    isSuccessfull = true;
                     Console.WriteLine("Succesfull RESULT" + result);
                     (Application.Current as App).crewName = UserName;
                     App.Current.MainPage = new NavigationPage(new MapView());
+
                 }
                 else
                 {

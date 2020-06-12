@@ -28,7 +28,7 @@ namespace UnitTesting
             testLogin.UserPassword = user.fld_Password;
 
 
-            //Assert.True(testLogin.IsSuccesFull);
+            Assert.True(testLogin.IsSuccesFull);
 
         }
 

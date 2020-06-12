@@ -19,8 +19,6 @@ namespace OxbridgeRaceMobileApp2.ViewModel
         private const string MathiasURI = @"http://192.168.1.92:3000/logincrew";
         private const string Emulator = @"http://10.0.2.2:3000/logincrew";
 
-        public bool IsSuccesFull { get; set; }
-
 
         public LoginViewModel()
         {
@@ -50,11 +48,9 @@ namespace OxbridgeRaceMobileApp2.ViewModel
 
         public async Task LoginIsvalid()
         {
-
             try
             {
                 Console.WriteLine("LOGIN ER BLEVET TRYKKET PÅ");
-
                 Console.WriteLine("PASSWORD ER DETTE:    "+UserPassword);
                 
                 var post = new CrewLoginInfo { fld_CrewName = UserName, fld_Password = UserPassword };
@@ -68,7 +64,6 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 var result = response.Content.ReadAsStringAsync().Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    IsSuccesFull = true;
                     Console.WriteLine("Succesfull RESULT" + result);
                     (Application.Current as App).crewName = UserName;
                     App.Current.MainPage = new NavigationPage(new MapView());
@@ -81,14 +76,8 @@ namespace OxbridgeRaceMobileApp2.ViewModel
             }
             catch (Exception e)
             {
-
                 Console.WriteLine("Error:  " + e.Message);
             }
-
-
-
-
         }
-
     }
 }

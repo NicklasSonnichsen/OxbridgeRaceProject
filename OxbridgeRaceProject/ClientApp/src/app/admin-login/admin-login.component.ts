@@ -32,14 +32,11 @@ export class AdminLoginComponent implements OnInit {
   //login to backend
   Login(){
   this.submitted = true;
-    console.log("Submit virker")
-    console.log("Email = " + this.model.fld_Email)
     this.http.post < Administrators>('http://localhost:3000/login', {
       "fld_Email": this.model.fld_Email,
       "fld_Password": this.model.fld_Password,
     }).subscribe((res) => {
       this.cookies.put("user", this.model.fld_Email);
-      console.log(res);
       this.router.navigate(['/manager-page'])
     })
   }

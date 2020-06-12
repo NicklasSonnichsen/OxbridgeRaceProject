@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxbridgeRaceMobileApp2.Andr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OxbridgeRaceMobileApp2", "OxbridgeRaceMobileApp2\OxbridgeRaceMobileApp2\OxbridgeRaceMobileApp2.csproj", "{F838CFFD-30E3-49D2-94AB-B2BC89801924}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting", "UnitTesting\UnitTesting.csproj", "{9841C739-7725-48E5-9756-C76766603B3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,12 @@ Global
 		{F838CFFD-30E3-49D2-94AB-B2BC89801924}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F838CFFD-30E3-49D2-94AB-B2BC89801924}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F838CFFD-30E3-49D2-94AB-B2BC89801924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9841C739-7725-48E5-9756-C76766603B3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9841C739-7725-48E5-9756-C76766603B3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9841C739-7725-48E5-9756-C76766603B3A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9841C739-7725-48E5-9756-C76766603B3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9841C739-7725-48E5-9756-C76766603B3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9841C739-7725-48E5-9756-C76766603B3A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,6 +18,10 @@ namespace OxbridgeRaceMobileApp2.ViewModel
         private const string PhoneUrl = @"http://192.168.43.161:3000/logincrew";
         private const string MathiasURI = @"http://192.168.1.92:3000/logincrew";
         private const string Emulator = @"http://10.0.2.2:3000/logincrew";
+
+        public bool IsSuccesFull { get; set; }
+
+
         public LoginViewModel()
         {
             client = new HttpClient();
@@ -59,12 +63,12 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 // making it content
                 var content = new StringContent(requestString, Encoding.UTF8, "application/json");
                 // posting 
-                var response = await client.PostAsync(PhoneUrl, content);
+                var response = await client.PostAsync(Emulator, content);
                 // to see what could be wrong 
                 var result = response.Content.ReadAsStringAsync().Result;
                 if (response.IsSuccessStatusCode)
                 {
-
+                    IsSuccesFull = true;
                     Console.WriteLine("Succesfull RESULT" + result);
                     (Application.Current as App).crewName = UserName;
                     // navigates to the mapView

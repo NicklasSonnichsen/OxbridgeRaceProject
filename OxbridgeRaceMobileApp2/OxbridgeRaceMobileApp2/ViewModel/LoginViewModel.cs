@@ -14,10 +14,13 @@ namespace OxbridgeRaceMobileApp2.ViewModel
     public class LoginViewModel : BaseViewModel
     {
         private HttpClient client = new HttpClient();
+        // all the different URL/IP's we have used through the project. 
         private const string NicklasURL = @"http://192.168.87.131:3000/logincrew";
         private const string PhoneUrl = @"http://192.168.43.161:3000/logincrew";
         private const string MathiasURI = @"http://192.168.1.92:3000/logincrew";
         private const string Emulator = @"http://10.0.2.2:3000/logincrew";
+
+        public bool IsSuccesFull { get; set; }
 
 
         public LoginViewModel()
@@ -48,13 +51,12 @@ namespace OxbridgeRaceMobileApp2.ViewModel
 
         public async Task LoginIsvalid()
         {
+
             try
             {
-                Console.WriteLine("LOGIN ER BLEVET TRYKKET PÅ");
-                Console.WriteLine("PASSWORD ER DETTE:    "+UserPassword);
-                
+                 // the object that is being posted.               
                 var post = new CrewLoginInfo { fld_CrewName = UserName, fld_Password = UserPassword };
-                Console.WriteLine("FLDPASSWORD ER:   "+post.fld_Password);
+               
                 var requestString = JsonConvert.SerializeObject(post);
                 // making it content
                 var content = new StringContent(requestString, Encoding.UTF8, "application/json");
@@ -64,8 +66,10 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 var result = response.Content.ReadAsStringAsync().Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    IsSuccesFull = true;
                     Console.WriteLine("Succesfull RESULT" + result);
                     (Application.Current as App).crewName = UserName;
+                    // navigates to the mapView
                     App.Current.MainPage = new NavigationPage(new MapView());
                 }
                 else
@@ -76,8 +80,14 @@ namespace OxbridgeRaceMobileApp2.ViewModel
             }
             catch (Exception e)
             {
+
                 Console.WriteLine("Error:  " + e.Message);
             }
+
+
+
+
         }
+
     }
 }

@@ -10,16 +10,16 @@ import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap'
 })
 export class HomeComponent {
 
-  //images = [944, 1011, 984].map((n) => '/assets');
+  // our images used in the carousel on the homePage
   images = [384, 598, 973].map((n) => `https://picsum.photos/id/${n}/900/500`);
   constructor(private http: HttpClient, config: NgbCarousel) {
-
+    // how long it should wait before switching images in ms 
     config.interval = 500
+    // making the carousel pause when hovering over pictures
     config.pauseOnHover = true
 
   }
 
-  //Call to test our node.js Server
  
 
 }

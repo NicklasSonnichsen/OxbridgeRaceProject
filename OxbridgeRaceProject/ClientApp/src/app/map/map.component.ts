@@ -40,25 +40,16 @@ export class MapComponent implements OnInit {
   
   constructor(private http: HttpClient, private Cookie: CookieService) {   
 
+    // this is done for avoiding undefined 
     this.http.get<any>('http://localhost:3000/gpsnames')
       .subscribe({
         next: result => this.CrewNames = result,
         error: err => console.log(err)
       })
-
-
-    this.http.get<RacesStartedModel>('http://localhost:3000/bool/1')
-      .subscribe({
-        next: result => this.raceStartedModel = { fld_Id: result.fld_Id, fld_IsStarted: result.fld_IsStarted },
-        error: err => console.log(err)
-      })
-
-    
-   
-
+      
   }
     ngOnInit(): void {
-      
+        // if ypu have a cookie some buttons are visble in the map page. 
         var cookie = this.Cookie.get("user");
         if(cookie == null) {
         this.isEnabled = false;
@@ -76,11 +67,11 @@ export class MapComponent implements OnInit {
       // interval for updating boats location if you are not event manager
       
       this.interValOnInit = setInterval(() => {
-        console.log("this is the result of checkIfRunning() : " + this.CheckIfRunning());
+       
         if (this.CheckIfRunning()) {                 
-          console.log("CheckIfRunning er true ---------------------------");
+         
           if (cookie == undefined) {
-            console.log("i got NO COOKIE!!!!!!! ----------------");
+           
             this.GetAllTeams
             // setting boats label for showcasing boat info on the map 
             this.boats = this.boats.map(boat => {
@@ -189,7 +180,8 @@ export class MapComponent implements OnInit {
     }
   };
 
-
+  /**
+   *gets all the team names and adds them to boats[]*/
   GetAllTeams() {
     
     this.http.get<any>('http://localhost:3000/gpsnames')
@@ -215,10 +207,12 @@ export class MapComponent implements OnInit {
     }
   }
 
-
+  /**
+   * stops the intervals and sets the isStarted property to false so that there is not shown any boats on the map anymore.
+   * resets boats to be empty
+   * */
   OnStop() {
-    this.isRunning = false;
-    console.log("STOP BUTTON PRESSED");
+    this.isRunning = false;    
     this.boats = [];
     clearInterval(this.nInterval)
     this.raceStartedModel = { fld_Id: 1, fld_IsStarted: false };
@@ -236,7 +230,7 @@ export class MapComponent implements OnInit {
       })
         
   }
-
+  // checking if isRunning is true and returns a true boolean if it is 
   CheckIfRunning() {
     if (this.isRunning) {
 

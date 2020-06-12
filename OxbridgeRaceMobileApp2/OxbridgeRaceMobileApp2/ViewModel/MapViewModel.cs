@@ -18,6 +18,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
     public class MapViewModel : BaseViewModel
     {
         private HttpClient client = new HttpClient();
+        // all the different URL/IP's we have used through the project.
         private const string NicklasURL = @"http://192.168.87.131:3000/gps";
         private const string PhoneUrl = @"http://192.168.43.161:3000/gps";
         private const string MathiasURI = @"http://192.168.1.92:3000/gps";
@@ -28,9 +29,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
             Map = new Map();
             client = new HttpClient();
             GetCurrentLocation();
-
-
-            //PositionChanged();
+           
         }
 
         private bool isRunning = true;

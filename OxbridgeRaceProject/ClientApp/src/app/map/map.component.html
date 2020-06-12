@@ -6,8 +6,8 @@
   </agm-map>
 </body>
 <div>
-  <button [disabled]="!isEnabled" [hidden]="!isEnabled" (click)="OnStart()">START</button>
-  <button [disabled]="!isEnabled" [hidden]="!isEnabled" (click)="OnStop()">STOP</button>
+  <button class="btn btn-success" [disabled]="!isEnabled" [hidden]="!isEnabled" (click)="OnStart()">START</button>
+  <button class="btn btn-danger" [disabled]="!isEnabled" [hidden]="!isEnabled" (click)="OnStop()">STOP</button>
   
 
 </div>

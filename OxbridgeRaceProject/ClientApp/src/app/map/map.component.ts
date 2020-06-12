@@ -26,32 +26,19 @@ import { RacesStartedModel } from '../models/races-started-model';
 export class MapComponent implements OnInit {
   latitude = 54.90926;
   longitude = 9.80737;
-  public gpsLocation: GpsLocation;
-  public gpsLocation2: GpsLocation;
   public nInterval;
   public secondCounter = interval(1000)
   public raceStartedModel: RacesStartedModel;
   public interValOnInit;
   public isRunning: boolean
   public isStarted: boolean
-
+  boats: BoatProps[] = []
   public isEnabled = false;
   CrewNames: SpecificCrewInfo[];
  
  
   
-  constructor(private http: HttpClient, private Cookie: CookieService) {
-    this.http.get<any>('http://localhost:3000/gps/test2')
-      .subscribe({
-        next: result => this.gpsLocation = result,
-        error: err => console.log(err)
-      })
-
-    this.http.get<any>('http://localhost:3000/gps/MartinCrew')
-      .subscribe({
-        next: result => this.gpsLocation2 = result,
-        error: err => console.log(err)
-      })
+  constructor(private http: HttpClient, private Cookie: CookieService) {   
 
     this.http.get<any>('http://localhost:3000/gpsnames')
       .subscribe({
@@ -93,7 +80,7 @@ export class MapComponent implements OnInit {
         if (this.CheckIfRunning()) {                 
           console.log("CheckIfRunning er true ---------------------------");
           if (cookie == undefined) {
-
+            console.log("i got NO COOKIE!!!!!!! ----------------");
             this.GetAllTeams
             // setting boats label for showcasing boat info on the map 
             this.boats = this.boats.map(boat => {
@@ -137,22 +124,23 @@ export class MapComponent implements OnInit {
 
  
   OnStart() {
-
+    // defining raceStartedModel so that when start button is pressed the fld_IsStarted is true.  
     this.raceStartedModel = { fld_Id: 1, fld_IsStarted: true };    
-        
+    // updating the DB so that isStarted==true.     
     this.http.put<RacesStartedModel>('http://localhost:3000/updateBool/1', this.raceStartedModel ).subscribe({
       next: result => console.log(result),
       error: err => console.log(err)
     });
-
+    // setting isRunning to what isStarted is in the DB
     this.http.get<RacesStartedModel>('http://localhost:3000/bool/1')
       .subscribe({
         next: result => this.isRunning = result.fld_IsStarted,
         error: err => console.log(err)
       })
 
+    // calling to get all teams and adding them to boats, has to be done if this is not done the boats names is not shown. 
     this.GetAllTeams();
-
+    // setting the labels of the boats so you can see the crewnames of each boat. 
     this.boats = this.boats.map(boat => {
       boat.label = {
         text: boat.name,
@@ -162,21 +150,23 @@ export class MapComponent implements OnInit {
       };
       return boat;
     })
-    
+
+    // starting interval that updates the location of each boat every second. it could not be done by calling GetAllTeams() inside the interval, it causes a undefined. 
     this.nInterval = setInterval(() => {
-      this.GetAllTeams
+      // getting all the teams names that adding setting it to crewNames
       this.http.get<any>('http://localhost:3000/gpsnames')
         .subscribe({
           next: result => this.CrewNames = result,
           error: err => console.log(err)
         })
-
+      // looping through crewNames 
       for (var i = 0; i < this.CrewNames.length; i++) {
-
+        // if there is no boat at boats[i] there will be added one
         if (this.boats[i] == undefined) {
           this.boats[i] = { name: this.CrewNames[i]._id, lat: this.CrewNames[i].lat, lng: this.CrewNames[i].lng }
           console.log(this.boats[i].name);
         }
+        // else if the namse are the same the boats location will be updated. 
         else if (this.boats[i].name.match(this.CrewNames[i]._id)) {
 
           this.boats[i].lat = this.CrewNames[i].lat
@@ -188,7 +178,8 @@ export class MapComponent implements OnInit {
   
   }
 
-  boats: BoatProps[] = []
+
+  // defining the icon that is used on the map. 
   icon = {
     labelOrigin: { x: 16, y: 48 },
     url: "/assets/BoatMarker2.jpg.png",

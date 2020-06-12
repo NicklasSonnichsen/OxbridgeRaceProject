@@ -67,6 +67,7 @@ namespace OxbridgeRaceMobileApp2.ViewModel
 
                     Console.WriteLine("Succesfull RESULT" + result);
                     (Application.Current as App).crewName = UserName;
+                    // navigates to the mapView
                     App.Current.MainPage = new NavigationPage(new MapView());
                 }
                 else

@@ -45,7 +45,10 @@ export class RaceFormComponent implements OnInit {
    * The data from the form is added as a new race in the database
    */
   SubmitRace(){
-    this.dateTime = this.dateTimeBuilder.date + " " + this.dateTimeBuilder.hours + ":" + this.dateTimeBuilder.minutes
+    this.dateTime = this.dateTimeBuilder.date
+     + " " + this.dateTimeBuilder.hours + 
+     ":" + this.dateTimeBuilder.minutes;
+
     this.model.fld_Date = this.dateTime;
     console.log(this.dateTime)
     this.submitted = true;
@@ -55,7 +58,6 @@ export class RaceFormComponent implements OnInit {
       error: err => console.log(err)
     });
   }
-
 }
 
 export class DateTimeBuilder{

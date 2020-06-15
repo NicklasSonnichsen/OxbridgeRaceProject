@@ -23,7 +23,6 @@ app.get('/gps', async (req, res) => {
 app.get('/gpsnames', async (req, res) => {
   
   try {
-      const tbl_Gps = await GPSCoordinatesModel.distinct("fld_CrewName");
       const tbl_Gps2 = await GPSCoordinatesModel.aggregate([
         {$match:{}},
         {$group:{_id:"$fld_CrewName",lat:{$last:"$fld_Lattitude"},lng:{$last:"$fld_Longitude"}}}

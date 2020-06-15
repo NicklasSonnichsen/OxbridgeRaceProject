@@ -107,8 +107,8 @@ app.post('/crew', async (req, res) => {
 
 app.post('/logincrew', async (req, res) => {
     const tbl_Crew = await CrewModel.findOne({ fld_CrewName: req.body.fld_CrewName })
+    console.log(tbl_Crew)
     try {
-
         var passwordIsValid = bcrypt.compare(req.body.fld_Password, tbl_Crew.fld_Password, (error, success) => {
             if (success) {
                 res.send(tbl_Crew);

@@ -55,11 +55,9 @@ namespace OxbridgeRaceMobileApp2.ViewModel
                 // sets position to the current location
                 var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(0.01));
                 // moving the map to 
-                Map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude),
-                                                             Distance.FromKilometers(0.05)));
+                Map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromKilometers(0.05)));
                 // updating and setting pins location
                 pinNew.Position = new Position(position.Latitude, position.Longitude);
-
                 
                 try
                 {

@@ -32,7 +32,7 @@
     "core-js": "^3.3.3",
     "jquery": "3.4.1",
     "ng-pick-datetime": "^7.0.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "oidc-client": "^1.9.1",
     "popper.js": "^1.16.0",
     "protractor": "~5.4.2",
@@ -60,7 +60,7 @@
     "typescript": "3.5.3"
   },
   "optionalDependencies": {
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "protractor": "~5.4.2",
     "ts-node": "~8.4.1",
     "tslint": "~5.20.0"
